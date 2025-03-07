@@ -1,0 +1,75 @@
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold text-[#2C2F66]">Course Management</h2>
+        <button class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg flex items-center gap-2">
+            ➕ Add New Course
+        </button>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="flex justify-between mb-6">
+        <input type="text" placeholder="🔍 Search courses..." class="p-2 w-1/2 border rounded-lg focus:outline-[#7F55E0]">
+        <div class="flex gap-3">
+            <select class="p-2 border rounded-lg focus:outline-[#7F55E0]">
+                <option>All Categories</option>
+                <option>Mathematics</option>
+                <option>Science</option>
+                <option>Literature</option>
+            </select>
+            <select class="p-2 border rounded-lg focus:outline-[#7F55E0]">
+                <option>Status</option>
+                <option>Active</option>
+                <option>Draft</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Course Cards -->
+    <div class="grid grid-cols-3 gap-6">
+        <!-- Course 1 -->
+        <div class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
+            <div class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-500">
+                Course Thumbnail
+            </div>
+            <h3 class="text-lg font-semibold text-[#2C2F66] mt-3">Advanced Mathematics</h3>
+            <p class="text-gray-500 text-sm">Grade 11 • 48 Students</p>
+            <div class="flex justify-between items-center mt-3">
+                <span class="bg-green-200 text-green-700 px-2 py-1 rounded-lg text-sm">Active</span>
+                <div class="flex gap-2">
+                    ✏️ 🗑️
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 2 -->
+        <div class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
+            <div class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-500">
+                Course Thumbnail
+            </div>
+            <h3 class="text-lg font-semibold text-[#2C2F66] mt-3">Physics Fundamentals</h3>
+            <p class="text-gray-500 text-sm">Grade 10 • 32 Students</p>
+            <div class="flex justify-between items-center mt-3">
+                <span class="bg-green-200 text-green-700 px-2 py-1 rounded-lg text-sm">Active</span>
+                <div class="flex gap-2">
+                    ✏️ 🗑️
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 3 -->
+        <div class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
+            <div class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-500">
+                Course Thumbnail
+            </div>
+            <h3 class="text-lg font-semibold text-[#2C2F66] mt-3">English Literature</h3>
+            <p class="text-gray-500 text-sm">Grade 12 • 28 Students</p>
+            <div class="flex justify-between items-center mt-3">
+                <span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded-lg text-sm">Draft</span>
+                <div class="flex gap-2">
+                    ✏️ 🗑️
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

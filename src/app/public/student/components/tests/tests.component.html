@@ -1,0 +1,61 @@
+<div class=" min-h-screen p-6 bg-gray-100 ">
+<div class=" p-5">
+    <div class="flex justify-between items-center mb-5">
+      <h2 class="text-xl font-semibold">Recent Tests Scores</h2>
+      <span class="text-gray-500 text-sm">Total 5 Tests (05/01/2023 - 06/30/2023)</span>
+    </div>
+  
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div *ngFor="let test of tests" class="border rounded-lg p-5 shadow-sm">
+        <h3 class="font-medium">{{ test.name }}</h3>
+        <p class="text-gray-600">Score: <span class="font-semibold">{{ test.score }}</span></p>
+        <p class="text-gray-600">Date: <span class="font-semibold">{{ test.date }}</span></p>
+        <button class="mt-4 px-4 py-2 border rounded-md text-[#636AE8FF] hover:text-[#4850E4FF]">
+          View Details
+        </button>
+      </div>
+    </div>
+  </div>
+  
+<!--  -->
+<div class="overflow-x-auto mt-10  mx-auto rounded-md border border-gray-300">
+    <table class="w-full text-left  rounded-lg">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-3 border-b">Assignment Name</th>
+          <th class="p-3 border-b">Due Date</th>
+          <th class="p-3 border-b">Submission Status</th>
+          <th class="p-3 border-b">Progress</th>
+          <th class="p-3 border-b">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let assignment of assignments" class="border-b">
+          <td class="p-3">{{ assignment.name }}</td>
+          <td class="p-3">{{ assignment.dueDate }}</td>
+          <td class="p-3">{{ assignment.status }}</td>
+          <td class="p-3">
+            <span class="text-yellow-500">
+              <ng-container *ngFor="let star of [].constructor(assignment.progress); let i = index">
+                ⭐
+              </ng-container>
+            </span>
+          </td>
+          <td class="p-3">
+            <button
+              class="px-4 py-1 rounded text-white"
+              [ngClass]="{
+                'bg-blue-500 hover:bg-blue-700': assignment.action === 'View',
+                'bg-green-500 hover:bg-green-700': assignment.action === 'Submit Now',
+                'bg-purple-500 hover:bg-purple-700': assignment.action === 'Edit'
+              }"
+            >
+              {{ assignment.action }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  </div>

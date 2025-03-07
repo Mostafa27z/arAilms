@@ -1,0 +1,83 @@
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold text-[#2C2F66]">Students</h2>
+        <div class="flex items-center space-x-3">
+            <input type="text" placeholder="Search students..." class="p-2 border rounded-lg focus:outline-[#7F55E0]">
+            <button class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                ➕ Add Student
+            </button>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-[#2C2F66] text-white">
+                <th class="p-3 text-left rounded-tl-lg">Student</th>
+                <th class="p-3 text-left">ID</th>
+                <th class="p-3 text-left">Class</th>
+                <th class="p-3 text-left">Email</th>
+                <th class="p-3 text-left">Phone</th>
+                <th class="p-3 text-left">Status</th>
+                <th class="p-3 text-left rounded-tr-lg">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b hover:bg-gray-100">
+                <td class="p-3 flex items-center gap-3">
+                    <img src="profile1.jpg" class="w-8 h-8 rounded-full">
+                    John Smith
+                </td>
+                <td class="p-3">STU2025001</td>
+                <td class="p-3">Grade 10 - A</td>
+                <td class="p-3">john.s&#64;gmail.com</td>
+                <td class="p-3">+1234-567-8901</td>
+                <td class="p-3"><span class="bg-green-200 text-green-700 px-2 py-1 rounded-lg">Active</span></td>
+                <td class="p-3 flex gap-2">
+                    ✏️ 🗑️
+                </td>
+            </tr>
+            <tr class="border-b hover:bg-gray-100">
+                <td class="p-3 flex items-center gap-3">
+                    <img src="profile2.jpg" class="w-8 h-8 rounded-full">
+                    Emma Wilson
+                </td>
+                <td class="p-3">STU2025002</td>
+                <td class="p-3">Grade 10 - B</td>
+                <td class="p-3">emma.w&#64;gmail.com</td>
+                <td class="p-3">+1234-567-8902</td>
+                <td class="p-3"><span class="bg-green-200 text-green-700 px-2 py-1 rounded-lg">Active</span></td>
+                <td class="p-3 flex gap-2">
+                    ✏️ 🗑️
+                </td>
+            </tr>
+            <tr class="border-b hover:bg-gray-100">
+                <td class="p-3 flex items-center gap-3">
+                    <img src="profile3.jpg" class="w-8 h-8 rounded-full">
+                    Michael Brown
+                </td>
+                <td class="p-3">STU2025003</td>
+                <td class="p-3">Grade 10 - A</td>
+                <td class="p-3">michael.b&#64;gmail.com</td>
+                <td class="p-3">+1234-567-8903</td>
+                <td class="p-3"><span class="bg-red-200 text-red-700 px-2 py-1 rounded-lg">Inactive</span></td>
+                <td class="p-3 flex gap-2">
+                    ✏️ 🗑️
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="flex justify-between items-center mt-4">
+        <span class="text-sm text-gray-500">Showing 1-3 of 30 entries</span>
+        <div class="flex space-x-2">
+            <button class="px-3 py-1 bg-gray-200 rounded-lg">⬅ Previous</button>
+            <button class="px-3 py-1 bg-[#7F55E0] text-white rounded-lg">1</button>
+            <button class="px-3 py-1 bg-gray-200 rounded-lg">2</button>
+            <button class="px-3 py-1 bg-gray-200 rounded-lg">3</button>
+            <button class="px-3 py-1 bg-gray-200 rounded-lg">Next ➡</button>
+        </div>
+    </div>
+</div>

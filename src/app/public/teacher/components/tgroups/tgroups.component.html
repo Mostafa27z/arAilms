@@ -1,0 +1,78 @@
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold text-[#2C2F66]">Student Groups</h2>
+        <button class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg flex items-center gap-2">
+            ➕ Create New Group
+        </button>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="flex justify-between mb-6">
+        <input type="text" placeholder="🔍 Search groups..." class="p-2 w-1/2 border rounded-lg focus:outline-[#7F55E0]">
+        <div class="flex gap-3">
+            <select class="p-2 border rounded-lg focus:outline-[#7F55E0]">
+                <option>All Grades</option>
+                <option>Grade 10</option>
+                <option>Grade 11</option>
+                <option>Grade 12</option>
+            </select>
+            <select class="p-2 border rounded-lg focus:outline-[#7F55E0]">
+                <option>Sort by: Name</option>
+                <option>Sort by: Students</option>
+                <option>Sort by: Date</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Student Group Cards -->
+    <div class="grid grid-cols-3 gap-6">
+        <!-- Group 1 -->
+        <div class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
+            <h3 class="text-lg font-semibold text-[#2C2F66]">Advanced Mathematics</h3>
+            <p class="text-gray-500 text-sm">👥 32 Students</p>
+            <p class="text-gray-500 text-sm">🎓 Grade 11</p>
+            <p class="text-gray-500 text-sm">📅 Created Jan 15, 2025</p>
+            <div class="flex justify-between items-center mt-3">
+                <div class="flex -space-x-2">
+                    <img src="avatar1.png" class="w-8 h-8 rounded-full border">
+                    <img src="avatar2.png" class="w-8 h-8 rounded-full border">
+                    <span class="text-gray-600 text-sm bg-gray-200 px-2 py-1 rounded-lg">+29</span>
+                </div>
+                <button class="text-[#7F55E0] hover:underline">✏️</button>
+            </div>
+        </div>
+
+        <!-- Group 2 -->
+        <div class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
+            <h3 class="text-lg font-semibold text-[#2C2F66]">Physics Lab Group A</h3>
+            <p class="text-gray-500 text-sm">👥 24 Students</p>
+            <p class="text-gray-500 text-sm">🎓 Grade 12</p>
+            <p class="text-gray-500 text-sm">📅 Created Jan 10, 2025</p>
+            <div class="flex justify-between items-center mt-3">
+                <div class="flex -space-x-2">
+                    <img src="avatar1.png" class="w-8 h-8 rounded-full border">
+                    <img src="avatar2.png" class="w-8 h-8 rounded-full border">
+                    <span class="text-gray-600 text-sm bg-gray-200 px-2 py-1 rounded-lg">+21</span>
+                </div>
+                <button class="text-[#7F55E0] hover:underline">✏️</button>
+            </div>
+        </div>
+
+        <!-- Group 3 -->
+        <div class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
+            <h3 class="text-lg font-semibold text-[#2C2F66]">Literature Club</h3>
+            <p class="text-gray-500 text-sm">👥 18 Students</p>
+            <p class="text-gray-500 text-sm">🎓 Grade 10</p>
+            <p class="text-gray-500 text-sm">📅 Created Jan 5, 2025</p>
+            <div class="flex justify-between items-center mt-3">
+                <div class="flex -space-x-2">
+                    <img src="avatar1.png" class="w-8 h-8 rounded-full border">
+                    <img src="avatar2.png" class="w-8 h-8 rounded-full border">
+                    <span class="text-gray-600 text-sm bg-gray-200 px-2 py-1 rounded-lg">+15</span>
+                </div>
+                <button class="text-[#7F55E0] hover:underline">✏️</button>
+            </div>
+        </div>
+    </div>
+</div>

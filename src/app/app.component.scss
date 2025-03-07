@@ -1,0 +1,31 @@
+/* Change the color of the arrows */
+.carousel .carousel-prev-icon,
+.carousel .carousel-next-icon {
+  color: red !important; /* Change the arrow color */
+  background-color: white !important; /* Background color of the arrow buttons */
+  border-radius: 50%; /* Make the buttons circular */
+  width: 40px; /* Adjust the width */
+  height: 40px; /* Adjust the height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* Change the hover effect */
+.carousel .carousel-prev:hover,
+.carousel .carousel-next:hover {
+  color: white !important; /* Change arrow color on hover */
+  background-color: red !important; /* Change background color on hover */
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+/* Increase the arrow icon size */
+.carousel .carousel-prev::before,
+.carousel .carousel-next::before {
+  font-size: 20px !important; /* Make the arrow icons larger */
+}
+.p-icon{
+    color: red !important;
+}
