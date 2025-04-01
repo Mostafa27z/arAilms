@@ -34,6 +34,13 @@ import { PperformanceComponent } from './public/parents/components/pperformance/
 import { PtestsComponent } from './public/parents/components/ptests/ptests.component';
 import { PpaymentsComponent } from './public/parents/components/ppayments/ppayments.component';
 import { PsupportComponent } from './public/parents/components/psupport/psupport.component';
+import { SlayoutComponent } from './public/supervisor/slayout/slayout.component';
+import { SdashboardComponent } from './public/supervisor/sdashboard/sdashboard.component';
+import { ScoursesComponent } from './public/supervisor/scourses/scourses.component';
+import { SstudentsComponent } from './public/supervisor/sstudents/sstudents.component';
+import { SteachersComponent } from './public/supervisor/steachers/steachers.component';
+import { SattendanceComponent } from './public/supervisor/sattendance/sattendance.component';
+import { StestsComponent } from './public/supervisor/stests/stests.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -55,9 +62,24 @@ export const routes: Routes = [
             { path: 'chats', component: ChatsComponent },
             { path: 'ai', component: AiComponent }
         ]
-    }
+    },
+    // Supervisor Layout Wrapper
+    {
+        path: 'supervisor',
+        component: SlayoutComponent,
+        children: [
+            
+            { path: 'dashboard', component: SdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
+            { path: 'courses', component: ScoursesComponent },
+            { path: 'students', component: SstudentsComponent },
+            { path: 'teachers', component: SteachersComponent },
+            { path: 'attendance', component: SattendanceComponent },
+            { path: 'tests', component: StestsComponent },
+
+        ]
+    },
     // parent
-    ,
+    
     {
         path: 'parents',
         component: PlayoutComponent,
