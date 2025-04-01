@@ -21,8 +21,19 @@ import { TpaymentsComponent } from './public/teacher/components/tpayments/tpayme
 import { AlayoutComponent } from './public/admin/components/alayout/alayout.component';
 import { AdashboardComponent } from './public/admin/components/adashboard/adashboard.component';
 import { AusersComponent } from './public/admin/components/ausers/ausers.component';
-
-
+import { AgroupsComponent } from './public/admin/components/agroups/agroups.component';
+import {AreportsComponent} from './public/admin/components/areports/areports.component';
+import { AcoursesComponent } from './public/admin/components/acourses/acourses.component';
+import { AchatsComponent } from './public/admin/components/achats/achats.component';
+import { TtestsComponent } from './public/teacher/components/ttests/ttests.component';
+import { PlayoutComponent } from './public/parents/components/playout/playout.component';
+import { PcoursesComponent } from './public/parents/components/pcourses/pcourses.component';
+import { PdashboardComponent } from './public/parents/components/pdashboard/pdashboard.component';
+import { PattendanceComponent } from './public/parents/components/pattendance/pattendance.component';
+import { PperformanceComponent } from './public/parents/components/pperformance/pperformance.component';
+import { PtestsComponent } from './public/parents/components/ptests/ptests.component';
+import { PpaymentsComponent } from './public/parents/components/ppayments/ppayments.component';
+import { PsupportComponent } from './public/parents/components/psupport/psupport.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -45,6 +56,22 @@ export const routes: Routes = [
             { path: 'ai', component: AiComponent }
         ]
     }
+    // parent
+    ,
+    {
+        path: 'parents',
+        component: PlayoutComponent,
+        children: [
+            { path: 'attendance', component: PattendanceComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
+            { path: 'dashboard', component: PdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
+            { path: 'courses', component: PcoursesComponent },
+            { path: 'payments', component: PpaymentsComponent },
+            { path: 'performance', component: PperformanceComponent },
+            { path: 'tests', component: PtestsComponent },
+            { path: 'ai', component: AiComponent },
+            { path: 'support', component: PsupportComponent },
+        ]
+    }
     ,
     // Teacher 
     {
@@ -58,6 +85,7 @@ export const routes: Routes = [
             { path: 'groups', component: TgroupsComponent },
             { path: 'chats', component: TchatsComponent },
             { path: 'payments', component: TpaymentsComponent },
+            { path: 'tests', component: TtestsComponent },
         ]
     }
     // admin
@@ -69,10 +97,11 @@ export const routes: Routes = [
             
             { path: 'dashboard', component: AdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
             { path: 'users', component: AusersComponent },
-            { path: 'courses', component: TcoursesComponent },
-            { path: 'groups', component: TgroupsComponent },
-            { path: 'chats', component: TchatsComponent },
+            { path: 'courses', component: AcoursesComponent },
+            { path: 'groups', component: AgroupsComponent },
+            { path: 'chats', component: AchatsComponent },
             { path: 'payments', component: TpaymentsComponent },
+            { path: 'reports', component: AreportsComponent },
         ]
     }
 ];
