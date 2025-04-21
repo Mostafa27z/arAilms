@@ -1,83 +1,137 @@
 <div class="p-6">
-    <!-- Payment Overview -->
-    <div class="grid grid-cols-4 gap-4 mb-6">
-      <div class="bg-white p-4 rounded-2xl shadow-md text-center">
-        <h3 class="text-xl font-semibold">Total Fees Due</h3>
-        <p class="text-2xl font-bold text-red-500">$1,200</p>
-        <p class="text-sm text-gray-500">Due Now</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow-md text-center">
-        <h3 class="text-xl font-semibold">Total Paid</h3>
-        <p class="text-2xl font-bold text-green-500">$5,000</p>
-        <p class="text-sm text-gray-500">Completed</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow-md text-center">
-        <h3 class="text-xl font-semibold">Pending Payments</h3>
-        <p class="text-2xl font-bold text-yellow-500">$200</p>
-        <p class="text-sm text-gray-500">Processing</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow-md text-center">
-        <h3 class="text-xl font-semibold">Next Payment Due</h3>
-        <p class="text-2xl font-bold">$400</p>
-        <p class="text-sm text-gray-500">Mar 15, 2025</p>
-      </div>
+  <!-- Payment Overview -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-4 rounded-2xl shadow-md text-center">
+      <h3 class="text-xl font-semibold">Total Fees Due</h3>
+      <p class="text-2xl font-bold text-red-500">$1,200</p>
+      <p class="text-sm text-gray-500">Due Now</p>
     </div>
-  
-    <!-- Search & Filters -->
-    <div class="flex items-center justify-between mb-4">
-      <input type="text" placeholder="Search invoices..." class="p-2 border rounded-lg w-1/3">
-      <div class="flex gap-4">
-        <select class="p-2 border rounded-lg">
-          <option>All Status</option>
-        </select>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">Apply Filters</button>
-      </div>
+    <div class="bg-white p-4 rounded-2xl shadow-md text-center">
+      <h3 class="text-xl font-semibold">Total Paid</h3>
+      <p class="text-2xl font-bold text-green-500">$5,000</p>
+      <p class="text-sm text-gray-500">Completed</p>
     </div>
-  
-    <!-- Invoice Table -->
-    <div class="bg-white p-4 rounded-2xl shadow-md">
-      <table class="w-full text-left">
-        <thead>
-          <tr class="bg-gray-200">
-            <th class="p-2">Invoice Number</th>
-            <th class="p-2">Issue Date</th>
-            <th class="p-2">Due Date</th>
-            <th class="p-2">Amount</th>
-            <th class="p-2">Status</th>
-            <th class="p-2">Actions</th>
+    <div class="bg-white p-4 rounded-2xl shadow-md text-center">
+      <h3 class="text-xl font-semibold">Pending Payments</h3>
+      <p class="text-2xl font-bold text-yellow-500">$200</p>
+      <p class="text-sm text-gray-500">Processing</p>
+    </div>
+    <div class="bg-white p-4 rounded-2xl shadow-md text-center">
+      <h3 class="text-xl font-semibold">Next Payment Due</h3>
+      <p class="text-2xl font-bold">$400</p>
+      <p class="text-sm text-gray-500">Mar 15, 2025</p>
+    </div>
+  </div>
+
+  <!-- Search & Filters -->
+  <div class="flex flex-col sm:flex-row items-center justify-between mb-4">
+    <input
+      type="text"
+      placeholder="Search invoices..."
+      class="p-2 border rounded-lg w-full sm:w-1/3 mb-4 sm:mb-0"
+    />
+    <div class="flex gap-4">
+      <select class="p-2 border rounded-lg">
+        <option>All Status</option>
+      </select>
+      <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">
+        Apply Filters
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white p-6 rounded-2xl shadow-md mt-6">
+    <h3 class="text-xl font-semibold mb-4">Invoice List</h3>
+
+    <!-- Table Layout on larger screens -->
+    <div class="hidden md:block">
+      <table class="min-w-full text-sm text-left text-gray-500">
+        <thead class="bg-gray-100 text-gray-600">
+          <tr>
+            <th class="px-4 py-3 font-medium">Invoice Number</th>
+            <th class="px-4 py-3 font-medium">Issue Date</th>
+            <th class="px-4 py-3 font-medium">Due Date</th>
+            <th class="px-4 py-3 font-medium">Amount</th>
+            <th class="px-4 py-3 font-medium">Status</th>
+            <th class="px-4 py-3 font-medium">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="border-t">
-            <td class="p-2">#INV-2025-001</td>
-            <td class="p-2">Jan 01, 2025</td>
-            <td class="p-2">Jan 15, 2025</td>
-            <td class="p-2">$500</td>
-            <td class="p-2"><span class="bg-green-200 px-2 py-1 rounded-lg">Paid</span></td>
-            <td class="p-2">
-              <button class="bg-gray-500 text-white px-3 py-1 rounded-lg">Download</button>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-3">#INV-2025-001</td>
+            <td class="px-4 py-3">Jan 01, 2025</td>
+            <td class="px-4 py-3">Jan 15, 2025</td>
+            <td class="px-4 py-3">$500</td>
+            <td class="px-4 py-3">
+              <span
+                class="bg-green-200 text-green-600 px-3 py-1 rounded-full text-xs"
+                >Paid</span
+              >
+            </td>
+            <td class="px-4 py-3">
+              <button
+                class="bg-gray-500 text-white px-3 py-1 rounded-lg text-xs"
+              >
+                Download
+              </button>
             </td>
           </tr>
+
+          <!-- Add more rows here -->
         </tbody>
       </table>
     </div>
-  
-    <!-- Payment Methods -->
-    <div class="bg-white p-4 rounded-2xl shadow-md mt-6">
-      <h3 class="font-semibold mb-4">Payment Methods</h3>
-      <div class="flex gap-4">
-        <div class="bg-gray-100 p-4 rounded-lg flex-1">
-          <p class="font-semibold">Visa **** 4242</p>
-          <p class="text-sm text-gray-500">Expires 12/25</p>
-        </div>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">+ Add Payment Method</button>
+
+    <!-- Card Layout for smaller screens -->
+    <div class="md:hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="bg-gray-100 p-4 rounded-xl shadow-md">
+        <h4 class="font-semibold">#INV-2025-001</h4>
+        <p><strong>Issue Date:</strong> Jan 01, 2025</p>
+        <p><strong>Due Date:</strong> Jan 15, 2025</p>
+        <p><strong>Amount:</strong> $500</p>
+        <p>
+          <strong>Status:</strong>
+          <span
+            class="bg-green-200 text-green-600 px-3 py-1 rounded-full text-xs"
+            >Paid</span
+          >
+        </p>
+        <button
+          class="bg-gray-500 text-white px-3 py-1 rounded-lg text-xs mt-2 w-full"
+        >
+          Download
+        </button>
       </div>
-    </div>
-  
-    <!-- Reports -->
-    <div class="bg-white p-4 rounded-2xl shadow-md mt-6 flex justify-between">
-      <button class="bg-gray-200 px-4 py-2 rounded-lg">Payment Summary</button>
-      <button class="bg-gray-200 px-4 py-2 rounded-lg">Transaction History</button>
+
+      <!-- Add more rows as cards here -->
     </div>
   </div>
-  
+
+  <!-- Payment Methods -->
+  <div class="bg-white p-4 rounded-2xl shadow-md mt-6">
+    <h3 class="font-semibold mb-4">Payment Methods</h3>
+    <div class="flex flex-col sm:flex-row gap-4">
+      <div class="bg-gray-100 p-4 rounded-lg flex-1">
+        <p class="font-semibold">Visa **** 4242</p>
+        <p class="text-sm text-gray-500">Expires 12/25</p>
+      </div>
+      <button
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full sm:w-auto"
+      >
+        + Add Payment Method
+      </button>
+    </div>
+  </div>
+
+  <!-- Reports -->
+  <div
+    class="bg-white p-4 rounded-2xl shadow-md mt-6 flex flex-col sm:flex-row justify-between"
+  >
+    <button class="bg-gray-200 px-4 py-2 rounded-lg mb-4 sm:mb-0">
+      Payment Summary
+    </button>
+    <button class="bg-gray-200 px-4 py-2 rounded-lg">
+      Transaction History
+    </button>
+  </div>
+</div>

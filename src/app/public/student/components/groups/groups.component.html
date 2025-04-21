@@ -1,36 +1,51 @@
 <div class="p-6 bg-gray-100 min-h-screen">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-semibold">Study Groups</h2>
-      <button class="bg-primary text-white px-4 py-2 rounded-lg flex items-center">
-        <span class="mr-2">+</span> Create Group
-      </button>
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4"
+  >
+    <h2 class="text-xl font-semibold">Study Groups</h2>
+    <button
+      class="bg-primary text-white px-4 py-2 rounded-lg flex items-center hover:bg-[#2C2F66]"
+    >
+      <span class="mr-2">+</span> Create Group
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+    <!-- Filters -->
+    <div class="lg:col-span-3 bg-white p-4 shadow rounded-lg">
+      <h3 class="font-medium mb-2">Filters</h3>
+      <label class="block text-sm font-medium">Subject</label>
+      <select class="w-full p-2 border rounded-lg mb-3">
+        <option>All Subjects</option>
+      </select>
+
+      <label class="block text-sm font-medium">Study Level</label>
+      <select class="w-full p-2 border rounded-lg">
+        <option>All Levels</option>
+      </select>
     </div>
-  
-    <div class="grid grid-cols-12 gap-4">
-      <!-- Filters -->
-      <div class="col-span-3 bg-white p-4 shadow rounded-lg">
-        <h3 class="font-medium mb-2">Filters</h3>
-        <label class="block text-sm font-medium">Subject</label>
-        <select class="w-full p-2 border rounded-lg mb-3">
-          <option>All Subjects</option>
-        </select>
-  
-        <label class="block text-sm font-medium">Study Level</label>
-        <select class="w-full p-2 border rounded-lg">
-          <option>All Levels</option>
-        </select>
-      </div>
-  
-      <!-- Study Groups -->
-      <div class="col-span-9 grid grid-cols-3 gap-4">
-        <div *ngFor="let group of studyGroups" class="bg-white p-4 shadow rounded-lg flex flex-col gap-3">
-          <h4 class="font-semibold">{{ group.name }}</h4>
-          <p class="text-sm text-gray-500">{{ group.subject }} • {{ group.level }}</p>
-          <p class="text-sm mt-2">{{ group.description }}</p>
-          <p class="text-xs text-gray-500 mt-1">{{ group.members }} members</p>
-          <button class="mt-3 w-full bg-primary text-white py-2 rounded-lg hover:bg-[#2C2F66] bg-[#7F55E0]">Join Group</button>
-        </div>
+
+    <!-- Study Groups -->
+    <div
+      class="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
+    >
+      <div
+        *ngFor="let group of studyGroups"
+        class="bg-white p-4 shadow rounded-lg flex flex-col gap-3"
+      >
+        <h4 class="font-semibold">{{ group.name }}</h4>
+        <p class="text-sm text-gray-500">
+          {{ group.subject }} • {{ group.level }}
+        </p>
+        <p class="text-sm mt-2">{{ group.description }}</p>
+        <p class="text-xs text-gray-500 mt-1">{{ group.members }} members</p>
+        <button
+          class="mt-3 w-full bg-primary text-white py-2 rounded-lg hover:bg-[#2C2F66]"
+        >
+          Join Group
+        </button>
       </div>
     </div>
   </div>
-  
+</div>

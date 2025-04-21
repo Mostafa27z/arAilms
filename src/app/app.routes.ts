@@ -22,7 +22,7 @@ import { AlayoutComponent } from './public/admin/components/alayout/alayout.comp
 import { AdashboardComponent } from './public/admin/components/adashboard/adashboard.component';
 import { AusersComponent } from './public/admin/components/ausers/ausers.component';
 import { AgroupsComponent } from './public/admin/components/agroups/agroups.component';
-import {AreportsComponent} from './public/admin/components/areports/areports.component';
+import { AreportsComponent } from './public/admin/components/areports/areports.component';
 import { AcoursesComponent } from './public/admin/components/acourses/acourses.component';
 import { AchatsComponent } from './public/admin/components/achats/achats.component';
 import { TtestsComponent } from './public/teacher/components/ttests/ttests.component';
@@ -43,87 +43,80 @@ import { SattendanceComponent } from './public/supervisor/sattendance/sattendanc
 import { StestsComponent } from './public/supervisor/stests/stests.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'course', component: CoursesComponent },
-    { path: 'login', component: LoginComponent
-    },
+  { path: '', component: HomeComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'course', component: CoursesComponent },
+  { path: 'login', component: LoginComponent },
 
-    // Student Layout Wrapper
-    {
-        path: 'student',
-        component: LayoutComponent,
-        children: [
-            { path: 'tests', component: TestsComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
-            { path: 'dashboard', component: DashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
-            { path: 'courses', component: CourseComponent },
-            { path: 'payment', component: PaymentComponent },
-            { path: 'groups', component: GroupsComponent },
-            { path: 'chats', component: ChatsComponent },
-            { path: 'ai', component: AiComponent }
-        ]
-    },
-    // Supervisor Layout Wrapper
-    {
-        path: 'supervisor',
-        component: SlayoutComponent,
-        children: [
-            
-            { path: 'dashboard', component: SdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
-            { path: 'courses', component: ScoursesComponent },
-            { path: 'students', component: SstudentsComponent },
-            { path: 'teachers', component: SteachersComponent },
-            { path: 'attendance', component: SattendanceComponent },
-            { path: 'tests', component: StestsComponent },
+  // Student Layout Wrapper
+  {
+    path: 'student',
+    component: LayoutComponent,
+    children: [
+      { path: 'tests', component: TestsComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
+      { path: 'dashboard', component: DashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
+      { path: 'courses', component: CourseComponent },
+      { path: 'payment', component: PaymentComponent },
+      { path: 'groups', component: GroupsComponent },
+      { path: 'chats', component: ChatsComponent },
+      { path: 'ai', component: AiComponent },
+    ],
+  },
+  // Supervisor Layout Wrapper
+  {
+    path: 'supervisor',
+    component: SlayoutComponent,
+    children: [
+      { path: 'dashboard', component: SdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
+      { path: 'courses', component: ScoursesComponent },
+      { path: 'students', component: SstudentsComponent },
+      { path: 'teachers', component: SteachersComponent },
+      { path: 'attendance', component: SattendanceComponent },
+      { path: 'tests', component: StestsComponent },
+    ],
+  },
+  // parent
 
-        ]
-    },
-    // parent
-    
-    {
-        path: 'parents',
-        component: PlayoutComponent,
-        children: [
-            { path: 'attendance', component: PattendanceComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
-            { path: 'dashboard', component: PdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
-            { path: 'courses', component: PcoursesComponent },
-            { path: 'payments', component: PpaymentsComponent },
-            { path: 'performance', component: PperformanceComponent },
-            { path: 'tests', component: PtestsComponent },
-            { path: 'ai', component: AiComponent },
-            { path: 'support', component: PsupportComponent },
-        ]
-    }
-    ,
-    // Teacher 
-    {
-        path: 'teacher',
-        component: TlayoutComponent,
-        children: [
-            
-            { path: 'dashboard', component: TdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
-            { path: 'students', component: TstudentsComponent },
-            { path: 'courses', component: TcoursesComponent },
-            { path: 'groups', component: TgroupsComponent },
-            { path: 'chats', component: TchatsComponent },
-            { path: 'payments', component: TpaymentsComponent },
-            { path: 'tests', component: TtestsComponent },
-        ]
-    }
-    // admin
-    ,
-    {
-        path: 'admin',
-        component: AlayoutComponent,
-        children: [
-            
-            { path: 'dashboard', component: AdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
-            { path: 'users', component: AusersComponent },
-            { path: 'courses', component: AcoursesComponent },
-            { path: 'groups', component: AgroupsComponent },
-            { path: 'chats', component: AchatsComponent },
-            { path: 'payments', component: TpaymentsComponent },
-            { path: 'reports', component: AreportsComponent },
-        ]
-    }
+  {
+    path: 'parents',
+    component: PlayoutComponent,
+    children: [
+      { path: 'attendance', component: PattendanceComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
+      { path: 'dashboard', component: PdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
+      { path: 'courses', component: PcoursesComponent },
+      { path: 'payments', component: PpaymentsComponent },
+      { path: 'performance', component: PperformanceComponent },
+      { path: 'tests', component: PtestsComponent },
+      { path: 'ai', component: AiComponent },
+      { path: 'support', component: PsupportComponent },
+    ],
+  },
+  // Teacher
+  {
+    path: 'teacher',
+    component: TlayoutComponent,
+    children: [
+      { path: 'dashboard', component: TdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
+      { path: 'students', component: TstudentsComponent },
+      { path: 'courses', component: TcoursesComponent },
+      { path: 'groups', component: TgroupsComponent },
+      { path: 'chats', component: TchatsComponent },
+      { path: 'payments', component: TpaymentsComponent },
+      { path: 'tests', component: TtestsComponent },
+    ],
+  },
+  // admin
+  {
+    path: 'admin',
+    component: AlayoutComponent,
+    children: [
+      { path: 'dashboard', component: AdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
+      { path: 'users', component: AusersComponent },
+      { path: 'courses', component: AcoursesComponent },
+      { path: 'groups', component: AgroupsComponent },
+      { path: 'chats', component: AchatsComponent },
+      { path: 'payments', component: TpaymentsComponent },
+      { path: 'reports', component: AreportsComponent },
+    ],
+  },
 ];

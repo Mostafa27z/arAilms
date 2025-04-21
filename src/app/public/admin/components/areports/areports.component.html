@@ -1,82 +1,130 @@
 <div class="p-6 bg-gray-100 min-h-screen">
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-semibold text-gray-800">Reports & Analytics</h1>
-      <div class="flex items-center gap-4">
-        <select class="border rounded px-3 py-1 bg-white text-gray-700 shadow-sm">
-          <option>Last 7 Days</option>
-          <option>Last 30 Days</option>
-          <option>All Time</option>
-        </select>
-        <button class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#6A44C0]">Export</button>
-      </div>
-    </div>
-  
-    <!-- Stats Overview -->
-    <div class="grid grid-cols-3 md:grid-cols-6 gap-4 mb-6">
-      <div class="bg-white p-4 rounded-lg shadow-md text-center">
-        <h3 class="text-gray-500 text-sm">Total Users</h3>
-        <p class="text-xl font-bold">24,582</p>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow-md text-center">
-        <h3 class="text-gray-500 text-sm">Revenue</h3>
-        <p class="text-xl font-bold">$147,582</p>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow-md text-center">
-        <h3 class="text-gray-500 text-sm">Test Performance</h3>
-        <p class="text-xl font-bold">87%</p>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow-md text-center">
-        <h3 class="text-gray-500 text-sm">Popular Courses</h3>
-        <p class="text-xl font-bold">1,284</p>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow-md text-center">
-        <h3 class="text-gray-500 text-sm">System Health</h3>
-        <p class="text-xl font-bold">99.9%</p>
-      </div>
-    </div>
-  
-    <!-- Graphs Section -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-      <div class="bg-white p-6 rounded-lg shadow-md h-64 flex items-center justify-center">
-        <p class="text-gray-400">📊 User Growth Trend Graph</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow-md h-64 flex items-center justify-center">
-        <p class="text-gray-400">📈 User Distribution</p>
-      </div>
-    </div>
-  
-    <!-- User Activity Table -->
-    <div class="bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-lg font-semibold mb-4">User Engagement</h2>
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="bg-gray-200 text-gray-600">
-            <th class="p-3">User</th>
-            <th class="p-3">Last Active</th>
-            <th class="p-3">Sessions</th>
-            <th class="p-3">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-t">
-            <td class="p-3 flex items-center gap-2">
-              <span class="w-8 h-8 bg-gray-300 rounded-full"></span> Alex Morgan
-            </td>
-            <td class="p-3">2 minutes ago</td>
-            <td class="p-3">245</td>
-            <td class="p-3"><span class="bg-green-500 text-white px-2 py-1 rounded text-sm">Active</span></td>
-          </tr>
-          <tr class="border-t">
-            <td class="p-3 flex items-center gap-2">
-              <span class="w-8 h-8 bg-gray-300 rounded-full"></span> Sarah Chen
-            </td>
-            <td class="p-3">5 minutes ago</td>
-            <td class="p-3">189</td>
-            <td class="p-3"><span class="bg-green-500 text-white px-2 py-1 rounded text-sm">Active</span></td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800">Reports & Analytics</h1>
+    <div class="flex items-center gap-4">
+      <select class="border rounded px-3 py-1 bg-white text-gray-700 shadow-sm">
+        <option>Last 7 Days</option>
+        <option>Last 30 Days</option>
+        <option>All Time</option>
+      </select>
+      <button
+        class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#6A44C0]"
+      >
+        Export
+      </button>
     </div>
   </div>
-  
+
+  <!-- Stats Overview -->
+  <div class="grid grid-cols-3 md:grid-cols-6 gap-4 mb-6">
+    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+      <h3 class="text-gray-500 text-sm">Total Users</h3>
+      <p class="text-xl font-bold">24,582</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+      <h3 class="text-gray-500 text-sm">Revenue</h3>
+      <p class="text-xl font-bold">$147,582</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+      <h3 class="text-gray-500 text-sm">Test Performance</h3>
+      <p class="text-xl font-bold">87%</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+      <h3 class="text-gray-500 text-sm">Popular Courses</h3>
+      <p class="text-xl font-bold">1,284</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+      <h3 class="text-gray-500 text-sm">System Health</h3>
+      <p class="text-xl font-bold">99.9%</p>
+    </div>
+  </div>
+
+  <!-- Graphs Section -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div
+      class="bg-white p-6 rounded-lg shadow-md h-64 flex items-center justify-center"
+    >
+      <p class="text-gray-400">📊 User Growth Trend Graph</p>
+    </div>
+    <div
+      class="bg-white p-6 rounded-lg shadow-md h-64 flex items-center justify-center"
+    >
+      <p class="text-gray-400">📈 User Distribution</p>
+    </div>
+  </div>
+
+  <!-- User Activity Table for PC -->
+  <div class="bg-white p-6 rounded-lg shadow-md hidden lg:block">
+    <h2 class="text-lg font-semibold mb-4">User Engagement</h2>
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600">
+          <th class="p-3">User</th>
+          <th class="p-3">Last Active</th>
+          <th class="p-3">Sessions</th>
+          <th class="p-3">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t">
+          <td class="p-3 flex items-center gap-2">
+            <span class="w-8 h-8 bg-gray-300 rounded-full"></span> Alex Morgan
+          </td>
+          <td class="p-3">2 minutes ago</td>
+          <td class="p-3">245</td>
+          <td class="p-3">
+            <span class="bg-green-500 text-white px-2 py-1 rounded text-sm"
+              >Active</span
+            >
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="p-3 flex items-center gap-2">
+            <span class="w-8 h-8 bg-gray-300 rounded-full"></span> Sarah Chen
+          </td>
+          <td class="p-3">5 minutes ago</td>
+          <td class="p-3">189</td>
+          <td class="p-3">
+            <span class="bg-green-500 text-white px-2 py-1 rounded text-sm"
+              >Active</span
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Cards for Phones -->
+  <div class="lg:hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <!-- User Card 1 -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg">
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-8 bg-gray-300 rounded-full"></span>
+        <div>
+          <h3 class="font-semibold text-lg">Alex Morgan</h3>
+          <p><strong>Last Active:</strong> 2 minutes ago</p>
+          <p><strong>Sessions:</strong> 245</p>
+          <span class="bg-green-500 text-white px-2 py-1 rounded text-sm"
+            >Active</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- User Card 2 -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg">
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-8 bg-gray-300 rounded-full"></span>
+        <div>
+          <h3 class="font-semibold text-lg">Sarah Chen</h3>
+          <p><strong>Last Active:</strong> 5 minutes ago</p>
+          <p><strong>Sessions:</strong> 189</p>
+          <span class="bg-green-500 text-white px-2 py-1 rounded text-sm"
+            >Active</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

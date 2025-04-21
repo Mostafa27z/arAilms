@@ -1,58 +1,64 @@
 <div class="p-6">
-    <!-- User Stats Overview -->
-    <div class="grid grid-cols-4 gap-4 mb-6">
-      <div class="bg-[#7F55E0] text-white p-4 rounded-lg shadow">
-        <h3 class="text-lg font-semibold">Total Users</h3>
-        <p class="text-2xl font-bold">12,543</p>
-        <p class="text-sm opacity-80">+15% from last month</p>
-      </div>
-      <div class="bg-[#2C2F66] text-white p-4 rounded-lg shadow">
-        <h3 class="text-lg font-semibold">Active Users</h3>
-        <p class="text-2xl font-bold">10,234</p>
-        <p class="text-sm opacity-80">82% of total</p>
-      </div>
-      <div class="bg-[#2C2F66] text-white p-4 rounded-lg shadow">
-        <h3 class="text-lg font-semibold">Inactive Users</h3>
-        <p class="text-2xl font-bold">2,309</p>
-        <p class="text-sm opacity-80">18% of total</p>
-      </div>
-      <div class="bg-[#7F55E0] text-white p-4 rounded-lg shadow">
-        <h3 class="text-lg font-semibold">New Users</h3>
-        <p class="text-2xl font-bold">456</p>
-        <p class="text-sm opacity-80">This week</p>
-      </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="bg-[#7F55E0] text-white p-4 rounded-lg shadow">
+      <h3 class="text-lg font-semibold">Total Users</h3>
+      <p class="text-2xl font-bold">12,543</p>
+      <p class="text-sm opacity-80">+15% from last month</p>
     </div>
-  
-    <!-- Search & Filters -->
+    <div class="bg-[#2C2F66] text-white p-4 rounded-lg shadow">
+      <h3 class="text-lg font-semibold">Active Users</h3>
+      <p class="text-2xl font-bold">10,234</p>
+      <p class="text-sm opacity-80">82% of total</p>
+    </div>
+    <div class="bg-[#2C2F66] text-white p-4 rounded-lg shadow">
+      <h3 class="text-lg font-semibold">Inactive Users</h3>
+      <p class="text-2xl font-bold">2,309</p>
+      <p class="text-sm opacity-80">18% of total</p>
+    </div>
+    <div class="bg-[#7F55E0] text-white p-4 rounded-lg shadow">
+      <h3 class="text-lg font-semibold">New Users</h3>
+      <p class="text-2xl font-bold">456</p>
+      <p class="text-sm opacity-80">This week</p>
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+    <input
+      type="text"
+      placeholder="Search users..."
+      class="w-full sm:w-1/3 p-2 rounded-lg border border-gray-300 mb-4 sm:mb-0"
+    />
+    <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-0">
+      <select class="p-2 rounded-lg border border-gray-300">
+        <option>All Roles</option>
+        <option>Admin</option>
+        <option>Instructor</option>
+        <option>Student</option>
+      </select>
+      <select class="p-2 rounded-lg border border-gray-300">
+        <option>All Status</option>
+        <option>Active</option>
+        <option>Inactive</option>
+      </select>
+      <button
+        class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg shadow hover:bg-[#6A44C0]"
+      >
+        Apply Filters
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-lg p-4">
     <div class="flex justify-between items-center mb-4">
-      <input type="text" placeholder="Search users..." class="w-1/3 p-2 rounded-lg border border-gray-300">
-      <div class="flex gap-2">
-        <select class="p-2 rounded-lg border border-gray-300">
-          <option>All Roles</option>
-          <option>Admin</option>
-          <option>Instructor</option>
-          <option>Student</option>
-        </select>
-        <select class="p-2 rounded-lg border border-gray-300">
-          <option>All Status</option>
-          <option>Active</option>
-          <option>Inactive</option>
-        </select>
-        <button class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg shadow hover:bg-[#6A44C0]">
-          Apply Filters
-        </button>
-      </div>
+      <h2 class="text-xl font-semibold">User List</h2>
+      <button
+        class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg shadow hover:bg-[#6A44C0]"
+      >
+        + Add New User
+      </button>
     </div>
-  
-    <!-- User List -->
-    <div class="bg-white rounded-lg shadow-lg p-4">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold">User List</h2>
-        <button class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg shadow hover:bg-[#6A44C0]">
-          + Add New User
-        </button>
-      </div>
-  
+
+    <div class="hidden lg:block">
       <table class="w-full border-collapse">
         <thead>
           <tr class="bg-[#2C2F66] text-white">
@@ -66,13 +72,18 @@
         <tbody>
           <tr class="border-b">
             <td class="py-3 px-4 flex items-center gap-2">
-              <img src="https://via.placeholder.com/40" class="rounded-full w-8 h-8">
+              <img
+                src="https://via.placeholder.com/40"
+                class="rounded-full w-8 h-8"
+              />
               John Doe
             </td>
             <td class="py-3 px-4">john&#64;example.com</td>
             <td class="py-3 px-4">Admin</td>
             <td class="py-3 px-4">
-              <span class="bg-green-500 text-white px-3 py-1 rounded-lg text-xs">Active</span>
+              <span class="bg-green-500 text-white px-3 py-1 rounded-lg text-xs"
+                >Active</span
+              >
             </td>
             <td class="py-3 px-4 flex gap-2">
               <button class="text-blue-500 hover:underline">✏️ Edit</button>
@@ -82,5 +93,35 @@
         </tbody>
       </table>
     </div>
+
+    <div class="lg:hidden">
+      <div class="grid grid-cols-1 gap-4">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <div class="flex items-center gap-2">
+            <img
+              src="https://via.placeholder.com/40"
+              class="rounded-full w-8 h-8"
+            />
+            <div>
+              <h3 class="font-semibold">John Doe</h3>
+              <p class="text-sm text-gray-500">john&#64;example.com</p>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p class="text-sm">Role: Admin</p>
+            <p class="text-sm">
+              Status:
+              <span class="bg-green-500 text-white px-2 py-1 rounded text-xs"
+                >Active</span
+              >
+            </p>
+          </div>
+          <div class="flex gap-2 mt-4">
+            <button class="text-blue-500 hover:underline">✏️ Edit</button>
+            <button class="text-red-500 hover:underline">🗑 Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
+</div>

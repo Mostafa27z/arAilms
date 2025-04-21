@@ -1,60 +1,76 @@
 <div class="p-6 bg-[#F4F7FE] min-h-screen">
-    <h2 class="text-2xl font-semibold text-[#2C2F66] mb-4">Payments & Earnings</h2>
-    
-    <!-- Summary Cards -->
-    <div class="grid grid-cols-3 gap-6 mb-6">
-        <div class="p-6 bg-white rounded-lg shadow-md text-center">
-            <h3 class="text-lg font-medium text-gray-500">Total Earnings</h3>
-            <p class="text-3xl font-semibold text-[#7F55E0]">$12,450.00</p>
-            <p class="text-sm text-green-500">+15% from last month</p>
-        </div>
-        <div class="p-6 bg-white rounded-lg shadow-md text-center">
-            <h3 class="text-lg font-medium text-gray-500">Pending Payments</h3>
-            <p class="text-3xl font-semibold text-[#7F55E0]">$850.00</p>
-            <p class="text-sm text-gray-500">3 payments pending</p>
-        </div>
-        <div class="p-6 bg-white rounded-lg shadow-md text-center">
-            <h3 class="text-lg font-medium text-gray-500">Next Payout</h3>
-            <p class="text-3xl font-semibold text-[#7F55E0]">$1,200.00</p>
-            <p class="text-sm text-gray-500">Expected Jan 15, 2025</p>
-        </div>
+  <h2 class="text-2xl font-semibold text-[#2C2F66] mb-4">
+    Payments & Earnings
+  </h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+    <div class="p-6 bg-white rounded-lg shadow-md text-center">
+      <h3 class="text-lg font-medium text-gray-500">Total Earnings</h3>
+      <p class="text-3xl font-semibold text-[#7F55E0]">$12,450.00</p>
+      <p class="text-sm text-green-500">+15% from last month</p>
     </div>
-    
-    <!-- Quick Actions -->
-    <div class="bg-white p-4 rounded-lg shadow-md mb-6 flex items-center gap-4">
-        <button class="px-4 py-2 bg-[#7F55E0] text-white rounded-md shadow">Request Payout</button>
-        <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700">Download Statement</button>
+    <div class="p-6 bg-white rounded-lg shadow-md text-center">
+      <h3 class="text-lg font-medium text-gray-500">Pending Payments</h3>
+      <p class="text-3xl font-semibold text-[#7F55E0]">$850.00</p>
+      <p class="text-sm text-gray-500">3 payments pending</p>
     </div>
-    
-    <!-- Transaction History -->
-    <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-xl font-medium text-[#2C2F66] mb-4">Transaction History</h3>
-        <table class="w-full text-left">
-            <thead>
-                <tr class="text-gray-500 border-b">
-                    <th class="py-2">Date</th>
-                    <th class="py-2">Description</th>
-                    <th class="py-2">Amount</th>
-                    <th class="py-2">Status</th>
-                    <th class="py-2">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="border-b">
-                    <td class="py-3">Jan 10, 2025</td>
-                    <td class="py-3">Course Payment - Advanced Math</td>
-                    <td class="py-3 text-[#7F55E0]">$450.00</td>
-                    <td class="py-3"><span class="px-2 py-1 bg-green-100 text-green-600 rounded">Completed</span></td>
-                    <td class="py-3"><button class="text-gray-500 hover:text-[#7F55E0]">⬇</button></td>
-                </tr>
-                <tr>
-                    <td class="py-3">Jan 08, 2025</td>
-                    <td class="py-3">Course Payment - Physics 101</td>
-                    <td class="py-3 text-[#7F55E0]">$350.00</td>
-                    <td class="py-3"><span class="px-2 py-1 bg-yellow-100 text-yellow-600 rounded">Pending</span></td>
-                    <td class="py-3"><button class="text-gray-500 hover:text-[#7F55E0]">⬇</button></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="p-6 bg-white rounded-lg shadow-md text-center">
+      <h3 class="text-lg font-medium text-gray-500">Next Payout</h3>
+      <p class="text-3xl font-semibold text-[#7F55E0]">$1,200.00</p>
+      <p class="text-sm text-gray-500">Expected Jan 15, 2025</p>
     </div>
+  </div>
+
+  <div
+    class="bg-white p-4 rounded-lg shadow-md mb-6 flex flex-col sm:flex-row items-center gap-4"
+  >
+    <button
+      class="w-full sm:w-auto px-4 py-2 bg-[#7F55E0] text-white rounded-md shadow"
+    >
+      Request Payout
+    </button>
+    <button
+      class="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md text-gray-700"
+    >
+      Download Statement
+    </button>
+  </div>
+
+  <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+    <h3 class="text-xl font-medium text-[#2C2F66] mb-4">Transaction History</h3>
+
+    <div class="space-y-4">
+      <div
+        class="border rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+      >
+        <div>
+          <p class="text-sm text-gray-500">Jan 10, 2025</p>
+          <p class="font-medium">Course Payment - Advanced Math</p>
+        </div>
+        <div class="text-[#7F55E0] font-semibold">$450.00</div>
+        <div>
+          <span class="bg-green-100 text-green-600 text-sm px-2 py-1 rounded"
+            >Completed</span
+          >
+        </div>
+        <button class="text-gray-500 hover:text-[#7F55E0] sm:ml-4">⬇</button>
+      </div>
+
+      <div
+        class="border rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+      >
+        <div>
+          <p class="text-sm text-gray-500">Jan 08, 2025</p>
+          <p class="font-medium">Course Payment - Physics 101</p>
+        </div>
+        <div class="text-[#7F55E0] font-semibold">$350.00</div>
+        <div>
+          <span class="bg-yellow-100 text-yellow-600 text-sm px-2 py-1 rounded"
+            >Pending</span
+          >
+        </div>
+        <button class="text-gray-500 hover:text-[#7F55E0] sm:ml-4">⬇</button>
+      </div>
+    </div>
+  </div>
 </div>

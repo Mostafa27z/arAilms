@@ -1,71 +1,61 @@
 <div class="bg-gray-100 min-h-screen p-6">
-    <div class="mx-auto bg-white p-6 rounded-lg shadow-md">
-      <!-- Payment Overview Header -->
-      <h2 class="text-2xl font-semibold text-gray-800">Payment Overview</h2>
-      <p class="text-gray-500">Manage your course payments and transactions</p>
-      
-      <!-- Payment Summary Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-        <div class="bg-blue-100 p-4 rounded-lg">
-          <p class="text-gray-600">Total Due</p>
-          <p class="text-xl font-semibold text-gray-800">$1,250.00</p>
-        </div>
-        <div class="bg-green-100 p-4 rounded-lg">
-          <p class="text-gray-600">Paid Amount</p>
-          <p class="text-xl font-semibold text-gray-800">$750.00</p>
-        </div>
-        <div class="bg-yellow-100 p-4 rounded-lg">
-          <p class="text-gray-600">Next Payment</p>
-          <p class="text-xl font-semibold text-gray-800">Mar 15, 2025</p>
-        </div>
+  <div class="mx-auto bg-white p-6 rounded-lg shadow-md">
+    <!-- Payment Overview Header -->
+    <h2 class="text-2xl font-semibold text-gray-800">Payment Overview</h2>
+    <p class="text-gray-500">Manage your course payments and transactions</p>
+
+    <!-- Payment Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+      <div class="bg-blue-100 p-4 rounded-lg">
+        <p class="text-gray-600">Total Due</p>
+        <p class="text-xl font-semibold text-gray-800">$1,250.00</p>
       </div>
-      
-      <!-- Quick Actions -->
-      <div class="bg-gray-50 p-4 rounded-lg mt-6">
-        <p class="font-semibold text-gray-700">Quick Actions</p>
-        <div class="flex gap-2 mt-2">
-          <button class="bg-blue-600 text-white px-4 py-2 rounded">Make Payment</button>
-          <button class="bg-gray-300 text-gray-800 px-4 py-2 rounded">Download Invoice</button>
-          <button class="bg-gray-300 text-gray-800 px-4 py-2 rounded">Payment History</button>
-        </div>
+      <div class="bg-green-100 p-4 rounded-lg">
+        <p class="text-gray-600">Paid Amount</p>
+        <p class="text-xl font-semibold text-gray-800">$750.00</p>
       </div>
-      
-      <!-- Recent Transactions -->
-      <div class="mt-6">
-        <p class="text-lg font-semibold text-gray-800">Recent Transactions</p>
-        <div class="bg-white shadow rounded-lg overflow-hidden mt-2">
-          <table class="w-full text-left">
-            <thead class="bg-gray-200 text-gray-600">
-              <tr>
-                <th class="p-3">Date</th>
-                <th class="p-3">Description</th>
-                <th class="p-3">Amount</th>
-                <th class="p-3">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-t">
-                <td class="p-3">Feb 15, 2025</td>
-                <td class="p-3">Course Fee - Advanced Web Development</td>
-                <td class="p-3">$250.00</td>
-                <td class="p-3 text-green-600">Completed</td>
-              </tr>
-              <tr class="border-t">
-                <td class="p-3">Jan 15, 2025</td>
-                <td class="p-3">Course Fee - UX Design Basics</td>
-                <td class="p-3">$500.00</td>
-                <td class="p-3 text-green-600">Completed</td>
-              </tr>
-              <tr class="border-t">
-                <td class="p-3">Dec 15, 2024</td>
-                <td class="p-3">Course Fee - Mobile App Development</td>
-                <td class="p-3">$300.00</td>
-                <td class="p-3 text-green-600">Completed</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="bg-yellow-100 p-4 rounded-lg">
+        <p class="text-gray-600">Next Payment</p>
+        <p class="text-xl font-semibold text-gray-800">Mar 15, 2025</p>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-gray-50 p-4 rounded-lg mt-6">
+      <p class="font-semibold text-gray-700">Quick Actions</p>
+      <div class="flex gap-2 mt-2">
+        <button class="bg-blue-600 text-white px-4 py-2 rounded">
+          Make Payment
+        </button>
+        <button class="bg-gray-300 text-gray-800 px-4 py-2 rounded">
+          Download Invoice
+        </button>
+        <button class="bg-gray-300 text-gray-800 px-4 py-2 rounded">
+          Payment History
+        </button>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <!-- Responsive Recent Transactions -->
+    <div class="mt-6">
+      <p class="text-lg font-semibold text-gray-800">Recent Transactions</p>
+
+      <div class="space-y-4 mt-2">
+        <!-- Transaction Card -->
+        <div
+          class="border rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 bg-white shadow"
+        >
+          <div>
+            <p class="text-sm text-gray-500">Feb 15, 2025</p>
+            <p class="font-medium">Course Fee - Advanced Web Development</p>
+          </div>
+          <div class="text-[#7F55E0] font-semibold">$250.00</div>
+          <div>
+            <span class="text-sm text-green-600">Completed</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 interface Message {
   sender: string;
@@ -7,22 +7,45 @@ interface Message {
   time: string;
   isUser: boolean;
 }
+
 @Component({
   selector: 'app-chats',
   imports: [CommonModule],
   templateUrl: './chats.component.html',
-  styleUrl: './chats.component.scss'
+  styleUrls: ['./chats.component.scss'],
 })
 export class ChatsComponent {
   contacts = [
-    { name: 'Dr. Sarah Wilson', lastMessage: 'Regarding your thesis proposal...', time: '10:30 AM' },
-    { name: 'Prof. James Moore', lastMessage: 'Project submission deadline...', time: 'Yesterday' },
-    { name: 'Dr. Emily Chen', lastMessage: 'Research lab schedule update', time: 'Mar 15' },
+    { name: 'Dr. Sarah Wilson', lastMessage: 'How are you?', time: '2h ago' },
+    {
+      name: 'Dr. Ahmed Ali',
+      lastMessage: 'Thanks for the update.',
+      time: '1d ago',
+    },
   ];
 
-  messages: Message[] = [
-    { sender: 'Dr. Sarah Wilson', text: 'Hello John, I\'ve reviewed your thesis proposal. There are some points we need to discuss.', time: '10:15 AM', isUser: false },
-    { sender: 'You', text: 'Thank you, Professor. When would be a good time to meet?', time: '10:20 AM', isUser: true },
-    { sender: 'Dr. Sarah Wilson', text: 'How about tomorrow at 2 PM in my office?', time: '10:30 AM', isUser: false }
+  messages = [
+    { text: 'Hello there!', time: '10:00 AM', isUser: false },
+    { text: 'Hi, how can I help?', time: '10:01 AM', isUser: true },
   ];
+
+  selectedContact: any = null;
+  screenWidth: number = window.innerWidth;
+
+  ngOnInit() {
+    this.updateScreenWidth();
+  }
+
+  @HostListener('window:resize')
+  updateScreenWidth() {
+    this.screenWidth = window.innerWidth;
+  }
+
+  openChat(contact: any) {
+    this.selectedContact = contact;
+  }
+
+  closeChat() {
+    this.selectedContact = null;
+  }
 }
