@@ -11,9 +11,11 @@ import { RouterLink } from '@angular/router';
 export class NavComponent {
   isMenuOpen = false;
   isSmallScreen = false;
+  isLoggedIn = false;
 
   ngOnInit() {
     this.checkScreenSize();
+    this.checkLoginStatus();
     window.addEventListener('resize', () => this.checkScreenSize());
   }
 
@@ -23,5 +25,16 @@ export class NavComponent {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  checkLoginStatus() {
+    // example: checking if token exists
+    this.isLoggedIn = !!localStorage.getItem('token');
+  }
+
+  logout() {
+    localStorage.clear();
+    this.isLoggedIn = false;
+    window.location.reload(); // or navigate to login
   }
 }

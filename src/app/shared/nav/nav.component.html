@@ -4,46 +4,48 @@
   </button>
 
   <section class="hidden md:flex gap-5">
-    <a
-      routerLink="register"
-      class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl sm:px-1 sm:py-0 sm:text-xs md:px-5 md:py-2 md:text-sm"
-      >اشترك</a
-    >
-    <a
-      routerLink="login"
-      class="bg-[#7F55E0] text-white px-5 py-2 rounded-2xl sm:px-2 sm:py-0 sm:text-xs md:px-5 md:py-2 md:text-sm"
-      >تسجيل دخول</a
-    >
+    <ng-container *ngIf="!isLoggedIn; else loggedInButtons">
+      <a
+        routerLink="register"
+        class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl"
+      >اشترك</a>
+      <a
+        routerLink="login"
+        class="bg-[#7F55E0] text-white px-5 py-2 rounded-2xl"
+      >تسجيل دخول</a>
+    </ng-container>
+
+    <ng-template #loggedInButtons>
+      <a
+        routerLink="dashboard"
+        class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl"
+      >لوحة التحكم</a>
+      <button
+        (click)="logout()"
+        class="bg-[#7F55E0] text-white px-5 py-2 rounded-2xl"
+      >تسجيل خروج</button>
+    </ng-template>
   </section>
 
   <section class="hidden md:flex gap-4">
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100"
-    >
+    <div class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0]">
       <a class="pb-2" href="">الصفحة الرئيسية</a>
     </div>
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100"
-    >
+    <div class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0]">
       <a class="pb-2" href="course">الدورات</a>
     </div>
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100"
-    >
-      <a class="pb-2" href="tst">المدرسين</a>
+    <div class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0]">
+      <a class="pb-2" href="">المدرسين</a>
     </div>
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100"
-    >
+    <div class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0]">
       <a class="pb-2" href="">من نحن</a>
     </div>
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100"
-    >
+    <div class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0]">
       <a class="pb-2" href="">تواصل معنا</a>
     </div>
   </section>
 
+  <!-- Mobile menu -->
   <section
     class="md:hidden absolute left-0 right-0 top-[70px] bg-white border-t-2 border-[#7F55E0] mt-2 z-10 flex flex-col justify-center items-center transition-all duration-500 ease-in-out transform"
     [class.max-h-0]="!isMenuOpen"
@@ -53,44 +55,38 @@
     [class.scale-y-100]="isMenuOpen"
     [class.origin-top]="true"
   >
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100 py-3 text-xl sm:py-2 sm:text-md"
-    >
-      <a class="pb-2" href="">الصفحة الرئيسية</a>
+    <div *ngFor="let link of ['الصفحة الرئيسية', 'الدورات', 'المدرسين', 'من نحن', 'تواصل معنا']" class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] py-3 text-xl sm:py-2 sm:text-md">
+      <a class="pb-2" href="">{{ link }}</a>
     </div>
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100 py-3 text-xl sm:py-2 sm:text-md"
-    >
-      <a class="pb-2" href="course">الدورات</a>
-    </div>
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100 py-3 text-xl sm:py-2 sm:text-md"
-    >
-      <a class="pb-2" href="">المدرسين</a>
-    </div>
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100 py-3 text-xl sm:py-2 sm:text-md"
-    >
-      <a class="pb-2" href="">من نحن</a>
-    </div>
-    <div
-      class="hover:border-b-2 pb-2 hover:pb-0 hover:text-[#7F55E0] border-[#7F55E0] border-opacity-100 py-3 text-xl sm:py-2 sm:text-md"
-    >
-      <a class="pb-2" href="">تواصل معنا</a>
-    </div>
-    <div class="py-3">
-      <a
-        routerLink="register"
-        class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl sm:px-2 sm:py-1 sm:text-xs md:px-5 md:py-2 md:text-sm"
-        >اشترك</a
-      >
-    </div>
-    <div class="py-3">
-      <a
-        routerLink="login"
-        class="bg-[#7F55E0] text-white px-5 py-2 rounded-2xl sm:px-2 sm:py-1 sm:text-xs md:px-5 md:py-2 md:text-sm"
-        >تسجيل دخول</a
-      >
-    </div>
+
+    <ng-container *ngIf="!isLoggedIn; else loggedInMobile">
+      <div class="py-3">
+        <a
+          routerLink="register"
+          class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl"
+        >اشترك</a>
+      </div>
+      <div class="py-3">
+        <a
+          routerLink="login"
+          class="bg-[#7F55E0] text-white px-5 py-2 rounded-2xl"
+        >تسجيل دخول</a>
+      </div>
+    </ng-container>
+
+    <ng-template #loggedInMobile>
+      <!-- <div class="py-3">
+        <a
+          routerLink="dashboard"
+          class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl"
+        >لوحة التحكم</a>
+      </div> -->
+      <div class="py-3">
+        <button
+          (click)="logout()"
+          class="bg-[#7F55E0] text-white px-5 py-2 rounded-2xl"
+        >تسجيل خروج</button>
+      </div>
+    </ng-template>
   </section>
 </nav>
