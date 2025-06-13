@@ -1,116 +1,96 @@
-<div class="h-auto md:min-h-screen p-6 bg-gray-100">
-  <div class="p-5">
-    <div class="flex justify-between items-center mb-5">
-      <h2 class="text-xl font-semibold">Recent Tests Scores</h2>
-      <span class="text-gray-500 text-sm"
-        >Total 5 Tests (05/01/2023 - 06/30/2023)</span
-      >
-    </div>
+<div class="h-auto md:min-h-screen p-6 bg-gray-100"> 
+  <div class="p-5"> 
+    <div class="flex justify-between items-center mb-5"> 
+      <h2 class="text-xl font-semibold">Recent Tests Scores</h2> 
+    </div> 
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <div *ngFor="let test of tests" class="border rounded-lg p-5 shadow-sm">
-        <h3 class="font-medium">{{ test.name }}</h3>
-        <p class="text-gray-600">
-          Score: <span class="font-semibold">{{ test.score }}</span>
-        </p>
-        <p class="text-gray-600">
-          Date: <span class="font-semibold">{{ test.date }}</span>
-        </p>
-        <button
-          class="mt-4 px-4 py-2 border rounded-md text-[#636AE8FF] hover:text-[#4850E4FF]"
-        >
-          View Details
-        </button>
-      </div>
-    </div>
-  </div>
+    <!-- Recent Tests --> 
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"> 
+      <div *ngFor="let test of exams" class="border rounded-lg p-5 shadow-sm"> 
+        <h3 class="font-medium">{{ test.exam.title }}</h3> 
+        <p class="text-gray-600">Score: <span class="font-semibold">{{ test.score }}</span></p> 
+        <p class="text-gray-600">Date: <span class="font-semibold">{{ test.exam.exam_date }}</span></p> 
+        <button class="mt-4 px-4 py-2 border rounded-md text-[#636AE8FF] hover:text-[#4850E4FF]">View Details</button> 
+      </div> 
+    </div> 
+  </div> 
 
-  <div
-    class="hidden md:block overflow-x-auto mt-10 mx-auto rounded-md border border-gray-300"
-  >
-    <table class="w-full text-left rounded-lg">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="p-3 border-b">Assignment Name</th>
-          <th class="p-3 border-b">Due Date</th>
-          <th class="p-3 border-b">Submission Status</th>
-          <th class="p-3 border-b">Progress</th>
-          <th class="p-3 border-b">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let assignment of assignments" class="border-b">
-          <td class="p-3">{{ assignment.name }}</td>
-          <td class="p-3">{{ assignment.dueDate }}</td>
-          <td class="p-3">{{ assignment.status }}</td>
+  <!-- Desktop View: Assignments --> 
+  <div class="hidden md:block overflow-x-auto mt-10 mx-auto rounded-md border border-gray-300"> 
+    <table class="w-full text-left rounded-lg"> 
+      <thead class="bg-gray-100"> 
+        <tr> 
+          <th class="p-3 border-b">Assignment Name</th> 
+          <th class="p-3 border-b">Due Date</th> 
+          <th class="p-3 border-b">Submission Status</th> 
+          <th class="p-3 border-b">Actions</th> 
+        </tr> 
+      </thead> 
+      <tbody> 
+        <tr *ngFor="let assignment of ass" class="border-b"> 
+          <td class="p-3">{{ assignment.title }}</td> 
+          <td class="p-3">{{ assignment.due_date }}</td> 
           <td class="p-3">
-            <span class="text-yellow-500">
-              <ng-container
-                *ngFor="
-                  let star of [].constructor(assignment.progress);
-                  let i = index
-                "
-              >
-                ⭐
-              </ng-container>
+            <span [ngClass]="{
+              'text-green-600': assignment.submission_status === 'Submitted',
+              'text-red-600': assignment.submission_status === 'Not Submitted',
+              'text-gray-500': !assignment.submission_status
+            }">
+              {{ assignment.submission_status || 'Loading...' }}
             </span>
-          </td>
-          <td class="p-3">
-            <button
-              class="px-4 py-1 rounded text-white"
-              [ngClass]="{
-                'bg-blue-500 hover:bg-blue-700': assignment.action === 'View',
-                'bg-green-500 hover:bg-green-700':
-                  assignment.action === 'Submit Now',
-                'bg-purple-500 hover:bg-purple-700':
-                  assignment.action === 'Edit'
-              }"
-            >
-              {{ assignment.action }}
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+          </td> 
+          <td class="p-3"> 
+            <button class="px-4 py-1 rounded text-black border" 
+              [disabled]="isPastDue(assignment.due_date)" 
+              (click)="openSubmissionModal(assignment)">
+              {{ assignment.submission_status === 'Submitted' ? 'Re-Submit' : 'Submit' }}
+            </button> 
+          </td> 
+        </tr> 
+      </tbody> 
+    </table> 
+  </div> 
+</div> 
 
-<div
-  class="md:hidden overflow-x-auto mt-10 mx-auto rounded-md border border-gray-300"
->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div
-      class="bg-white p-6 rounded-lg shadow-md"
-      *ngFor="let assignment of assignments"
-    >
-      <h3 class="text-lg font-semibold">{{ assignment.name }}</h3>
-      <p class="text-sm text-gray-500">Due Date: {{ assignment.dueDate }}</p>
-      <p class="text-sm text-gray-500">Status: {{ assignment.status }}</p>
-      <div class="flex items-center mt-2">
-        <span class="text-yellow-500">
-          <ng-container
-            *ngFor="
-              let star of [].constructor(assignment.progress);
-              let i = index
-            "
-          >
-            ⭐
-          </ng-container>
-        </span>
-      </div>
-      <div class="mt-4">
-        <button
-          class="w-full px-4 py-2 rounded text-white"
-          [ngClass]="{
-            'bg-blue-500 hover:bg-blue-700': assignment.action === 'View',
-            'bg-green-500 hover:bg-green-700':
-              assignment.action === 'Submit Now',
-            'bg-purple-500 hover:bg-purple-700': assignment.action === 'Edit'
-          }"
-        >
-          {{ assignment.action }}
-        </button>
-      </div>
-    </div>
-  </div>
+<!-- Mobile View --> 
+<div class="md:hidden overflow-x-auto mt-10 mx-auto rounded-md border border-gray-300"> 
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"> 
+    <div class="bg-white p-6 rounded-lg shadow-md" *ngFor="let assignment of ass"> 
+      <h3 class="text-lg font-semibold">{{ assignment.title }}</h3> 
+      <p class="text-sm text-gray-500">Due Date: {{ assignment.due_date }}</p> 
+      <p class="text-sm text-gray-500">Description: {{ assignment.description }}</p> 
+      <p class="mt-2"> 
+        <span [ngClass]="{
+            'text-green-600': assignment.submission_status === 'Submitted',
+            'text-red-600': assignment.submission_status === 'Not Submitted',
+            'text-gray-500': !assignment.submission_status
+          }">
+          {{ assignment.submission_status || 'Loading...' }}
+        </span> 
+      </p> 
+      <div class="mt-4"> 
+        <button class="px-4 py-1 rounded text-black border" 
+          [disabled]="isPastDue(assignment.due_date)" 
+          (click)="openSubmissionModal(assignment)">
+          {{ assignment.submission_status === 'Submitted' ? 'Re-Submit' : 'Submit' }}
+        </button> 
+      </div> 
+    </div> 
+  </div> 
+</div> 
+
+<!-- Submission Modal --> 
+<div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"> 
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"> 
+    <h2 class="text-lg font-semibold mb-4">Submit Assignment</h2> 
+
+    <textarea [(ngModel)]="submissionText" rows="4" placeholder="Enter your submission text..." class="w-full p-2 border rounded mb-4"></textarea> 
+
+    <input type="file" (change)="onFileSelected($event)" class="mb-4" /> 
+
+    <div class="flex justify-end"> 
+      <button (click)="closeModal()" class="mr-4 text-gray-600">Cancel</button> 
+      <button (click)="submitAssignment()" class="bg-blue-600 text-white px-4 py-2 rounded">Submit</button> 
+    </div> 
+  </div> 
 </div>

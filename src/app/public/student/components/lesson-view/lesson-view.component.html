@@ -1,0 +1,29 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <h2 class="text-xl font-semibold mb-4">{{ lesson.title }}</h2>
+  <p class="text-gray-700 mb-6">{{ lesson.content }}</p>
+
+  <div *ngIf="this.questions.length > 0">
+    <h3 class="text-lg font-semibold mb-3">Quiz</h3>
+
+    <div *ngFor="let question of questions" class="mb-4 p-4 bg-white shadow rounded">
+      <p class="font-medium mb-2">{{ question.question_text }}</p>
+
+      <div *ngFor="let option of question.options" class="mb-1">
+        <label class="flex items-center space-x-2">
+          <input
+            type="radio"
+            [name]="'question-' + question.id"
+            [value]="option.id"
+            [(ngModel)]="answers[question.id]"
+            class="form-radio"
+          />
+          <span>{{ option.option_text }}</span>
+        </label>
+      </div>
+    </div>
+
+    <button (click)="submitAnswers()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">
+      Submit Quiz
+    </button>
+  </div>
+</div>

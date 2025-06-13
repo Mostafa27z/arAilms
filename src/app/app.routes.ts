@@ -7,7 +7,7 @@ import { DashboardComponent } from './public/student/components/dashboard/dashbo
 import { LayoutComponent } from './public/student/components/layout/layout.component';
 import { CourseComponent } from './public/student/components/courses/courses.component';
 import { PaymentComponent } from './public/student/components/payment/payment.component';
-import { GroupsComponent } from './public/student/components/groups/groups.component';
+
 import { ChatsComponent } from './public/student/components/chats/chats.component';
 import { AiComponent } from './public/student/components/ai/ai.component';
 import { LoginComponent } from './public/components/login/login.component';
@@ -41,7 +41,9 @@ import { SstudentsComponent } from './public/supervisor/sstudents/sstudents.comp
 import { SteachersComponent } from './public/supervisor/steachers/steachers.component';
 import { SattendanceComponent } from './public/supervisor/sattendance/sattendance.component';
 import { StestsComponent } from './public/supervisor/stests/stests.component';
-
+import { ClubsComponent } from './public/student/components/clubs/clubs.component';
+import { LessonViewComponent } from './public/student/components/lesson-view/lesson-view.component';
+import { CourseDetailsComponent } from './public/student/components/course-details/course-details.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
@@ -53,13 +55,16 @@ export const routes: Routes = [
     path: 'student',
     component: LayoutComponent,
     children: [
+      { path: '', component: DashboardComponent }, 
       { path: 'tests', component: TestsComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
       { path: 'dashboard', component: DashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
       { path: 'courses', component: CourseComponent },
       { path: 'payment', component: PaymentComponent },
-      { path: 'groups', component: GroupsComponent },
+      { path: 'clubs', component: ClubsComponent },
       { path: 'chats', component: ChatsComponent },
       { path: 'ai', component: AiComponent },
+      { path: 'lessons/:lessonId', component: LessonViewComponent },
+      { path: 'courses/:courseId', component: CourseDetailsComponent}
     ],
   },
   // Supervisor Layout Wrapper
@@ -67,6 +72,7 @@ export const routes: Routes = [
     path: 'supervisor',
     component: SlayoutComponent,
     children: [
+      { path: '', component: SdashboardComponent },
       { path: 'dashboard', component: SdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
       { path: 'courses', component: ScoursesComponent },
       { path: 'students', component: SstudentsComponent },
@@ -81,6 +87,7 @@ export const routes: Routes = [
     path: 'parents',
     component: PlayoutComponent,
     children: [
+      { path: '', component: PdashboardComponent },
       { path: 'attendance', component: PattendanceComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
       { path: 'dashboard', component: PdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
       { path: 'courses', component: PcoursesComponent },
@@ -96,6 +103,7 @@ export const routes: Routes = [
     path: 'teacher',
     component: TlayoutComponent,
     children: [
+      { path: '', component: TdashboardComponent },
       { path: 'dashboard', component: TdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
       { path: 'students', component: TstudentsComponent },
       { path: 'courses', component: TcoursesComponent },
@@ -110,6 +118,7 @@ export const routes: Routes = [
     path: 'admin',
     component: AlayoutComponent,
     children: [
+      { path: '', component: AdashboardComponent },
       { path: 'dashboard', component: AdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
       { path: 'users', component: AusersComponent },
       { path: 'courses', component: AcoursesComponent },

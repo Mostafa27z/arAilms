@@ -27,36 +27,47 @@ export class LoginComponent {
   }
 
   submit() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    this.loading = true;
-    this.errorMessage = '';
-
-    const data = {
-      email: this.form.value.email,
-      password: this.form.value.password
-    };
-
-    this.http.post(`${environment.url}/login`, data).subscribe({
-      next: (response: any) => {
-        console.log('Login Success:', response);
-        // Example: you might want to store the token if your API sends it
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
-        
-        this.router.navigate(['/']); // redirect after login
-      },
-      error: (error) => {
-        console.error('Login Failed:', error);
-        if (error.error?.message) {
-          this.errorMessage = error.error.message;
-        } else {
-          this.errorMessage = 'Something went wrong. Please try again.';
-        }
-        this.loading = false;
-      }
-    });
+  if (this.form.invalid) {
+    return;
   }
+
+  this.loading = true;
+  this.errorMessage = '';
+
+  const data = {
+    email: this.form.value.email,
+    password: this.form.value.password
+  };
+
+  this.http.post(`${environment.url}/login`, data).subscribe({
+    next: (response: any) => {
+      console.log('Login Success:', response);
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('user', JSON.stringify(response.user));
+      localStorage.setItem('roleid', JSON.stringify(response.related_id));
+
+      const role = response.user.role;
+
+      switch (role) {
+        case 'student':
+          this.router.navigate(['/student']);
+          break;
+        case 'teacher':
+          this.router.navigate(['/teacher']);
+          break;
+        case 'parent':
+          this.router.navigate(['/parent']);
+          break;
+        default:
+          this.router.navigate(['/']); // fallback
+      }
+    },
+    error: (error) => {
+      console.error('Login Failed:', error);
+      this.errorMessage = error.error?.message || 'Something went wrong. Please try again.';
+      this.loading = false;
+    }
+  });
+}
+
 }
