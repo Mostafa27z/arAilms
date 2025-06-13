@@ -10,18 +10,22 @@ export class CourseEnrollmentService {
   constructor(private http: HttpClient) {}
 
   getEnrollments(): Observable<any> {
-    return this.http.get(this.baseUrl);
+    return this.http.get(`${this.baseUrl}/enrollments`);
   }
 
   enrollStudent(data: { student_id: number; course_id: number }): Observable<any> {
-    return this.http.post(this.baseUrl, data);
+    return this.http.post(`${this.baseUrl}/enrollments`, data);
   }
 
   getEnrollment(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/enrollments/${id}`);
   }
 
   deleteEnrollment(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/enrollments/${id}`);
   }
+  getEnrollmentsByStudent(studentId: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/enrollments/student/${studentId}`);
+}
+
 }

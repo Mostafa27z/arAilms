@@ -44,6 +44,7 @@ import { StestsComponent } from './public/supervisor/stests/stests.component';
 import { ClubsComponent } from './public/student/components/clubs/clubs.component';
 import { LessonViewComponent } from './public/student/components/lesson-view/lesson-view.component';
 import { CourseDetailsComponent } from './public/student/components/course-details/course-details.component';
+import { ClubChatComponent } from './public/student/components/club-chat/club-chat.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
@@ -60,11 +61,14 @@ export const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
       { path: 'courses', component: CourseComponent },
       { path: 'payment', component: PaymentComponent },
+      { path: 'clubs/:id/chat', component: ClubChatComponent },
       { path: 'clubs', component: ClubsComponent },
       { path: 'chats', component: ChatsComponent },
       { path: 'ai', component: AiComponent },
       { path: 'lessons/:lessonId', component: LessonViewComponent },
-      { path: 'courses/:courseId', component: CourseDetailsComponent}
+      { path: 'courses/:courseId', component: CourseDetailsComponent},
+      
+
     ],
   },
   // Supervisor Layout Wrapper

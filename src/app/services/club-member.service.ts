@@ -32,4 +32,11 @@ export class ClubMemberService {
   deleteMember(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+  getMyMemberships(studentId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}?student_id=${studentId}`);
+  }
+
+  joinClub(data: { club_id: number; student_id: number }): Observable<any> {
+    return this.http.post(`${this.baseUrl}`, data);
+  }
 }

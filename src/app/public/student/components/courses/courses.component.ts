@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CourseService } from '../../../../services/course.service';
 import { CommonModule } from '@angular/common';
 import { StudentService } from '../../../../services/student.service';
-import { LessonService } from '../../../../services/lesson.service'; // ✅ نضيف LessonService
+import { LessonService } from '../../../../services/lesson.service';
+import { CourseEnrollmentService } from '../../../../services/course-enrollment.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,13 +16,15 @@ export class CourseComponent {
   studentId: any = false;
   courses: any[] = [];
   myCourses: any[] = [];
-  lessons: any[] = [];  // ✅ نجهز المتغير الخاص بالـ lessons
-  selectedCourseTitle: string = ''; // عشان نعرض اسم الكورس عند عرض دروسه
+  lessons: any[] = [];
+  selectedCourseTitle: string = '';
+  enrollments: any[] = [];
 
   constructor(
     private serv: CourseService,
     private ser: StudentService,
-    private lessonService: LessonService , // ✅ Inject LessonService
+    private lessonService: LessonService,
+    private enrollmentService: CourseEnrollmentService,
     private router: Router
   ) {}
 
@@ -32,9 +35,9 @@ export class CourseComponent {
       try {
         const parsed = JSON.parse(user);
         this.studentId = parsed;
-
         if (this.studentId) {
           this.loadStudentCourses(this.studentId);
+          this.loadStudentEnrollments(this.studentId);
         } else {
           console.error('Student ID is missing in localStorage user');
         }
@@ -50,7 +53,7 @@ export class CourseComponent {
     this.serv.getAllCourses().subscribe({
       next: (data) => {
         this.courses = data.data;
-        console.log(' courses:', this.courses);
+        console.log('courses:', this.courses);
       },
       error: (err) => {
         console.error('Error loading courses:', err);
@@ -59,7 +62,7 @@ export class CourseComponent {
   }
 
   loadStudentCourses(id: any): void {
-    this.ser.stdcourses(id).subscribe({
+    this.enrollmentService.getEnrollmentsByStudent(id).subscribe({
       next: (data) => {
         this.myCourses = data.data;
         console.log('Student courses:', this.myCourses);
@@ -70,19 +73,44 @@ export class CourseComponent {
     });
   }
 
-  // ✅ لما يضغط على View Course
-  // viewCourse(course: any): void {
-  //   this.selectedCourseTitle = course.title;
-  //   this.lessonService.getLessonsByCourse(course.id).subscribe({
-  //     next: (data) => {
-  //       this.lessons = data.data;
-  //       console.log('Lessons:', this.lessons);
-  //     },
-  //     error: (err) => {
-  //       console.error('Error loading lessons:', err);
-  //     }
-  //   });
-  // }
+  loadStudentEnrollments(studentId: any): void {
+    this.enrollmentService.getEnrollmentsByStudent(studentId).subscribe({
+      next: (data) => {
+        this.enrollments = data.data;
+        console.log('Enrollments:', this.enrollments);
+      },
+      error: (err) => {
+        console.error('Error loading enrollments:', err);
+      }
+    });
+  }
+
+  getEnrollmentStatus(courseId: number): string {
+    const enrollment = this.enrollments.find(e => e.course_id === courseId);
+    if (enrollment) {
+      if (enrollment.status === 'approved') return 'Enrolled';
+      if (enrollment.status === 'pending') return 'Pending';
+    }
+    return 'Not Enrolled';
+  }
+
+  requestEnrollment(course: any): void {
+    const payload = {
+      student_id: this.studentId,
+      course_id: course.id
+    };
+
+    this.enrollmentService.enrollStudent(payload).subscribe({
+      next: () => {
+        alert('Enrollment request submitted!');
+        this.loadStudentEnrollments(this.studentId); // reload after request
+      },
+      error: (err) => {
+        console.error('Error submitting enrollment request:', err);
+      }
+    });
+  }
+
   viewCourse(course: any): void {
     this.router.navigate(['/student/courses', course.id]);
   }
