@@ -23,42 +23,56 @@
   <nav class="space-y-2 flex-1">
     <a
       routerLink="dashboard"
-      class="flex items-center gap-3 py-2 px-4 bg-[#2C2F66] rounded-lg"
+      routerLinkActive="bg-[#2C2F66]"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="flex items-center gap-3 py-2 px-4 rounded-lg"
     >
       🏠 <span>Dashboard</span>
     </a>
     <a
       routerLink="students"
+      routerLinkActive="bg-[#2C2F66]"
+      [routerLinkActiveOptions]="{ exact: true }"
       class="flex items-center gap-3 py-2 px-4 hover:bg-[#2C2F66] rounded-lg"
     >
       🎓 <span>Students</span>
     </a>
     <a
       routerLink="courses"
+      routerLinkActive="bg-[#2C2F66]"
+      [routerLinkActiveOptions]="{ exact: true }"
       class="flex items-center gap-3 py-2 px-4 hover:bg-[#2C2F66] rounded-lg"
     >
       📚 <span>Courses</span>
     </a>
     <a
       routerLink="assignments"
+      routerLinkActive="bg-[#2C2F66]"
+      [routerLinkActiveOptions]="{ exact: true }"
       class="flex items-center gap-3 py-2 px-4 hover:bg-[#2C2F66] rounded-lg"
     >
       📅 <span>Assignments</span>
     </a>
     <a
       routerLink="lessons"
+      routerLinkActive="bg-[#2C2F66]"
+      [routerLinkActiveOptions]="{ exact: true }"
       class="flex items-center gap-3 py-2 px-4 hover:bg-[#2C2F66] rounded-lg"
     >
       💳 <span>Lessons</span>
     </a>
     <a
       routerLink="groups"
+      routerLinkActive="bg-[#2C2F66]"
+      [routerLinkActiveOptions]="{ exact: true }"
       class="flex items-center gap-3 py-2 px-4 hover:bg-[#2C2F66] rounded-lg"
     >
       👥 <span>Groups</span>
     </a>
     <a
       routerLink="chats"
+      routerLinkActive="bg-[#2C2F66]"
+      [routerLinkActiveOptions]="{ exact: true }"
       class="flex items-center gap-3 py-2 px-4 hover:bg-[#2C2F66] rounded-lg"
     >
       💬 <span>Chats</span>

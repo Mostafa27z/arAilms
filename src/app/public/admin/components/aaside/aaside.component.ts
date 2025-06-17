@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-aaside',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, RouterModule],
   templateUrl: './aaside.component.html',
   styleUrl: './aaside.component.scss',
 })
