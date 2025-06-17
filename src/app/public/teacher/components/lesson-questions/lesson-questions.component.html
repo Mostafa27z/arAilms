@@ -1,0 +1,71 @@
+<div class="bg-white p-6 rounded-lg shadow-lg">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold text-[#2C2F66]">Questions</h2>
+    <button (click)="openAddQuestionModal()" class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg">➕ Add Question</button>
+  </div>
+
+  <div *ngFor="let question of questions" class="bg-white p-4 rounded shadow mb-4">
+  <!-- Editable Question Title -->
+  <input 
+    [(ngModel)]="question.question_text" 
+    class="border p-2 w-full mb-2 rounded" 
+    placeholder="Enter question title" />
+
+  <!-- List of Options -->
+  <div *ngFor="let option of question.options" class="flex items-center gap-2 mb-2">
+    <input 
+      [(ngModel)]="option.option_text" 
+      class="border p-2 flex-1 rounded" 
+      placeholder="Option text" />
+
+    <!-- Radio Button to select correct option -->
+    <input 
+      type="radio" 
+      name="correctOption{{question.id}}" 
+      [checked]="option.is_correct"
+      (change)="setCorrectOption(question, option)" />
+      
+    <button class="bg-red-500 text-white px-2 py-1 rounded" (click)="deleteOption(option.id)">
+      Delete
+    </button>
+  </div>
+
+  <!-- Add New Option -->
+  <div class="flex gap-2 mb-2">
+    <input [(ngModel)]="question.newOptionText" placeholder="New option..." class="border p-2 flex-1 rounded" />
+    <button class="bg-green-500 text-white px-3 rounded" (click)="addOption(question)">Add Option</button>
+  </div>
+
+  <!-- Save Question -->
+  <button class="bg-blue-600 text-white px-4 py-1 rounded" (click)="saveQuestion(question)">Save Changes</button>
+</div>
+
+</div>
+
+<!-- Add Question Modal -->
+<div *ngIf="showAddQuestionModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+    <h3 class="text-xl font-semibold mb-4">Add Question</h3>
+    <input type="text" [(ngModel)]="questionForm.question_text" placeholder="Question Title" class="border p-2 rounded w-full mb-3" />
+    <div class="flex justify-end gap-2">
+      <button class="bg-gray-400 text-white px-4 py-2 rounded" (click)="showAddQuestionModal=false">Cancel</button>
+      <button class="bg-[#7F55E0] text-white px-4 py-2 rounded" (click)="saveNewQuestion()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Option Modal -->
+<div *ngIf="showAddOptionModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+    <h3 class="text-xl font-semibold mb-4">Add Option</h3>
+    <input type="text" [(ngModel)]="optionForm.option_text" placeholder="Option Text" class="border p-2 rounded w-full mb-3" />
+    <label class="flex items-center mb-3">
+      <input type="checkbox" [(ngModel)]="optionForm.is_correct" class="mr-2" />
+      Correct Answer
+    </label>
+    <div class="flex justify-end gap-2">
+      <button class="bg-gray-400 text-white px-4 py-2 rounded" (click)="showAddOptionModal=false">Cancel</button>
+      <button class="bg-[#7F55E0] text-white px-4 py-2 rounded" (click)="saveNewOption()">Save</button>
+    </div>
+  </div>
+</div>

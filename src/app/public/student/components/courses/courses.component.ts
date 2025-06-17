@@ -1,24 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../../../../services/course.service';
-import { CommonModule } from '@angular/common';
 import { StudentService } from '../../../../services/student.service';
 import { LessonService } from '../../../../services/lesson.service';
 import { CourseEnrollmentService } from '../../../../services/course-enrollment.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-courses',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss'
 })
-export class CourseComponent {
-  studentId: any = false;
+export class CourseComponent implements OnInit {
+  studentId: number | null = null;
   courses: any[] = [];
   myCourses: any[] = [];
   lessons: any[] = [];
   selectedCourseTitle: string = '';
   enrollments: any[] = [];
+
+  loadingCourses = true;
+  loadingMyCourses = true;
+  loadingEnrollments = true;
 
   constructor(
     private serv: CourseService,
@@ -30,63 +35,67 @@ export class CourseComponent {
 
   ngOnInit(): void {
     this.loadCourses();
+
     const user = localStorage.getItem('roleid');
     if (user) {
       try {
-        const parsed = JSON.parse(user);
-        this.studentId = parsed;
+        this.studentId = JSON.parse(user);
         if (this.studentId) {
           this.loadStudentCourses(this.studentId);
           this.loadStudentEnrollments(this.studentId);
-        } else {
-          console.error('Student ID is missing in localStorage user');
         }
       } catch (e) {
-        console.error('Failed to parse user from localStorage', e);
+        console.error('❌ Failed to parse studentId from localStorage:', e);
       }
-    } else {
-      console.error('No user found in localStorage');
     }
   }
 
   loadCourses(): void {
+    this.loadingCourses = true;
     this.serv.getAllCourses().subscribe({
       next: (data) => {
         this.courses = data.data;
-        console.log('courses:', this.courses);
+        this.loadingCourses = false;
       },
       error: (err) => {
-        console.error('Error loading courses:', err);
+        console.error('❌ Error loading courses:', err);
+        this.loadingCourses = false;
       }
     });
   }
 
-  loadStudentCourses(id: any): void {
+  loadStudentCourses(id: number): void {
+    this.loadingMyCourses = true;
     this.enrollmentService.getEnrollmentsByStudent(id).subscribe({
       next: (data) => {
-        this.myCourses = data.data;
-        console.log('Student courses:', this.myCourses);
+        this.myCourses = data.data.filter((e: any) => e.status === 'approved');
+        this.loadingMyCourses = false;
       },
       error: (err) => {
-        console.error('Error loading courses:', err);
+        console.error('❌ Error loading my courses:', err);
+        this.loadingMyCourses = false;
       }
     });
   }
 
-  loadStudentEnrollments(studentId: any): void {
-    this.enrollmentService.getEnrollmentsByStudent(studentId).subscribe({
+  loadStudentEnrollments(id: number): void {
+    this.loadingEnrollments = true;
+    this.enrollmentService.getEnrollmentsByStudent(id).subscribe({
       next: (data) => {
         this.enrollments = data.data;
-        console.log('Enrollments:', this.enrollments);
+        this.loadingEnrollments = false;
       },
       error: (err) => {
-        console.error('Error loading enrollments:', err);
+        console.error('❌ Error loading enrollments:', err);
+        this.loadingEnrollments = false;
       }
     });
   }
 
   getEnrollmentStatus(courseId: number): string {
-    const enrollment = this.enrollments.find(e => e.course_id === courseId);
+    const enrollment = this.enrollments.find(e =>
+      e.course?.id === courseId || e.course_id === courseId
+    );
     if (enrollment) {
       if (enrollment.status === 'approved') return 'Enrolled';
       if (enrollment.status === 'pending') return 'Pending';
@@ -96,17 +105,17 @@ export class CourseComponent {
 
   requestEnrollment(course: any): void {
     const payload = {
-      student_id: this.studentId,
+      student_id: this.studentId!,
       course_id: course.id
     };
-
     this.enrollmentService.enrollStudent(payload).subscribe({
       next: () => {
         alert('Enrollment request submitted!');
-        this.loadStudentEnrollments(this.studentId); // reload after request
+        this.loadStudentEnrollments(this.studentId!);
+        this.loadStudentCourses(this.studentId!);
       },
       error: (err) => {
-        console.error('Error submitting enrollment request:', err);
+        console.error('❌ Error submitting enrollment request:', err);
       }
     });
   }
@@ -115,3 +124,4 @@ export class CourseComponent {
     this.router.navigate(['/student/courses', course.id]);
   }
 }
+

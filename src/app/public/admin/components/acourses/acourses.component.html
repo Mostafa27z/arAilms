@@ -1,81 +1,39 @@
-<div class="p-6 bg-gray-100 min-h-screen">
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+<div class="p-6 bg-gray-100 min-h-screen"> 
+
+  <!-- Statistics cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
     <div class="p-4 bg-white shadow rounded-xl">
       <h3 class="text-gray-500 text-sm">Total Courses</h3>
-      <p class="text-xl font-semibold">
-        324 <span class="text-green-500">+12 this month</span>
-      </p>
+      <p class="text-xl font-semibold">{{ totalCourses }}</p>
     </div>
     <div class="p-4 bg-white shadow rounded-xl">
-      <h3 class="text-gray-500 text-sm">New Courses</h3>
-      <p class="text-xl font-semibold">
-        28 <span class="text-gray-400">Last 30 days</span>
-      </p>
+      <h3 class="text-gray-500 text-sm">Total Enrollments</h3>
+      <p class="text-xl font-semibold">{{ totalEnrollments }}</p>
     </div>
     <div class="p-4 bg-white shadow rounded-xl">
-      <h3 class="text-gray-500 text-sm">Active Enrollments</h3>
-      <p class="text-xl font-semibold">
-        2,847 <span class="text-green-500">+234 this month</span>
-      </p>
-    </div>
-    <div class="p-4 bg-white shadow rounded-xl">
-      <h3 class="text-gray-500 text-sm">Popular Categories</h3>
-      <p class="text-xl font-semibold">
-        Development <span class="text-green-500">+48% growth</span>
-      </p>
+      <h3 class="text-gray-500 text-sm">Pending Enrollments</h3>
+      <p class="text-xl font-semibold">{{ pendingEnrollments }}</p>
     </div>
   </div>
 
-  <div class="bg-white shadow rounded-xl p-4">
-    <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
-      <input
-        type="text"
-        placeholder="Search courses..."
-        class="p-2 border rounded-md w-full sm:w-1/3 mb-4 sm:mb-0"
-      />
-      <div class="flex gap-2">
-        <select class="p-2 border rounded-md">
-          <option>All Categories</option>
-        </select>
-        <select class="p-2 border rounded-md">
-          <option>All Status</option>
-        </select>
-      </div>
-    </div>
-
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-    >
-      <div class="bg-gray-50 shadow rounded-xl p-4">
-        <h3 class="text-lg font-semibold">Web Development Bootcamp</h3>
-        <p class="text-sm text-gray-500">
-          Instructor: <span class="font-medium">John Doe</span>
-        </p>
-        <p class="text-sm text-gray-500">
-          Category: <span class="font-medium">Development</span>
-        </p>
-        <p class="text-sm text-gray-500">
-          Enrollments: <span class="font-medium">234</span>
-        </p>
-        <p class="text-sm text-green-500">Status: Active</p>
-        <div class="mt-4 flex justify-between">
-          <button class="text-blue-500">✏ Edit</button>
-          <button class="text-red-500">🗑 Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-    <div
-      class="p-4 bg-white shadow rounded-xl h-64 flex items-center justify-center"
-    >
-      📊 Engagement Trends
-    </div>
-    <div
-      class="p-4 bg-white shadow rounded-xl h-64 flex items-center justify-center"
-    >
-      📈 Course Completion Rates
-    </div>
-  </div>
+  <!-- Courses Cards -->
+  <div class="bg-white shadow rounded-xl p-4"> 
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"> 
+      <div *ngFor="let course of courses" class="bg-gray-50 shadow rounded-xl p-4"> 
+        <h3 class="text-lg font-semibold">{{ course.title }}</h3> 
+        <p class="text-sm text-gray-500"> 
+          Instructor: <span class="font-medium">{{ course.teacher }}</span> 
+        </p> 
+        <p class="text-sm text-gray-500"> 
+          Lessons: <span class="font-medium">{{ course.lessonsCount }}</span> 
+        </p> 
+        <p class="text-sm text-gray-500"> 
+          Enrollments: <span class="font-medium">{{ course.enrollmentsCount }}</span> 
+        </p> 
+        <div class="mt-4 flex justify-center"> 
+          <button class="text-red-500" (click)="deleteCourse(course.id)">🗑 Delete</button> 
+        </div> 
+      </div> 
+    </div> 
+  </div> 
 </div>

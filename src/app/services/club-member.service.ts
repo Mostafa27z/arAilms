@@ -39,4 +39,7 @@ export class ClubMemberService {
   joinClub(data: { club_id: number; student_id: number }): Observable<any> {
     return this.http.post(`${this.baseUrl}`, data);
   }
+  getMembers(clubId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}?club_id=${clubId}`);
+  }
 }

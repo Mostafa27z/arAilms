@@ -1,51 +1,29 @@
 <h1 class="text-[28px] font-extrabold text-center mt-6">Courses</h1>
-<section class="flex flex-wrap justify-around gap-12 items-center mt-24 mb-12">
-  <div class="w-[250px] flex flex-col gap-3">
-    <img
-      src="./assets/course1.png"
-      alt=""
-      class="block mx-auto my-2 rounded-xl w-full"
-    />
-    <h2 class="pl-3 text-[24px] font-bold">Course 1</h2>
-    <p class="pl-3">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+
+<!-- Loading Spinner -->
+<div *ngIf="loading" class="flex justify-center items-center h-[300px]">
+  <div class="w-12 h-12 border-4 border-[#7F55E0] border-t-transparent rounded-full animate-spin"></div>
+</div>
+
+<!-- No Courses -->
+<div *ngIf="!loading && courses.length === 0" class="text-center text-gray-500 mt-12">
+  No courses available.
+</div>
+
+<!-- Courses Grid -->
+<section *ngIf="!loading && courses.length > 0"
+         class="flex flex-wrap justify-around gap-12 items-center mt-12 mb-12 px-4">
+  <div *ngFor="let course of courses" class="w-[250px] flex flex-col gap-3">
+    <img [src]="course.thumbnail || './assets/course1.png'" 
+         alt="{{ course.title }}" 
+         class="block mx-auto my-2 rounded-xl w-full" />
+
+    <h2 class="pl-3 text-[20px] font-bold truncate">{{ course.title }}</h2>
+    <p class="pl-3 text-sm text-gray-600 line-clamp-3">
+      {{ course.description || 'No description available.' }}
     </p>
-    <button
-      class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl"
-    >
+    <!-- <button class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl mx-3 mt-auto">
       View Course
-    </button>
-  </div>
-  <div class="w-[250px] flex flex-col gap-3">
-    <img
-      src="./assets/course1.png"
-      alt=""
-      class="block mx-auto my-2 rounded-xl w-full"
-    />
-    <h2 class="pl-3 text-[24px] font-bold">Course 1</h2>
-    <p class="pl-3">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-    </p>
-    <button
-      class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl"
-    >
-      View Course
-    </button>
-  </div>
-  <div class="w-[250px] flex flex-col gap-3">
-    <img
-      src="./assets/course1.png"
-      alt=""
-      class="block mx-auto my-2 rounded-xl w-full"
-    />
-    <h2 class="pl-3 text-[24px] font-bold">Course 1</h2>
-    <p class="pl-3">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-    </p>
-    <button
-      class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl"
-    >
-      View Course
-    </button>
+    </button> -->
   </div>
 </section>

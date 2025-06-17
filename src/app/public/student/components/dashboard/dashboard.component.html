@@ -1,104 +1,47 @@
 <div class="p-6 bg-gray-100 min-h-screen flex flex-col lg:flex-row">
-  <!-- Sidebar (Optional, hidden on small screens) -->
-
-  <!-- Main Content -->
   <main class="flex-1 lg:ml-6 mt-6 lg:mt-0">
-    <h1 class="text-2xl font-bold text-gray-800">Welcome back, {{this.name}}!</h1>
+    <h1 class="text-2xl font-bold text-gray-800">
+      Welcome back, {{ name }}!
+    </h1>
     <p class="text-gray-600">Here's your learning progress</p>
 
+    <!-- Loading Spinner -->
+    <div *ngIf="loadingCourses || loadingExams" class="flex justify-center py-6">
+      <div class="w-10 h-10 border-4 border-purple-400 border-dashed rounded-full animate-spin"></div>
+    </div>
+
     <!-- Overview Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+    <div *ngIf="!loadingCourses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
       <div class="bg-white p-4 rounded-lg shadow">
         <h3 class="text-gray-700">Enrolled Courses</h3>
-        <p class="text-2xl font-bold">{{this.courses.length?this.courses.length:0}}</p>
-        <!-- <p class="text-gray-500">2 in progress</p> -->
+        <p class="text-2xl font-bold">{{ courses.length }}</p>
       </div>
-      <!-- <div class="bg-white p-4 rounded-lg shadow">
-        <h3 class="text-gray-700">Upcoming Tests</h3>
-        <p class="text-2xl font-bold">3</p>
-        <p class="text-gray-500">Next in 2 days</p>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow">
-        <h3 class="text-gray-700">Hours Spent</h3>
-        <p class="text-2xl font-bold">24h</p>
-        <p class="text-gray-500">This month</p>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow">
-        <h3 class="text-gray-700">Certificates</h3>
-        <p class="text-2xl font-bold">5</p>
-        <p class="text-gray-500">Earned</p>
-      </div> -->
     </div>
 
     <!-- Current Courses -->
     <div class="mt-6 bg-white p-6 rounded-lg shadow">
-  <h2 class="text-xl font-semibold text-gray-800">Current Courses</h2>
-  <div class="mt-4 space-y-4">
-    <div *ngFor="let course of this.courses">
-      <p class="text-gray-700">{{ course.title }}</p>
-      <p class="text-gray-700">{{ course.description	 }}</p>
-      <!-- <div class="bg-gray-200 rounded-full h-2">
-        <div
-          class="bg-blue-600 h-2 rounded-full"
-          [style.width.%]="course.progress || 0"
-        ></div>
-      </div> -->
-    </div>
-  </div>
-</div>
+      <h2 class="text-xl font-semibold text-gray-800">Current Courses</h2>
 
-    
-    <div class="grid grid-cols-1 sm:grid-cols-1 gap-6 mt-6">
-      
-      <!-- <div class="bg-white p-6 rounded-lg shadow">
-        <h2 class="text-xl font-semibold text-gray-800">Upcoming Tests</h2>
-        <div class="mt-4 space-y-2">
-          <div class="flex justify-between text-gray-700" *ngFor="let exam of this.exams">
-            <p>{{exam.title}}</p>
-            <span class="text-gray-500">{{exam.exam_date}}</span>
-           
-          </div>
-          
-        </div>
-      </div> -->
+      <div *ngIf="loadingCourses" class="animate-pulse text-gray-400 mt-4">
+        Loading courses...
+      </div>
 
-      <!-- Recent Payments -->
-      <!-- <div class="bg-white p-6 rounded-lg shadow">
-        <h2 class="text-xl font-semibold text-gray-800">Recent Payments</h2>
-        <div class="mt-4 space-y-2">
-          <div class="flex justify-between text-gray-700">
-            <p>Advanced Web Development</p>
-            <span class="text-gray-500">$199</span>
-          </div>
-          <div class="flex justify-between text-gray-700">
-            <p>Data Analytics</p>
-            <span class="text-gray-500">$249</span>
-          </div>
+      <div *ngIf="!loadingCourses" class="mt-4 space-y-4">
+        <div *ngFor="let course of courses">
+          <p class="text-gray-700 font-medium">{{ course.title }}</p>
+          <p class="text-gray-600">{{ course.description }}</p>
         </div>
-      </div> -->
+      </div>
     </div>
 
-    <!-- Recent Messages -->
-    <!-- <div class="mt-6 bg-white p-6 rounded-lg shadow">
-      <h2 class="text-xl font-semibold text-gray-800">Recent Messages</h2>
-      <div class="mt-4 space-y-2">
-        <div class="flex items-center space-x-3">
-          <img
-            src="https://randomuser.me/api/portraits/men/44.jpg"
-            class="w-8 h-8 rounded-full"
-          />
-          <p class="text-gray-700">
-            <strong>Sarah Johnson</strong> - Assignment feedback ready...
-          </p>
-        </div>
-        <div class="flex items-center space-x-3">
-          <img
-            src="https://randomuser.me/api/portraits/men/46.jpg"
-            class="w-8 h-8 rounded-full"
-          />
-          <p class="text-gray-700">
-            <strong>Mike Peters</strong> - Next week's schedule update...
-          </p>
+    <!-- Upcoming Exams -->
+    <!-- <div *ngIf="!loadingExams" class="mt-6 bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-gray-800">Upcoming Exams</h2>
+      <div *ngIf="exams.length === 0" class="text-gray-500 mt-2">No upcoming exams</div>
+      <div class="mt-4 space-y-2" *ngFor="let exam of exams">
+        <div class="flex justify-between text-gray-700">
+          <p>{{ exam.title }}</p>
+          <span class="text-gray-500">{{ exam.exam_date }}</span>
         </div>
       </div>
     </div> -->

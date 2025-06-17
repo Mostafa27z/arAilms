@@ -33,9 +33,9 @@
     >
       <div>
         {{ selectedContact.name }}
-        <span class="text-gray-400 text-sm"
+        <!-- <span class="text-gray-400 text-sm"
           >Department of Computer Science</span
-        >
+        > -->
       </div>
       <button class="md:hidden text-gray-400 text-2xl" (click)="closeChat()">
         &times;
@@ -43,31 +43,29 @@
     </div>
 
     <div class="flex-1 p-4 overflow-y-auto space-y-3">
-      <div
-        *ngFor="let msg of messages"
-        [ngClass]="{ 'text-right': msg.isUser }"
-      >
-        <div
-          class="inline-block p-3 rounded-lg max-w-xs"
-          [ngClass]="
-            msg.isUser ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-800'
-          "
-        >
-          {{ msg.text }}
-        </div>
-        <div class="text-xs text-gray-500 mt-1">{{ msg.time }}</div>
-      </div>
+  <div *ngFor="let msg of messages.reverse()" [ngClass]="{ 'text-right': msg.isUser }">
+    <div
+      class="inline-block p-3 rounded-lg max-w-xs"
+      [ngClass]="msg.isUser ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-800'"
+    >
+      {{msg.name}}{{ msg.text }}
     </div>
+    <div class="text-xs text-gray-500 mt-1">{{ msg.time }}</div>
+  </div>
+</div>
+
 
     <div class="p-4 border-t bg-white flex items-center">
-      <input
-        class="flex-1 p-2 border rounded-lg"
-        type="text"
-        placeholder="Type a message..."
-      />
-      <button class="ml-2 px-4 py-2 bg-gray-900 text-white rounded-lg">
-        Send
-      </button>
-    </div>
+  <input
+    class="flex-1 p-2 border rounded-lg"
+    type="text"
+    placeholder="Type a message..."
+    [(ngModel)]="newMessage"
+  />
+  <button class="ml-2 px-4 py-2 bg-gray-900 text-white rounded-lg" (click)="sendMessage()">
+    Send
+  </button>
+</div>
+
   </div>
 </div>

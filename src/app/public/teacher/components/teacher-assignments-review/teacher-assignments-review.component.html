@@ -1,0 +1,98 @@
+<!-- Loading -->
+<div *ngIf="loading" class="text-center py-6">
+  <div class="w-10 h-10 border-4 border-[#7F55E0] border-dashed rounded-full animate-spin mx-auto"></div>
+  <p class="text-sm text-gray-500 mt-2">Loading submissions...</p>
+</div>
+
+<!-- Filters -->
+<div class="p-6" *ngIf="!loading">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <input type="text" class="border p-2 rounded" placeholder="Search by student name..."
+      [(ngModel)]="studentSearch" (input)="applyFilters()">
+
+    <input type="text" class="border p-2 rounded" placeholder="Search by assignment title..."
+      [(ngModel)]="assignmentSearch" (input)="applyFilters()">
+
+    <select class="border p-2 rounded" [(ngModel)]="reviewFilter" (change)="applyFilters()">
+      <option value="all">All</option>
+      <option value="reviewed">Reviewed</option>
+      <option value="not_reviewed">Not Reviewed</option>
+    </select>
+  </div>
+
+  <!-- Submitted Assignments Table -->
+  <div class="bg-white rounded-2xl shadow-lg p-6">
+    <h3 class="text-xl font-semibold mb-4 text-[#2C2F66]">Submitted Assignments</h3>
+
+    <div *ngIf="filteredSubmissions.length > 0; else noData">
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border-collapse">
+          <thead>
+            <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+              <th class="py-3 px-6 text-left">Assignment</th>
+              <th class="py-3 px-6 text-left">Student</th>
+              <th class="py-3 px-6 text-left">Submitted At</th>
+              <th class="py-3 px-6 text-left">Status</th>
+              <th class="py-3 px-6 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700 text-sm">
+            <tr *ngFor="let sub of filteredSubmissions">
+              <td class="py-2 px-4">{{ sub.assignment_title }}</td>
+              <td class="py-2 px-4">{{ sub.student_name }}</td>
+              <td class="py-2 px-4">{{ sub.updated_at | date }}</td>
+              <td class="py-2 px-4">
+                <span [ngClass]="sub.reviews?.length > 0 ? 'text-green-600' : 'text-red-600'">
+                  {{ sub.reviews?.length > 0 ? 'Reviewed' : 'Pending' }}
+                </span>
+              </td>
+              <td class="py-2 px-4 text-center">
+                <button class="bg-blue-600 text-white px-3 py-1 rounded"
+                  (click)="openReview(sub)">
+                  {{ sub.reviews?.length > 0 ? 'Re-Review' : 'Review' }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ng-template #noData>
+      <p class="text-gray-500 text-center">No submissions found.</p>
+    </ng-template>
+  </div>
+</div>
+
+<!-- Review Modal -->
+<div *ngIf="showReviewModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-xl w-[90%] md:w-[500px]">
+    <h3 class="text-xl font-semibold mb-4">Review Submission</h3>
+
+    <div class="mb-3">
+      <label class="font-medium">Submitted Text:</label>
+      <p class="bg-gray-100 p-2 rounded">{{ selectedSubmission?.submission_text || 'No Text' }}</p>
+    </div>
+
+    <div class="mb-3" *ngIf="selectedSubmission?.file_path">
+      <label class="font-medium">Uploaded File:</label>
+      <a [href]="'http://localhost:8000' + selectedSubmission.file_path" target="_blank"
+        class="text-blue-600 underline">Download File</a>
+    </div>
+
+    <div class="mb-3">
+      <label class="font-medium">Score:</label>
+      <input type="number" [(ngModel)]="score" class="w-full border p-2 rounded" min="0" max="100">
+    </div>
+
+    <div class="mb-3">
+      <label class="font-medium">Feedback:</label>
+      <textarea [(ngModel)]="feedback" rows="3" class="w-full border p-2 rounded"></textarea>
+    </div>
+
+    <div class="flex justify-end gap-2">
+      <button class="bg-gray-400 text-white px-3 py-1 rounded" (click)="closeReview()">Cancel</button>
+      <button class="bg-green-600 text-white px-3 py-1 rounded" (click)="submitReview()">Save Review</button>
+    </div>
+  </div>
+</div>

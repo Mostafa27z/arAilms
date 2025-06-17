@@ -83,6 +83,9 @@
 <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"> 
   <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"> 
     <h2 class="text-lg font-semibold mb-4">Submit Assignment</h2> 
+<div *ngIf="submitting" class="w-full bg-gray-200 rounded h-2 mt-4">
+  <div class="bg-blue-600 h-full rounded transition-all" [style.width.%]="uploadProgress"></div>
+</div>
 
     <textarea [(ngModel)]="submissionText" rows="4" placeholder="Enter your submission text..." class="w-full p-2 border rounded mb-4"></textarea> 
 

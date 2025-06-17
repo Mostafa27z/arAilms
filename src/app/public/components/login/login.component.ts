@@ -49,18 +49,22 @@ export class LoginComponent {
       const role = response.user.role;
 
       switch (role) {
-        case 'student':
-          this.router.navigate(['/student']);
-          break;
-        case 'teacher':
-          this.router.navigate(['/teacher']);
-          break;
-        case 'parent':
-          this.router.navigate(['/parent']);
-          break;
-        default:
-          this.router.navigate(['/']); // fallback
-      }
+  case 'student':
+    this.router.navigate(['/student']).then(() => window.location.reload());
+    break;
+  case 'admin':
+    this.router.navigate(['/admin']).then(() => window.location.reload());
+    break;
+  case 'teacher':
+    this.router.navigate(['/teacher']).then(() => window.location.reload());
+    break;
+  case 'parent':
+    this.router.navigate(['/parents']).then(() => window.location.reload());
+    break;
+  default:
+    this.router.navigate(['/']).then(() => window.location.reload());
+}
+
     },
     error: (error) => {
       console.error('Login Failed:', error);

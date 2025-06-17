@@ -1,87 +1,125 @@
-<div class="bg-white p-6 rounded-lg shadow-md">
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-xl font-semibold text-[#2C2F66]">Course Management</h2>
-    <button
-      class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg flex items-center gap-2"
-    >
-      ➕ Add New Course
-    </button>
+<div class="p-6 bg-gray-100 min-h-screen">
+  <!-- Loading Courses -->
+  <div *ngIf="loadingCourses" class="text-center py-6">
+    <div class="w-10 h-10 border-4 border-[#7F55E0] border-dashed rounded-full animate-spin mx-auto"></div>
+    <p class="text-sm text-gray-500 mt-2">Loading courses...</p>
   </div>
 
-  <div class="flex justify-between mb-6">
-    <input
-      type="text"
-      placeholder="🔍 Search courses..."
-      class="p-2 w-1/2 border rounded-lg focus:outline-[#7F55E0]"
-    />
-    <div class="flex gap-3">
-      <select class="p-2 border rounded-lg focus:outline-[#7F55E0]">
-        <option>All Categories</option>
-        <option>Mathematics</option>
-        <option>Science</option>
-        <option>Literature</option>
-      </select>
-      <select class="p-2 border rounded-lg focus:outline-[#7F55E0]">
-        <option>Status</option>
-        <option>Active</option>
-        <option>Draft</option>
-      </select>
-    </div>
-  </div>
+  <!-- Course Management Header -->
+  <div class="bg-white p-6 rounded-lg shadow-md" *ngIf="!loadingCourses">
+    <h2 class="text-xl font-semibold text-[#2C2F66] mb-6 flex justify-between items-center">
+      Course Management
+      <button (click)="openAddModal()" class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg flex items-center gap-2">➕ Add New Course</button>
+    </h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
-      <div
-        class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-500"
-      >
-        Course Thumbnail
-      </div>
-      <h3 class="text-lg font-semibold text-[#2C2F66] mt-3">
-        Advanced Mathematics
-      </h3>
-      <p class="text-gray-500 text-sm">Grade 11 • 48 Students</p>
-      <div class="flex justify-between items-center mt-3">
-        <span class="bg-green-200 text-green-700 px-2 py-1 rounded-lg text-sm"
-          >Active</span
-        >
-        <div class="flex gap-2">✏️ 🗑️</div>
+    <!-- Course Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div *ngFor="let course of courses" class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
+        <div class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-500 overflow-hidden">
+          <img *ngIf="course.thumbnail" [src]="'http://localhost:8000' + course.thumbnail" class="object-cover h-32 w-full rounded-lg" />
+          <span *ngIf="!course.thumbnail">No Thumbnail</span>
+        </div>
+        <h3 class="text-lg font-semibold text-[#2C2F66] mt-3">{{ course.title }}</h3>
+        <p class="text-gray-500 text-sm mb-2">By: {{ course.teacher.user.name }}</p>
+        <p class="text-gray-500 text-sm">{{ course.approved_enrollments_count }} Students</p>
+        <div class="flex justify-end items-center mt-3">
+          <div class="flex gap-2 text-lg">
+            <button (click)="openEditModal(course)">✏️</button>
+            <button (click)="deleteCourse(course.id)">🗑️</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
-      <div
-        class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-500"
-      >
-        Course Thumbnail
-      </div>
-      <h3 class="text-lg font-semibold text-[#2C2F66] mt-3">
-        Physics Fundamentals
-      </h3>
-      <p class="text-gray-500 text-sm">Grade 10 • 32 Students</p>
-      <div class="flex justify-between items-center mt-3">
-        <span class="bg-green-200 text-green-700 px-2 py-1 rounded-lg text-sm"
-          >Active</span
-        >
-        <div class="flex gap-2">✏️ 🗑️</div>
+    <!-- Add Course Modal -->
+    <div *ngIf="showAddModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="bg-white p-6 rounded-lg w-[90%] md:w-[400px]">
+        <h3 class="text-xl mb-4 font-semibold text-[#2C2F66]">Add Course</h3>
+        <form (ngSubmit)="addCourse()" #addForm="ngForm">
+          <input [(ngModel)]="newCourse.title" name="title" required type="text" placeholder="Title" class="w-full p-2 border rounded mb-3" />
+          <input [(ngModel)]="newCourse.description" name="description" type="text" placeholder="Description" class="w-full p-2 border rounded mb-3" />
+          <input type="file" (change)="onFileSelected($event)" class="w-full p-2 border rounded mb-3" />
+
+          <div *ngIf="uploadProgress > 0" class="mb-3">
+            <div class="h-2 bg-gray-300 rounded-full overflow-hidden">
+              <div class="h-full bg-[#7F55E0]" [style.width.%]="uploadProgress"></div>
+            </div>
+            <p class="text-sm text-gray-600 text-right mt-1">{{ uploadProgress }}%</p>
+          </div>
+
+          <div class="flex justify-end gap-2">
+            <button type="button" (click)="closeAddModal()" class="px-3 py-1 bg-gray-300 rounded">Cancel</button>
+            <button type="submit" class="px-3 py-1 bg-[#7F55E0] text-white rounded">Save</button>
+          </div>
+        </form>
       </div>
     </div>
 
-    <div class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
-      <div
-        class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-500"
-      >
-        Course Thumbnail
+    <!-- Edit Course Modal -->
+    <div *ngIf="showEditModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="bg-white p-6 rounded-lg w-[90%] md:w-[400px]">
+        <h3 class="text-xl mb-4 font-semibold text-[#2C2F66]">Edit Course</h3>
+        <form (ngSubmit)="updateCourse()" #editForm="ngForm">
+          <input [(ngModel)]="editCourse.title" name="title" required type="text" placeholder="Title" class="w-full p-2 border rounded mb-3" />
+          <input [(ngModel)]="editCourse.description" name="description" type="text" placeholder="Description" class="w-full p-2 border rounded mb-3" />
+          <input type="file" (change)="onEditFileSelected($event)" class="w-full p-2 border rounded mb-3" />
+
+          <div *ngIf="editUploadProgress > 0" class="mb-3">
+            <div class="h-2 bg-gray-300 rounded-full overflow-hidden">
+              <div class="h-full bg-[#7F55E0]" [style.width.%]="editUploadProgress"></div>
+            </div>
+            <p class="text-sm text-gray-600 text-right mt-1">{{ editUploadProgress }}%</p>
+          </div>
+
+          <div class="flex justify-end gap-2">
+            <button type="button" (click)="closeEditModal()" class="px-3 py-1 bg-gray-300 rounded">Cancel</button>
+            <button type="submit" class="px-3 py-1 bg-[#7F55E0] text-white rounded">Update</button>
+          </div>
+        </form>
       </div>
-      <h3 class="text-lg font-semibold text-[#2C2F66] mt-3">
-        English Literature
-      </h3>
-      <p class="text-gray-500 text-sm">Grade 12 • 28 Students</p>
-      <div class="flex justify-between items-center mt-3">
-        <span class="bg-yellow-200 text-yellow-700 px-2 py-1 rounded-lg text-sm"
-          >Draft</span
-        >
-        <div class="flex gap-2">✏️ 🗑️</div>
+    </div>
+
+    <!-- Pending Enrollments -->
+    <div class="bg-yellow-100 p-4 rounded-lg mt-8 shadow-md">
+      <h3 class="text-lg font-semibold text-yellow-700 mb-3">Pending Enrollments</h3>
+      <div *ngIf="loadingEnrollments" class="text-center text-yellow-700">Loading...</div>
+      <div *ngIf="!loadingEnrollments && pendingEnrollments.length > 0; else noPending">
+        <ul class="space-y-2">
+          <li *ngFor="let enrollment of pendingEnrollments" class="p-2 bg-white rounded shadow flex justify-between items-center">
+            <div>
+              Student: {{ enrollment.student.name }} - Course: {{ enrollment.course.title }}
+            </div>
+            <div class="flex gap-2">
+              <button class="bg-green-500 text-white px-3 py-1 rounded" (click)="changeEnrollmentStatus(enrollment.id, 'approved')">Approve</button>
+              <button class="bg-red-500 text-white px-3 py-1 rounded" (click)="changeEnrollmentStatus(enrollment.id, 'rejected')">Reject</button>
+            </div>
+          </li>
+        </ul>
       </div>
+      <ng-template #noPending>
+        <p class="text-gray-500">No pending enrollments found.</p>
+      </ng-template>
+    </div>
+
+    <!-- Rejected Enrollments -->
+    <div class="bg-red-100 p-4 rounded-lg mt-8 shadow-md">
+      <h3 class="text-lg font-semibold text-red-700 mb-3">Rejected Enrollments</h3>
+      <div *ngIf="loadingEnrollments" class="text-center text-red-700">Loading...</div>
+      <div *ngIf="!loadingEnrollments && rejectedEnrollments.length > 0; else noRejected">
+        <ul class="space-y-2">
+          <li *ngFor="let enrollment of rejectedEnrollments" class="p-2 bg-white rounded shadow flex justify-between items-center">
+            <div>
+              Student: {{ enrollment.student.name }} - Course: {{ enrollment.course.title }}
+            </div>
+            <div>
+              <button class="bg-green-500 text-white px-3 py-1 rounded" (click)="changeEnrollmentStatus(enrollment.id, 'approved')">Approve</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <ng-template #noRejected>
+        <p class="text-gray-500">No rejected enrollments found.</p>
+      </ng-template>
     </div>
   </div>
 </div>

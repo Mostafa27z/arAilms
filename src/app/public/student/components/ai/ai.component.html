@@ -6,14 +6,26 @@
 
   <!-- Messages -->
   <div class="flex-1 p-4 overflow-y-auto space-y-3">
-    <div *ngFor="let msg of messages" [ngClass]="{'text-right': msg.isUser}">
-      <div class="inline-block p-3 rounded-lg max-w-xs"
-           [ngClass]="msg.isUser ? 'bg-blue-600 text-white' : 'bg-gray-300 text-black'">
+  <div *ngFor="let msg of messages" [ngClass]="{'text-right': msg.isUser}">
+    
+    <div class="inline-block p-3 rounded-lg max-w-xs"
+         [ngClass]="msg.isUser ? 'bg-blue-600 text-white' : 'bg-gray-300 text-black'">
+      
+      <ng-container *ngIf="msg.text !== 'Typing...'; else typingTemplate">
         {{ msg.text }}
-      </div>
-      <div class="text-xs text-gray-500 mt-1">{{ msg.time }}</div>
+      </ng-container>
+
+      <ng-template #typingTemplate>
+        <span class="italic text-gray-400 animate-pulse">Typing...</span>
+      </ng-template>
+
     </div>
+
+    <div class="text-xs text-gray-500 mt-1" *ngIf="msg.time">{{ msg.time }}</div>
+
   </div>
+</div>
+
 
   <!-- Input -->
   <div class="p-4 border-t bg-white flex items-center">

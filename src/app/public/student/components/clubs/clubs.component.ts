@@ -17,6 +17,10 @@ export class ClubsComponent implements OnInit {
   page: number = 1;
   userId: number = 0;
 
+  loadingClubs: boolean = false;
+  loadingMemberships: boolean = false;
+  joining: boolean = false;
+
   constructor(
     private clubService: ClubService,
     private clubMemberService: ClubMemberService,
@@ -40,23 +44,29 @@ export class ClubsComponent implements OnInit {
   }
 
   loadClubs(): void {
+    this.loadingClubs = true;
     this.clubService.getAllClubs(this.page).subscribe({
       next: (res) => {
         this.clubs = res.data;
+        this.loadingClubs = false;
       },
       error: (err) => {
         console.error('Error loading clubs:', err);
+        this.loadingClubs = false;
       }
     });
   }
 
   loadMyClubMemberships(): void {
+    this.loadingMemberships = true;
     this.clubMemberService.getMyMemberships(this.userId).subscribe({
       next: (res) => {
         this.clubMembers = res.data;
+        this.loadingMemberships = false;
       },
       error: (err) => {
         console.error('Error loading club memberships:', err);
+        this.loadingMemberships = false;
       }
     });
   }
@@ -71,13 +81,15 @@ export class ClubsComponent implements OnInit {
       student_id: this.userId
     };
 
+    this.joining = true;
     this.clubMemberService.joinClub(data).subscribe({
       next: () => {
-        alert('Joined successfully!');
+        this.joining = false;
         this.loadMyClubMemberships();
       },
       error: (err) => {
         console.error('Error joining club:', err);
+        this.joining = false;
       }
     });
   }
@@ -90,3 +102,4 @@ export class ClubsComponent implements OnInit {
     this.router.navigate(['student/clubs', club.id, 'chat']);
   }
 }
+

@@ -45,16 +45,27 @@ import { ClubsComponent } from './public/student/components/clubs/clubs.componen
 import { LessonViewComponent } from './public/student/components/lesson-view/lesson-view.component';
 import { CourseDetailsComponent } from './public/student/components/course-details/course-details.component';
 import { ClubChatComponent } from './public/student/components/club-chat/club-chat.component';
+import { AddLessonComponent } from './public/teacher/components/add-lesson/add-lesson.component';
+import { LessonsListComponent } from './public/teacher/components/lessons-list/lessons-list.component';
+import { EditLessonComponent } from './public/teacher/components/edit-lesson/edit-lesson.component';
+import { TeacherAssignmentsReviewComponent } from './public/teacher/components/teacher-assignments-review/teacher-assignments-review.component';
+import { LessonQuestionsComponent } from './public/teacher/components/lesson-questions/lesson-questions.component';
+import { TeacherPerformanceComponent } from './public/admin/components/teacher-performance/teacher-performance.component';
+import { PlinkStudentComponent } from './public/parents/components/plink-student/plink-student.component';
+import { AboutUsComponent } from './public/components/about-us/about-us.component';
+import { AuthGuard } from './auth/auth.guard';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'course', component: CoursesComponent },
   { path: 'login', component: LoginComponent },
-
+{ path: 'about', component: AboutUsComponent },
   // Student Layout Wrapper
   {
     path: 'student',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
+  data: { role: 'student' },
     children: [
       { path: '', component: DashboardComponent }, 
       { path: 'tests', component: TestsComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
@@ -83,6 +94,7 @@ export const routes: Routes = [
       { path: 'teachers', component: SteachersComponent },
       { path: 'attendance', component: SattendanceComponent },
       { path: 'tests', component: StestsComponent },
+      
     ],
   },
   // parent
@@ -90,6 +102,8 @@ export const routes: Routes = [
   {
     path: 'parents',
     component: PlayoutComponent,
+    canActivate: [AuthGuard],
+  data: { role: 'parent' },
     children: [
       { path: '', component: PdashboardComponent },
       { path: 'attendance', component: PattendanceComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
@@ -100,12 +114,15 @@ export const routes: Routes = [
       { path: 'tests', component: PtestsComponent },
       { path: 'ai', component: AiComponent },
       { path: 'support', component: PsupportComponent },
+      { path: 'addstd', component: PlinkStudentComponent },
     ],
   },
   // Teacher
   {
     path: 'teacher',
     component: TlayoutComponent,
+    canActivate: [AuthGuard],
+  data: { role: 'teacher' },
     children: [
       { path: '', component: TdashboardComponent },
       { path: 'dashboard', component: TdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
@@ -114,13 +131,22 @@ export const routes: Routes = [
       { path: 'groups', component: TgroupsComponent },
       { path: 'chats', component: TchatsComponent },
       { path: 'payments', component: TpaymentsComponent },
-      { path: 'tests', component: TtestsComponent },
+      { path: 'assignments', component: TeacherAssignmentsReviewComponent },
+      { path: 'lessons', component: LessonsListComponent },
+      { path: 'addlesson', component: AddLessonComponent },
+      { path: 'editlesson/:id', component: EditLessonComponent },
+      { path: 'ai', component: AiComponent },
+      { path: 'lesson/:lessonId/questions', 
+       component: LessonQuestionsComponent
+      }
     ],
   },
   // admin
   {
     path: 'admin',
     component: AlayoutComponent,
+    canActivate: [AuthGuard],
+  data: { role: 'admin' },
     children: [
       { path: '', component: AdashboardComponent },
       { path: 'dashboard', component: AdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
@@ -129,7 +155,8 @@ export const routes: Routes = [
       { path: 'groups', component: AgroupsComponent },
       { path: 'chats', component: AchatsComponent },
       { path: 'payments', component: TpaymentsComponent },
-      { path: 'reports', component: AreportsComponent },
+      { path: 'reports', component: TeacherPerformanceComponent },
+      { path: 'ai', component: AiComponent },
     ],
   },
 ];

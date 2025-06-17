@@ -12,16 +12,14 @@ import { CarouselModule } from 'primeng/carousel';
 })
 export class AppComponent {
   title = 'ailms';
-  slides = [
-      "./assets/laptop.PNG" ,
-      "./assets/laptop.PNG" ,
-      "./assets/laptop.PNG" ,
-      "./assets/laptop.PNG" ,
-      "./assets/laptop.PNG" ,
-      "./assets/laptop.PNG" ,
-      "./assets/laptop.PNG" ,
-      "./assets/laptop.PNG" ,
-      
-   "./assets/books.png" 
-  ];
+  slides = [ "./assets/laptop.PNG", "./assets/books.png" ];
+  loading = true;
+
+  ngOnInit(): void {
+    // Simulate loading delay (e.g., for assets or initial data)
+    setTimeout(() => {
+      this.loading = false;
+    }, 400); // Adjust time as needed
+  }
 }
+

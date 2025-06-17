@@ -1,10 +1,18 @@
-<div class="flex justify-between items-center mt-6 mb-2 mx-8">
-  <div>
-    <p class="text-3xl font-extrabold text-gray-900">LOGO</p>
-  </div>
-  <app-nav></app-nav>
+<!-- Fullscreen Loader -->
+<div *ngIf="loading" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+  <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#636AE8]"></div>
 </div>
 
-<router-outlet></router-outlet>
+<!-- Actual App Content -->
+<div *ngIf="!loading">
+  <div class="flex justify-between items-center mt-2 mb-2 mx-8">
+    <div>
+      <p class="text-3xl font-extrabold text-gray-900">
+        <img src="assets/aim.svg" alt="Logo" class="w-24 h-24" />
+      </p>
+    </div>
+    <app-nav></app-nav>
+  </div>
 
-
+  <router-outlet></router-outlet>
+</div>

@@ -14,4 +14,8 @@ export class AssignmentService {
       console.log(id + "ca")
     return this.http.get(`${this.baseUrl}/student/${id}`);
     }
+    getAssignmentsByStudent(studentId: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/student/${studentId}`);
+}
+
 }

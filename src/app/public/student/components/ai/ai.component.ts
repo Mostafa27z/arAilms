@@ -22,13 +22,14 @@ export class AiComponent implements OnInit {
   messages: Message[] = [];
   newMessage: string = '';
   userId: number = 0;
+  loading: boolean = false;
 
   constructor(private aiService: AiChatService) {}
 
   ngOnInit(): void {
-    const storedId = localStorage.getItem('roleid');
+    const storedId = localStorage.getItem('user');
     if (storedId) {
-      this.userId = parseInt(JSON.parse(storedId));
+      this.userId = parseInt(JSON.parse(storedId).id);
       this.loadChatHistory();
     }
   }
@@ -49,36 +50,52 @@ export class AiComponent implements OnInit {
     });
   }
 
-  sendMessage(): void {
-    if (!this.newMessage.trim()) return;
+  sendMessage(): void { 
+  if (!this.newMessage.trim()) return; 
 
-    const payload = { user_id: this.userId, message: this.newMessage };
+  const payload = { user_id: this.userId, message: this.newMessage }; 
 
-    // Add message directly for better UX
-    this.messages.push({
-      sender: 'You',
-      text: this.newMessage,
-      time: new Date().toLocaleTimeString(),
-      isUser: true
-    });
+  // Add user message immediately 
+  this.messages.push({ 
+    sender: 'You', 
+    text: this.newMessage, 
+    time: new Date().toLocaleTimeString(), 
+    isUser: true 
+  }); 
 
-    const sendingMsg = this.newMessage;
-    this.newMessage = '';
+  const sendingMsg = this.newMessage; 
+  this.newMessage = ''; 
 
-    this.aiService.sendMessage(payload).subscribe({
-      next: (res) => {
-        this.messages.push({
-          sender: 'AI',
-          text: res.data.ai_response.message,
-          time: new Date(res.data.ai_response.created_at).toLocaleTimeString(),
-          isUser: false
-        });
-      },
-      error: (err) => {
-        console.error('Error sending message:', err);
-        // rollback in case of error
-        this.messages = this.messages.filter(m => m.text !== sendingMsg);
-      }
-    });
-  }
+  // Add temporary loading message 
+  this.messages.push({ 
+    sender: 'AI', 
+    text: 'Typing...', 
+    time: '', 
+    isUser: false 
+  }); 
+
+  this.loading = true;
+
+  this.aiService.sendMessage(payload).subscribe({ 
+    next: (res) => { 
+      // Remove temporary loading message
+      this.messages.pop(); 
+
+      this.messages.push({ 
+        sender: 'AI', 
+        text: res.data.ai_response.message, 
+        time: new Date(res.data.ai_response.created_at).toLocaleTimeString(), 
+        isUser: false 
+      }); 
+
+      this.loading = false;
+    }, 
+    error: (err) => { 
+      console.error('Error sending message:', err); 
+      this.messages = this.messages.filter(m => m.text !== sendingMsg); 
+      this.loading = false;
+    } 
+  }); 
+}
+
 }

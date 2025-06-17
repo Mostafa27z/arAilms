@@ -1,85 +1,46 @@
-<div class="p-6 bg-[#2C2F66] text-white rounded-lg shadow-lg">
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-    <div class="bg-[#7F55E0] p-4 rounded-lg text-center">
-      <h3 class="text-lg font-semibold">Total Groups</h3>
-      <p class="text-3xl font-bold">248</p>
-      <p class="text-sm text-gray-300">Active: 182 | Inactive: 66</p>
-    </div>
-    <div class="bg-[#7F55E0] p-4 rounded-lg text-center">
-      <h3 class="text-lg font-semibold">Recent Activity</h3>
-      <p class="text-sm">📌 15 new members added today</p>
-      <p class="text-sm">📌 3 groups created in last 24h</p>
-    </div>
-    <div class="bg-[#7F55E0] p-4 rounded-lg text-center">
-      <h3 class="text-lg font-semibold">Most Active Groups</h3>
-      <p class="text-sm">✅ Web Development - 98%</p>
-      <p class="text-sm">✅ Data Science - 92%</p>
-    </div>
-  </div>
+<div class="p-6 bg-[#2C2F66] text-white rounded-lg shadow-lg"> 
+  <!-- Statistics -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6"> 
+    <div class="bg-[#7F55E0] p-4 rounded-lg text-center"> 
+      <h3 class="text-lg font-semibold">Total Groups</h3> 
+      <p class="text-3xl font-bold">{{ totalGroups }}</p> 
+    </div> 
+    <div class="bg-[#7F55E0] p-4 rounded-lg text-center"> 
+      <h3 class="text-lg font-semibold">Total Members</h3> 
+      <p class="text-3xl font-bold">{{ totalMembers }}</p> 
+    </div> 
+    <div class="bg-[#7F55E0] p-4 rounded-lg text-center"> 
+      <h3 class="text-lg font-semibold">Recent Activity</h3> 
+      <p class="text-sm">📌 Groups & Members statistics</p> 
+    </div> 
+  </div> 
 
-  <div
-    class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3"
-  >
-    <input
-      type="text"
-      placeholder="🔍 Search groups..."
-      class="w-full sm:w-1/2 p-2 rounded bg-[#2C2F66] text-white focus:outline-none"
-    />
-    <button
-      class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg hover:bg-[#6A44C0] w-full sm:w-auto"
-    >
-      ➕ Create New Group
-    </button>
-  </div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div class="bg-[#3A3D75] p-4 rounded-lg">
-      <h4 class="font-semibold text-lg mb-2">👨‍💻 Web Development</h4>
-      <p class="text-sm text-gray-300 mb-1">
-        Members: <span class="text-white">32</span>
-      </p>
-      <p class="text-sm text-gray-300 mb-1">
-        Category: <span class="text-white">Study Group</span>
-      </p>
-      <p class="text-sm mb-2">
-        Status:
-        <span class="bg-green-500 text-white px-2 py-1 rounded text-xs"
-          >Active</span
-        >
-      </p>
-      <div class="flex justify-between text-sm mt-3">
-        <button class="text-yellow-400 hover:underline">✏️ Edit</button>
-        <button class="text-red-400 hover:underline">🗑️ Delete</button>
-      </div>
-    </div>
-    <div class="bg-[#3A3D75] p-4 rounded-lg">
-      <h4 class="font-semibold text-lg mb-2">👨‍💻 Web Development</h4>
-      <p class="text-sm text-gray-300 mb-1">
-        Members: <span class="text-white">32</span>
-      </p>
-      <p class="text-sm text-gray-300 mb-1">
-        Category: <span class="text-white">Study Group</span>
-      </p>
-      <p class="text-sm mb-2">
-        Status:
-        <span class="bg-green-500 text-white px-2 py-1 rounded text-xs"
-          >Active</span
-        >
-      </p>
-      <div class="flex justify-between text-sm mt-3">
-        <button class="text-yellow-400 hover:underline">✏️ Edit</button>
-        <button class="text-red-400 hover:underline">🗑️ Delete</button>
-      </div>
-    </div>
-  </div>
+  <!-- Groups Listing -->
+  <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3"> 
+    <input 
+  type="text" 
+  placeholder="🔍 Search groups..." 
+  [(ngModel)]="searchText"
+  class="w-full sm:w-1/2 p-2 rounded bg-[#2C2F66] text-white focus:outline-none border" 
+/>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-    <div class="bg-[#3A3D75] p-6 rounded-lg text-center">
-      📊
-      <p>User Engagement Metrics</p>
-    </div>
-    <div class="bg-[#3A3D75] p-6 rounded-lg text-center">
-      ⏳
-      <p>Activity Timeline</p>
-    </div>
-  </div>
+    <!-- <button class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg hover:bg-[#6A44C0] w-full sm:w-auto"> ➕ Create New Group </button>  -->
+  </div> 
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"> 
+  <div *ngFor="let group of filteredGroups()" class="bg-[#3A3D75] p-4 rounded-lg"> 
+    <h4 class="font-semibold text-lg mb-2">{{ group.name }}</h4> 
+    <p class="text-sm text-gray-300 mb-1">Members: <span class="text-white">{{ group.membersCount }}</span></p> 
+    <p class="text-sm text-gray-300 mb-1">Category: <span class="text-white">Study Group</span></p> 
+    <div class="flex justify-between text-sm mt-3"> 
+      <button class="text-red-400 hover:underline" (click)="deleteGroup(group.id)">🗑️ Delete</button> 
+    </div> 
+  </div> 
+</div>
+ 
+
+  <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6"> 
+    <div class="bg-[#3A3D75] p-6 rounded-lg text-center"> 📊 <p>User Engagement Metrics</p> </div> 
+    <div class="bg-[#3A3D75] p-6 rounded-lg text-center"> ⏳ <p>Activity Timeline</p> </div> 
+  </div>  -->
 </div>

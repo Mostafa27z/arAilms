@@ -1,190 +1,67 @@
-<main class="flex flex-wrap items-center justify-center gap-8">
-  <div class="w-full relative">
-    <div
-      class="absolute flex justify-center items-center flex-col h-full w-full bg-[rgba(0,0,0,.4)] text-white gap-4"
-    >
-      <h1 class="font-bold text-xl">Empower Learning</h1>
-      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-      <button class="bg-[#4A50C0] rounded-xl px-4 py-2">Get Started</button>
-    </div>
-    <img src="./assets/home.png" alt="" class="w-full h-[350px]" />
-  </div>
+<div *ngIf="loading" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+  <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#636AE8]"></div>
+</div>
+<div *ngIf="!loading">
+  <!-- Put your current home content here -->
+  <main >
+    <main class="flex flex-wrap items-center justify-center gap-8 animate-fade-in"> 
+  <div class="w-full relative h-[400px] overflow-hidden rounded-b-3xl"> 
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white text-center p-4 z-10"> 
+      <h1 class="font-bold text-3xl md:text-5xl mb-2">Empower Your Learning Journey</h1> 
+      <p class="max-w-xl mb-4 text-lg">Join thousands of learners and educators on our AI-powered platform. Learn, grow, and succeed at your own pace.</p> 
+      <button class="bg-[#4A50C0] hover:bg-[#3a3fb3] rounded-xl px-6 py-3 transition-all duration-300">Get Started</button> 
+    </div> 
+    <img src="./assets/home.png" alt="Hero" class="w-full h-full object-cover" /> 
+  </div> 
 </main>
 
-<section class="my-6">
-  <div class="w-3/5 mx-auto my-4">
-    <div class="flex gap-4 justify-center items-center mb-6">
-      <svg
-        fill="#FF4081FF"
-        height="32px"
-        width="32px"
-        version="1.2"
-        baseProfile="tiny"
-        id="Layer_1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="-63 65 128 128"
-        xml:space="preserve"
-        stroke="#FF4081FF"
-      >
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g
-          id="SVGRepo_tracerCarrier"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></g>
-        <g id="SVGRepo_iconCarrier">
-          <path
-            d="M1,102.1c9.7,0,17.5-7.9,17.5-17.6S10.7,66.9,1,66.9s-17.6,7.8-17.6,17.6C-16.6,94.2-8.7,102.1,1,102.1 M18,106.3 c8,0.3,11.4,6.7,11.4,6.7l25.9,35.6c1.1,1.6,1.7,3.5,1.7,5.6c0,5.5-4.5,10-10,10c-1.3,0-2.5-0.3-3.7-0.7l-15.6-4.4v15.6h-54.2v-15.6 l-15.6,4.4c-1.1,0.4-2.3,0.7-3.7,0.7c-5.5,0-10-4.5-10-10c0-2.1,0.6-4,1.7-5.6l25.9-35.6c0,0,3.4-6.4,11.4-6.7H18z M0.6,163.8 L0.6,163.8l20.3-6.7l-0.5-0.1c-14-4.1-8.6-22.6,5.4-18.5l1.9,0.7v-20.9l-27.1,8.9l-27.2-8.9v20.9l1.9-0.7c14-4.1,19.4,14.3,5.4,18.5 l-0.5,0.1L0.6,163.8z M56.4,188.6c1.4,0,2.5-1.4,2.5-3.3c0-1.9-1.1-3.3-2.5-3.3H-53.2c-1.4,0-2.5,1.5-2.5,3.3c0,1.8,1.1,3.3,2.5,3.3 H56.4z"
-          ></path>
-        </g>
-      </svg>
-      <h2 class="text-xl font-extrabold">Student Features</h2>
-    </div>
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus
-      perferendis eos, consectetur, cumque, autem et quod magni necessitatibus
-      tempora dolorum deleniti neque suscipit aspernatur soluta cum sit. Minus,
-      impedit quo.
-    </p>
+<section class="my-12 animate-fade-in-up"> 
+  <div class="w-11/12 md:w-3/5 mx-auto text-center mb-10"> 
+    <h2 class="text-3xl font-bold text-[#2C2F66] mb-4">Platform Features</h2> 
+    <p class="text-gray-600">Explore our key features tailored for students, parents, and teachers to enhance the education experience.</p> 
   </div>
-  <!--  -->
-  <div class="w-3/5 mx-auto my-4">
-    <div class="flex gap-4 justify-center items-center mb-6">
-      <svg
-        height="36px"
-        width="36px"
-        version="1.1"
-        id="_x32_"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 0 512.00 512.00"
-        xml:space="preserve"
-        fill="#FF4081FF"
-        stroke="#FF4081FF"
-        stroke-width="0.00512"
-        transform="rotate(0)"
-      >
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g
-          id="SVGRepo_tracerCarrier"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></g>
-        <g id="SVGRepo_iconCarrier">
-          <style type="text/css">
-            .st0 {
-              fill: #ff4081ff;
-            }
-          </style>
-          <g>
-            <path
-              class="st0"
-              d="M180.242,96.435c26.635,0,48.212-21.596,48.212-48.212C228.454,21.578,206.877,0,180.242,0 c-26.644,0-48.222,21.578-48.222,48.223C132.02,74.839,153.598,96.435,180.242,96.435z"
-            ></path>
-            <path
-              class="st0"
-              d="M222.019,119.275h-42.274h-42.273c-23.362,0-48.78,25.418-48.78,48.79v162.062 c0,11.681,9.464,21.155,21.145,21.155c5.75,0,0,0,14.764,0l8.04,138.212c0,12.43,10.086,22.507,22.515,22.507 c5.246,0,14.918,0,24.589,0c9.672,0,19.343,0,24.589,0c12.429,0,22.515-10.077,22.515-22.507l8.04-138.212 c14.764,0,9.014,0,14.764,0c11.681,0,21.145-9.474,21.145-21.155V168.065C270.799,144.693,245.382,119.275,222.019,119.275z"
-            ></path>
-            <path
-              class="st0"
-              d="M360.619,224.327c18.441,0,33.377-14.944,33.377-33.368c0-18.45-14.936-33.386-33.377-33.386 c-18.442,0-33.377,14.936-33.377,33.386C327.242,209.383,342.177,224.327,360.619,224.327z"
-            ></path>
-            <path
-              class="st0"
-              d="M389.543,240.136h-29.266H331.01c-16.17,0-33.764,17.595-33.764,33.783V386.1 c0,8.085,6.552,14.647,14.638,14.647c3.984,0,0,0,10.221,0l5.562,95.678c0,8.598,6.985,15.575,15.593,15.575 c3.624,0,10.321,0,17.018,0c6.697,0,13.393,0,17.017,0c8.608,0,15.594-6.977,15.594-15.575l5.561-95.678c10.221,0,6.237,0,10.221,0 c8.085,0,14.638-6.562,14.638-14.647V273.919C423.307,257.731,405.713,240.136,389.543,240.136z"
-            ></path>
-          </g>
-        </g>
-      </svg>
-      <h2 class="text-xl font-extrabold">Parent Features</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10 w-11/12 md:w-4/5 mx-auto"> 
+    <!-- Student Features --> 
+    <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-center"> 
+      <div class="text-[#4A50C0] text-5xl mb-4">🎓</div>
+      <h3 class="font-bold text-xl mb-2">Student Dashboard</h3> 
+      <p class="text-gray-600">Track your progress, view lessons, and participate in interactive quizzes all in one place.</p> 
     </div>
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus
-      perferendis eos, consectetur, cumque, autem et quod magni necessitatibus
-      tempora dolorum deleniti neque suscipit aspernatur soluta cum sit. Minus,
-      impedit quo.
-    </p>
-  </div>
-  <!--  -->
-  <div class="w-3/5 mx-auto my-4">
-    <div class="flex gap-4 justify-center items-center mb-6">
-      <svg
-        height="36px"
-        width="36px"
-        version="1.1"
-        id="_x32_"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 0 512 512"
-        xml:space="preserve"
-        fill="#FF4081FF"
-      >
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g
-          id="SVGRepo_tracerCarrier"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></g>
-        <g id="SVGRepo_iconCarrier">
-          <style type="text/css">
-            .st0 {
-              fill: #ff4081ff;
-            }
-          </style>
-          <g>
-            <path
-              class="st0"
-              d="M80.584,108.848c34.877,0,41.862-27.108,41.862-41.892v-14.3c0-14.785-6.984-41.884-41.862-41.884 c-34.876,0-41.861,27.1-41.861,41.884v14.3C38.724,81.74,45.708,108.848,80.584,108.848z"
-            ></path>
-            <path
-              class="st0"
-              d="M224.214,188.162l-38.522,18.785l-32.093-52.3c-9.4-15.338-21.568-27.308-38.83-27.308H88.461H51 c-28.169,0-51,24.192-51,54.031v155.368h34.477v164.491h33.368l20.616-149.86l20.615,149.86h33.369v-237.66v-39.138l28.231,32.615 l53.538-37.338V188.162z"
-            ></path>
-            <polygon
-              class="st0"
-              points="354.463,20.74 322.955,20.74 189.045,20.74 189.045,44.371 189.045,182.293 191.63,186.493 204.798,180.04 204.798,44.371 496.246,44.371 496.246,280.677 204.798,280.677 204.798,254.484 189.045,264.216 189.045,280.677 189.045,304.307 512,304.307 512,280.677 512,44.371 512,20.74 "
-            ></polygon>
-          </g>
-        </g>
-      </svg>
-      <h2 class="text-xl font-extrabold">Teacher Features</h2>
+
+    <!-- Parent Features --> 
+    <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-center"> 
+      <div class="text-[#FF4081] text-5xl mb-4">👨‍👩‍👧‍👦</div>
+      <h3 class="font-bold text-xl mb-2">Parental Insights</h3> 
+      <p class="text-gray-600">Monitor your child’s academic journey and stay informed with performance analytics and alerts.</p> 
     </div>
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus
-      perferendis eos, consectetur, cumque, autem et quod magni necessitatibus
-      tempora dolorum deleniti neque suscipit aspernatur soluta cum sit. Minus,
-      impedit quo.
-    </p>
+
+    <!-- Teacher Features --> 
+    <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-center"> 
+      <div class="text-[#4CAF50] text-5xl mb-4">🧑‍🏫</div>
+      <h3 class="font-bold text-xl mb-2">Smart Teaching Tools</h3> 
+      <p class="text-gray-600">Easily create, manage, and grade assignments with AI-enhanced tools and live class support.</p> 
+    </div>
   </div>
 </section>
 
-<section
-  class="bg-[#636AE8FF] text-white flex flex-col md:flex-row border border-[#636AE8FF] justify-between rounded-xl p-0 w-[80%] mx-auto my-6"
->
-  <div>
-    <img
-      src="./assets/contact.jpg"
-      alt=""
-      class="rounded-r-xl md:rounded-none"
-    />
-  </div>
-  <div
-    class="text-white flex flex-col justify-center items-center w-[350px] mx-auto text-center gap-3"
-  >
-    <h2 class="text-2xl font-bold">Join Our EDU system</h2>
-    <p>
-      Unlock your full potential with access to top educators and resources.
-      Sign up now and start your learning journey!
-    </p>
-    <button class="bg-white text-[#636AE8FF] px-4 py-2 rounded-md mb-4">
-      Join Us
-    </button>
-  </div>
+<section class="bg-[#636AE8FF] text-white py-12 animate-fade-in-up"> 
+  <div class="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-6 gap-8"> 
+    <img src="./assets/contact.jpg" alt="Contact" class="rounded-2xl w-full md:w-1/2 shadow-lg" /> 
+
+    <div class="flex flex-col justify-center items-start gap-4 w-full md:w-1/2 text-left"> 
+      <h2 class="text-3xl font-bold">Join Our Education Revolution</h2> 
+      <p class="text-lg leading-relaxed">Experience a personalized learning environment that adapts to each learner's pace and needs. From real-time progress tracking to AI-powered tutoring, we help students and teachers thrive.</p> 
+      <button class="bg-white text-[#636AE8FF] font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition-all">Join Now</button> 
+    </div> 
+  </div> 
 </section>
 
-<footer
-  class="h-[300px] rounded-t-[70px] bg-[#2C2F66] mt-14 flex items-center justify-center text-white text-md font-semibold"
->
-  &copy; 2025 Your Company. All Rights Reserved.
+<footer class="h-52 bg-[#2C2F66] mt-14 flex items-center justify-center text-white text-md font-semibold rounded-t-[50px] animate-fade-in-up"> 
+  &copy; 2025 LearnSphere. All Rights Reserved. 
 </footer>
+
+
+
+  </main>
+</div>

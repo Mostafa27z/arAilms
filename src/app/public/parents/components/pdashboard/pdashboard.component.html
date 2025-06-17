@@ -1,63 +1,65 @@
-<div class="bg-white p-6 rounded-2xl shadow-md">
-  <!-- Student Info -->
-  <div class="flex items-center gap-4 mb-6">
-    <img
-      src="/assets/avatar.png"
-      alt="Student Avatar"
-      class="w-14 h-14 rounded-full"
-    />
-    <div>
-      <h2 class="text-xl font-semibold">Sarah Doe</h2>
-      <p class="text-sm text-gray-500">Grade 10 • Student ID: 2025001</p>
-    </div>
-  </div>
+<div class="p-6 bg-gray-100 min-h-screen">
+  <h2 class="text-2xl font-semibold mb-4">My Children</h2>
 
-  <!-- Stats Overview -->
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
-  >
-    <div
-      class="bg-purple-600 text-white p-4 rounded-xl shadow-md flex flex-col items-center"
-    >
-      <span class="text-2xl font-bold">8</span>
-      <p class="text-sm">Total Enrolled Courses</p>
-    </div>
-    <div
-      class="bg-blue-600 text-white p-4 rounded-xl shadow-md flex flex-col items-center"
-    >
-      <span class="text-2xl font-bold">5</span>
-      <p class="text-sm">Ongoing Courses</p>
-      <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
-        <div class="bg-blue-400 h-2 rounded-full" style="width: 60%"></div>
+  <!-- 🔄 Students Loading Placeholder -->
+  <div *ngIf="loadingStudents" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div *ngFor="let i of [1, 2]" class="animate-pulse bg-white p-6 rounded-2xl shadow-md h-48">
+      <div class="h-6 bg-gray-200 w-1/2 mb-4 rounded"></div>
+      <div class="h-4 bg-gray-200 w-1/4 mb-2 rounded"></div>
+      <div class="grid grid-cols-3 gap-3 mt-6">
+        <div class="h-12 bg-gray-200 rounded-xl"></div>
+        <div class="h-12 bg-gray-200 rounded-xl"></div>
+        <div class="h-12 bg-gray-200 rounded-xl"></div>
       </div>
     </div>
-    <div
-      class="bg-green-600 text-white p-4 rounded-xl shadow-md flex flex-col items-center"
-    >
-      <span class="text-2xl font-bold">3</span>
-      <p class="text-sm">Completed Courses</p>
-    </div>
-    <div
-      class="bg-yellow-500 text-white p-4 rounded-xl shadow-md flex flex-col items-center"
-    >
-      <span class="text-2xl font-bold">4</span>
-      <p class="text-sm">Upcoming Tests</p>
-    </div>
-    <div
-      class="bg-gray-800 text-white p-4 rounded-xl shadow-md flex flex-col items-center"
-    >
-      <span class="text-2xl font-bold">85%</span>
-      <p class="text-sm">Average Performance</p>
-    </div>
   </div>
 
-  <!-- Additional Student Details -->
-  <div class="mt-6 p-4 bg-gray-100 rounded-xl shadow">
-    <h3 class="text-lg font-semibold mb-2">Recent Activity</h3>
-    <ul class="text-sm text-gray-600 space-y-2">
-      <li>✔ Completed "Algebra Basics" on March 5</li>
-      <li>📝 Scheduled "Physics Test" for March 15</li>
-      <li>📚 Enrolled in "Biology Essentials"</li>
-    </ul>
+  <!-- ✅ Students Loaded -->
+  <div *ngIf="!loadingStudents" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+    <div *ngFor="let student of students" class="bg-white p-6 rounded-2xl shadow-md">
+      <!-- Student Info -->
+      <div class="flex items-center gap-4 mb-6">
+        <div>
+          <h2 class="text-xl font-semibold">{{ student.user.name }}</h2>
+          <p class="text-sm text-gray-500">Student ID: {{ student.student_id }}</p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Courses -->
+        <div class="bg-purple-600 text-white p-4 rounded-xl shadow-md flex flex-col items-center">
+          <span class="text-2xl font-bold" *ngIf="!student.loading.courses; else loadingCard"> 
+            {{ student.totalCourses }}
+          </span>
+          <ng-template #loadingCard>
+            <div class="w-6 h-6 bg-white/40 rounded-full animate-pulse"></div>
+          </ng-template>
+          <p class="text-sm">Courses</p>
+        </div>
+
+        <!-- Submitted -->
+        <div class="bg-green-600 text-white p-4 rounded-xl shadow-md flex flex-col items-center">
+          <span class="text-2xl font-bold" *ngIf="!student.loading.submissions; else loadingCard2"> 
+            {{ student.submittedAssignments }}
+          </span>
+          <ng-template #loadingCard2>
+            <div class="w-6 h-6 bg-white/40 rounded-full animate-pulse"></div>
+          </ng-template>
+          <p class="text-sm">Assignment - Submitted</p>
+        </div>
+
+        <!-- Pending -->
+        <div class="bg-yellow-500 text-white p-4 rounded-xl shadow-md flex flex-col items-center">
+          <span class="text-2xl font-bold" *ngIf="!student.loading.assignments; else loadingCard3">
+            {{ student.pendingAssignments }}
+          </span>
+          <ng-template #loadingCard3>
+            <div class="w-6 h-6 bg-white/40 rounded-full animate-pulse"></div>
+          </ng-template>
+          <p class="text-sm">Assignment - Pending</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -47,7 +47,7 @@ export class RegisterComponent {
     this.http.post(`${this.apiUrl}/register`, payload).subscribe({
       next: (res) => {
         console.log('Registration successful', res);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/student']);
       },
       error: (err) => {
         console.error('Registration error', err);

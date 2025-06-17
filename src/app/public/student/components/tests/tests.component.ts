@@ -1,145 +1,84 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HttpEvent, HttpEventType } from '@angular/common/http';
 import { ExamService } from '../../../../services/exam.service';
 import { AssignmentService } from '../../../../services/assignment.service';
-import { StudentSubmissionService } from '../../../../services/student-submission.service'; // ✅ هنا بنضيف السيرفس الجديد
-import { formatDate } from '@angular/common'; 
-import { FormsModule } from '@angular/forms';
-interface TestScore {
-  name: string;
-  score: string;
-  date: string;
-}
-
-interface Assignment {
-  name: string;
-  dueDate: string;
-  status: string;
-  progress: number;
-  action: string;
-}
+import { StudentSubmissionService } from '../../../../services/student-submission.service';
 
 @Component({
   selector: 'app-tests',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './tests.component.html',
   styleUrl: './tests.component.scss'
 })
 export class TestsComponent implements OnInit {
-   // نستورد الفورمات من Angular
-
-selectedAssignment: any = null;
-submissionText: string = '';
-
-isPastDue(dueDate: string): boolean {
-  const today = new Date();
-  return new Date(dueDate) < today;
-}
-
-// فتح نافذة تسليم
-// openSubmissionModal(assignment: any) {
-//   this.selectedAssignment = assignment;
-//   this.submissionText = ''; // reset on open
-
-//   // هنا ممكن تفتح مودال أو نافذة حسب نظامك
-//   const confirmed = prompt('Enter your submission text:', '');
-//   if (confirmed !== null) {
-//     this.submissionText = confirmed;
-//     this.submitAssignment();
-//   }
-// }
-
-// تنفيذ التسليم
-// submitAssignment() {
-//   if (!this.selectedAssignment) return;
-
-//   const payload = {
-//     student_id: this.studentId,
-//     assignment_id: this.selectedAssignment.id,
-//     submission_text: this.submissionText
-//   };
-
-//   this.submissionService.submitAssignment(payload).subscribe({
-//     next: (data) => {
-//       alert('Submission Successful');
-//       // بعد التسليم نحدث حالة التسليم لهذا التكليف
-//       this.selectedAssignment.submission_status = 'Submitted';
-//       this.selectedAssignment.submitted_at = new Date().toISOString();
-//     },
-//     error: (err) => {
-//       console.error('Submission error:', err);
-//       alert('Submission failed');
-//     }
-//   });
-// }
-
   studentId: any = 0;
+  exams: any[] = [];
+  ass: any[] = [];
+
+  loadingAssignments = true;
+  loadingExams = true;
+  checkingSubmissions = false;
+  submitting = false;
+
+  selectedAssignment: any = null;
+  submissionText: string = '';
+  selectedFile: File | null = null;
+  showModal: boolean = false;
+  uploadProgress: number = 0;
 
   constructor(
-    private serv: ExamService, 
-    private ser: AssignmentService, 
-    private submissionService: StudentSubmissionService  // ✅ نضيف السيرفس هنا
+    private serv: ExamService,
+    private ser: AssignmentService,
+    private submissionService: StudentSubmissionService
   ) {}
 
   ngOnInit(): void {
     const user = localStorage.getItem('roleid');
     if (user) {
       try {
-        const parsed = JSON.parse(user);
-        this.studentId = parsed;
-
+        this.studentId = JSON.parse(user);
         if (this.studentId) {
-          console.log(this.studentId);
           this.loadStudentResults(this.studentId);
           this.loadStudentAssignments(this.studentId);
-        } else {
-          console.error('Student ID is missing in localStorage user');
         }
       } catch (e) {
         console.error('Failed to parse user from localStorage', e);
       }
-    } else {
-      console.error('No user found in localStorage');
     }
   }
 
-  exams: any[] = [];
-
   loadStudentResults(id: any): void {
-    console.log(id);
+    this.loadingExams = true;
     this.serv.stdResult(id).subscribe({
       next: (data) => {
         this.exams = data.data;
-        console.log('Student results:', this.exams);
+        this.loadingExams = false;
       },
-      error: (err) => {
-        console.error('Error loading courses:', err);
-      }
+      error: () => (this.loadingExams = false)
     });
   }
 
-  ass: any[] = [];
-
   loadStudentAssignments(id: any): void {
-    console.log(id);
+    this.loadingAssignments = true;
     this.ser.stdResult(id).subscribe({
       next: (data) => {
         this.ass = data.data;
-        console.log('Student assignments:', this.ass);
-
-        // ✅ هنا بعد ما نحمل الـ assignments نجيب حالة كل واحد
+        this.loadingAssignments = false;
+        this.checkingSubmissions = true;
+        let completed = 0;
         this.ass.forEach((assignment: any) => {
           this.checkSubmission(assignment);
+          completed++;
+          if (completed === this.ass.length) this.checkingSubmissions = false;
         });
-
       },
-      error: (err) => {
-        console.error('Error loading courses:', err);
-      }
+      error: () => (this.loadingAssignments = false)
     });
   }
 
-  // ✅ تابع جديد لجلب حالة التسليم من السيرفر
   checkSubmission(assignment: any): void {
     const payload = {
       student_id: this.studentId,
@@ -148,65 +87,47 @@ isPastDue(dueDate: string): boolean {
 
     this.submissionService.checkSubmissionStatus(payload.student_id, payload.assignment_id).subscribe({
       next: (data) => {
-        // نضيف حالة التسليم مباشرة للـ assignment نفسه
         assignment.submission_status = data.submitted ? 'Submitted' : 'Not Submitted';
         assignment.submission_id = data.submission_id;
         assignment.submitted_at = data.submitted_at;
       },
-      error: (err) => {
-        console.error('Error checking submission:', err);
+      error: () => {
         assignment.submission_status = 'Unknown';
       }
     });
   }
 
-  // باقي بياناتك الثابتة زي ما هي ✅
-  assignments: Assignment[] = [
-    { name: 'Math Homework', dueDate: '2023-10-15', status: 'Submitted', progress: 5, action: 'View' },
-    { name: 'Science Project', dueDate: '2023-10-20', status: 'Not Submitted', progress: 5, action: 'Submit Now' },
-    { name: 'History Essay', dueDate: '2023-10-25', status: 'In Progress', progress: 5, action: 'Edit' },
-    { name: 'Art Assignment', dueDate: '2023-10-30', status: 'Submitted', progress: 5, action: 'View' },
-    { name: 'English Worksheet', dueDate: '2023-10-18', status: 'Not Submitted', progress: 5, action: 'Submit Now' }
-  ];
-
-  tests: TestScore[] = [
-    { name: 'Math Test', score: '95%', date: '08/15/2023' },
-    { name: 'Science Exam', score: '88%', date: '08/22/2023' },
-    { name: 'History Quiz', score: '92%', date: '09/01/2023' }
-  ];
-//   selectedAssignment: any = null;
-// submissionText: string = '';
-
-selectedFile: File | null = null;
-showModal: boolean = false;
-
-openSubmissionModal(assignment: any) {
-  this.selectedAssignment = assignment;
-  this.submissionText = '';
-  this.selectedFile = null;
-  this.showModal = true;
-}
-
-closeModal() {
-  this.showModal = false;
-  this.selectedFile = null;
-  this.submissionText = '';
-}
-
-onFileSelected(event: any) {
-  const file: File = event.target.files[0];
-  if (file) {
-    this.selectedFile = file;
+  isPastDue(dueDate: string): boolean {
+    return new Date(dueDate) < new Date();
   }
-}
 
-submitAssignment() {
+  openSubmissionModal(assignment: any): void {
+    this.selectedAssignment = assignment;
+    this.submissionText = '';
+    this.selectedFile = null;
+    this.showModal = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+    this.selectedFile = null;
+    this.submissionText = '';
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
+  submitAssignment(): void {
   if (!this.selectedAssignment) return;
 
   const formData = new FormData();
+  const isUpdate = this.selectedAssignment.submission_status === 'Submitted' && this.selectedAssignment.submission_id;
 
-  // ✅ لأول مرة تقديم نضيف البيانات الأساسية
-  if (this.selectedAssignment.submission_status !== 'Submitted') {
+  if (!isUpdate) {
     formData.append('student_id', this.studentId.toString());
     formData.append('assignment_id', this.selectedAssignment.id.toString());
   }
@@ -216,35 +137,45 @@ submitAssignment() {
     formData.append('file_path', this.selectedFile);
   }
 
-  if (this.selectedAssignment.submission_status === 'Submitted' && this.selectedAssignment.submission_id) {
+  this.submitting = true;
+  let completed = false;
+
+  const finalize = () => {
+    this.selectedAssignment.submission_status = 'Submitted';
+    this.selectedAssignment.submitted_at = new Date().toISOString();
+    this.submitting = false;
+    this.uploadProgress = 0;
+    this.closeModal();
+  };
+
+  const handleEvent = (event: HttpEvent<any>) => {
+    if (event.type === HttpEventType.UploadProgress && event.total) {
+      this.uploadProgress = Math.round((event.loaded / event.total) * 100);
+    }
+
+    if (event.type === HttpEventType.Response && !completed) {
+      completed = true;
+      finalize();
+    }
+  };
+
+  const handleError = (err: any) => {
+    console.error('❌ Submission error:', err);
+    this.submitting = false;
+    this.uploadProgress = 0;
+  };
+
+  if (isUpdate) {
     this.submissionService.updateAssignment(this.selectedAssignment.submission_id, formData).subscribe({
-      next: () => {
-        alert('Re-Submission Successful');
-        this.selectedAssignment.submission_status = 'Submitted';
-        this.selectedAssignment.submitted_at = new Date().toISOString();
-        this.closeModal();
-      },
-      error: (err) => {
-        console.error('Error updating submission:', err);
-        alert('Update failed');
-      }
+      next: handleEvent,
+      error: handleError
     });
   } else {
     this.submissionService.submitAssignment(formData).subscribe({
-      next: () => {
-        alert('Submission Successful');
-        this.selectedAssignment.submission_status = 'Submitted';
-        this.selectedAssignment.submitted_at = new Date().toISOString();
-        this.closeModal();
-      },
-      error: (err) => {
-        console.error('Submission error:', err);
-        alert('Submission failed');
-      }
+      next: handleEvent,
+      error: handleError
     });
   }
 }
-
-
 
 }
