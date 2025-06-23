@@ -54,6 +54,7 @@ import { TeacherPerformanceComponent } from './public/admin/components/teacher-p
 import { PlinkStudentComponent } from './public/parents/components/plink-student/plink-student.component';
 import { AboutUsComponent } from './public/components/about-us/about-us.component';
 import { AuthGuard } from './auth/auth.guard';
+import { LessonAssignmentUploadComponent } from './public/teacher/components/lesson-assignment-upload/lesson-assignment-upload.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
@@ -67,7 +68,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   data: { role: 'student' },
     children: [
-      { path: '', component: DashboardComponent }, 
+      { path: '', component: CourseComponent }, 
       { path: 'tests', component: TestsComponent }, // Loads inside StudentLayoutComponent's primary <router-outlet>
       { path: 'dashboard', component: DashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
       { path: 'courses', component: CourseComponent },
@@ -128,6 +129,7 @@ export const routes: Routes = [
       { path: 'dashboard', component: TdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
       { path: 'students', component: TstudentsComponent },
       { path: 'courses', component: TcoursesComponent },
+	  { path: 'addassignment', component: LessonAssignmentUploadComponent },
       { path: 'groups', component: TgroupsComponent },
       { path: 'chats', component: TchatsComponent },
       { path: 'payments', component: TpaymentsComponent },
@@ -136,6 +138,7 @@ export const routes: Routes = [
       { path: 'addlesson', component: AddLessonComponent },
       { path: 'editlesson/:id', component: EditLessonComponent },
       { path: 'ai', component: AiComponent },
+	   
       { path: 'lesson/:lessonId/questions', 
        component: LessonQuestionsComponent
       }

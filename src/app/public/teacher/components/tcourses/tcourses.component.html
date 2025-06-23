@@ -7,20 +7,23 @@
 
   <!-- Course Management Header -->
   <div class="bg-white p-6 rounded-lg shadow-md" *ngIf="!loadingCourses">
-    <h2 class="text-xl font-semibold text-[#2C2F66] mb-6 flex justify-between items-center">
+    <h2 class="text-xl font-semibold text-[#2C2F66] mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
       Course Management
-      <button (click)="openAddModal()" class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg flex items-center gap-2">➕ Add New Course</button>
+      <button (click)="openAddModal()" class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg flex items-center gap-2">
+        ➕ Add New Course
+      </button>
     </h2>
 
     <!-- Course Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <div *ngFor="let course of courses" class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
         <div class="bg-gray-300 h-32 rounded-lg flex items-center justify-center text-gray-500 overflow-hidden">
-          <img *ngIf="course.thumbnail" [src]="'http://localhost:8000' + course.thumbnail" class="object-cover h-32 w-full rounded-lg" />
+          <img *ngIf="course.thumbnail" [src]="'http://localhost:8000' + course.thumbnail"
+               class="object-cover h-32 w-full rounded-lg" />
           <span *ngIf="!course.thumbnail">No Thumbnail</span>
         </div>
-        <h3 class="text-lg font-semibold text-[#2C2F66] mt-3">{{ course.title }}</h3>
-        <p class="text-gray-500 text-sm mb-2">By: {{ course.teacher.user.name }}</p>
+        <h3 class="text-lg font-semibold text-[#2C2F66] mt-3 break-words">{{ course.title }}</h3>
+        <p class="text-gray-500 text-sm mb-2 break-words">By: {{ course.teacher.user.name }}</p>
         <p class="text-gray-500 text-sm">{{ course.approved_enrollments_count }} Students</p>
         <div class="flex justify-end items-center mt-3">
           <div class="flex gap-2 text-lg">
@@ -36,8 +39,10 @@
       <div class="bg-white p-6 rounded-lg w-[90%] md:w-[400px]">
         <h3 class="text-xl mb-4 font-semibold text-[#2C2F66]">Add Course</h3>
         <form (ngSubmit)="addCourse()" #addForm="ngForm">
-          <input [(ngModel)]="newCourse.title" name="title" required type="text" placeholder="Title" class="w-full p-2 border rounded mb-3" />
-          <input [(ngModel)]="newCourse.description" name="description" type="text" placeholder="Description" class="w-full p-2 border rounded mb-3" />
+          <input [(ngModel)]="newCourse.title" name="title" required type="text" placeholder="Title"
+                 class="w-full p-2 border rounded mb-3" />
+          <input [(ngModel)]="newCourse.description" name="description" type="text" placeholder="Description"
+                 class="w-full p-2 border rounded mb-3" />
           <input type="file" (change)="onFileSelected($event)" class="w-full p-2 border rounded mb-3" />
 
           <div *ngIf="uploadProgress > 0" class="mb-3">
@@ -60,8 +65,10 @@
       <div class="bg-white p-6 rounded-lg w-[90%] md:w-[400px]">
         <h3 class="text-xl mb-4 font-semibold text-[#2C2F66]">Edit Course</h3>
         <form (ngSubmit)="updateCourse()" #editForm="ngForm">
-          <input [(ngModel)]="editCourse.title" name="title" required type="text" placeholder="Title" class="w-full p-2 border rounded mb-3" />
-          <input [(ngModel)]="editCourse.description" name="description" type="text" placeholder="Description" class="w-full p-2 border rounded mb-3" />
+          <input [(ngModel)]="editCourse.title" name="title" required type="text" placeholder="Title"
+                 class="w-full p-2 border rounded mb-3" />
+          <input [(ngModel)]="editCourse.description" name="description" type="text" placeholder="Description"
+                 class="w-full p-2 border rounded mb-3" />
           <input type="file" (change)="onEditFileSelected($event)" class="w-full p-2 border rounded mb-3" />
 
           <div *ngIf="editUploadProgress > 0" class="mb-3">
@@ -85,13 +92,16 @@
       <div *ngIf="loadingEnrollments" class="text-center text-yellow-700">Loading...</div>
       <div *ngIf="!loadingEnrollments && pendingEnrollments.length > 0; else noPending">
         <ul class="space-y-2">
-          <li *ngFor="let enrollment of pendingEnrollments" class="p-2 bg-white rounded shadow flex justify-between items-center">
-            <div>
+          <li *ngFor="let enrollment of pendingEnrollments"
+              class="p-2 bg-white rounded shadow flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
+            <div class="text-gray-800 break-words w-full sm:w-auto">
               Student: {{ enrollment.student.name }} - Course: {{ enrollment.course.title }}
             </div>
-            <div class="flex gap-2">
-              <button class="bg-green-500 text-white px-3 py-1 rounded" (click)="changeEnrollmentStatus(enrollment.id, 'approved')">Approve</button>
-              <button class="bg-red-500 text-white px-3 py-1 rounded" (click)="changeEnrollmentStatus(enrollment.id, 'rejected')">Reject</button>
+            <div class="flex gap-2 flex-wrap justify-end">
+              <button class="bg-green-500 text-white px-3 py-1 rounded"
+                      (click)="changeEnrollmentStatus(enrollment.id, 'approved')">Approve</button>
+              <button class="bg-red-500 text-white px-3 py-1 rounded"
+                      (click)="changeEnrollmentStatus(enrollment.id, 'rejected')">Reject</button>
             </div>
           </li>
         </ul>
@@ -107,12 +117,14 @@
       <div *ngIf="loadingEnrollments" class="text-center text-red-700">Loading...</div>
       <div *ngIf="!loadingEnrollments && rejectedEnrollments.length > 0; else noRejected">
         <ul class="space-y-2">
-          <li *ngFor="let enrollment of rejectedEnrollments" class="p-2 bg-white rounded shadow flex justify-between items-center">
-            <div>
+          <li *ngFor="let enrollment of rejectedEnrollments"
+              class="p-2 bg-white rounded shadow flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
+            <div class="text-gray-800 break-words w-full sm:w-auto">
               Student: {{ enrollment.student.name }} - Course: {{ enrollment.course.title }}
             </div>
             <div>
-              <button class="bg-green-500 text-white px-3 py-1 rounded" (click)="changeEnrollmentStatus(enrollment.id, 'approved')">Approve</button>
+              <button class="bg-green-500 text-white px-3 py-1 rounded"
+                      (click)="changeEnrollmentStatus(enrollment.id, 'approved')">Approve</button>
             </div>
           </li>
         </ul>

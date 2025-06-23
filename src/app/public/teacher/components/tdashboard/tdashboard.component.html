@@ -1,6 +1,6 @@
-<div class="p-6 min-h-screen bg-gray-50">
-  <h1 class="text-2xl font-semibold text-[#2C2F66]">Welcome back, Teacher!</h1>
-  <p class="text-gray-500">Here's your current teaching summary</p>
+<div class="p-4 sm:p-6 min-h-screen bg-gray-50">
+  <h1 class="text-xl sm:text-2xl font-semibold text-[#2C2F66]">Welcome back, Teacher!</h1>
+  <p class="text-sm sm:text-base text-gray-500">Here's your current teaching summary</p>
 
   <div *ngIf="isLoading" class="mt-10 text-center">
     <p>Loading dashboard...</p>
@@ -9,50 +9,46 @@
   <div *ngIf="!isLoading">
 
     <!-- Cards -->
-    <div class="grid grid-cols-3 gap-6 mt-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
       <div class="p-6 bg-white rounded-xl shadow-md border-l-4 border-[#7F55E0]">
-        <h2 class="text-xl font-semibold text-[#2C2F66]">Pending Assignments</h2>
-        <p class="text-3xl font-bold">{{ pendingAssignments }}</p>
+        <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66]">Pending Assignments</h2>
+        <p class="text-2xl sm:text-3xl font-bold">{{ pendingAssignments }}</p>
       </div>
 
       <div class="p-6 bg-white rounded-xl shadow-md border-l-4 border-[#7F55E0]">
-        <h2 class="text-xl font-semibold text-[#2C2F66]">Enrolled Students</h2>
-        <p class="text-3xl font-bold">{{ totalStudents }}</p>
+        <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66]">Enrolled Students</h2>
+        <p class="text-2xl sm:text-3xl font-bold">{{ totalStudents }}</p>
       </div>
 
       <div class="p-6 bg-white rounded-xl shadow-md border-l-4 border-[#7F55E0]">
-        <h2 class="text-xl font-semibold text-[#2C2F66]">My Courses</h2>
-        <p class="text-3xl font-bold">{{ totalCourses }}</p>
+        <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66]">My Courses</h2>
+        <p class="text-2xl sm:text-3xl font-bold">{{ totalCourses }}</p>
       </div>
     </div>
 
-    <!-- التفاصيل الإضافية -->
-    <div class="mt-8 p-6 bg-white rounded-xl shadow-md">
-      <h2 class="text-xl font-semibold text-[#2C2F66]">Students Enrolled</h2>
-      <table class="min-w-full mt-4 text-left">
-        <thead><tr><th>Student Name</th><th>Course</th></tr></thead>
-        <tbody>
-          <tr *ngFor="let student of students">
-            <td>{{ student.student_name }}</td>
-            <td>{{ student.course_name }}</td>
-          </tr>
-        </tbody>
-      </table>
+<!-- Students Enrolled as Cards -->
+<div class="mt-8">
+  <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66] mb-4">Students Enrolled</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div *ngFor="let student of students" class="p-4 bg-white rounded-xl shadow-md border border-gray-200">
+      <p class="font-semibold text-[#2C2F66]">{{ student.student_name }}</p>
+      <p class="text-gray-500 text-sm">Course: {{ student.course_name }}</p>
     </div>
+  </div>
+</div>
 
-    <div class="mt-8 p-6 bg-white rounded-xl shadow-md">
-      <h2 class="text-xl font-semibold text-[#2C2F66]">Pending Reviews</h2>
-      <table class="min-w-full mt-4 text-left">
-        <thead><tr><th>Assignment</th><th>Student</th><th>Submitted At</th></tr></thead>
-        <tbody>
-          <tr *ngFor="let submission of unreviewedAssignments">
-            <td>{{ submission.assignment_title }}</td>
-            <td>{{ submission.student_name }}</td>
-            <td>{{ submission.submitted_at | date:'short' }}</td>
-          </tr>
-        </tbody>
-      </table>
+<!-- Pending Reviews as Cards -->
+<div class="mt-8">
+  <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66] mb-4">Pending Reviews</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div *ngFor="let submission of unreviewedAssignments" class="p-4 bg-white rounded-xl shadow-md border border-gray-200">
+      <p class="font-semibold text-[#2C2F66]">{{ submission.assignment_title }}</p>
+      <p class="text-gray-500 text-sm">Student: {{ submission.student_name }}</p>
+      <p class="text-gray-400 text-xs mt-1">Submitted: {{ submission.submitted_at | date:'short' }}</p>
     </div>
+  </div>
+</div>
+
 
   </div>
 </div>
