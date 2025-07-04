@@ -13,7 +13,7 @@ import { ClubChatService } from '../../../../services/club-chat.service';
 })
 export class ClubsComponent implements OnInit {
   clubs: any[] = [];
-  clubMembers: any[] = [];
+  clubMembers: { club_id: number; status: string }[] = [];
   page: number = 1;
   userId: number = 0;
 
@@ -72,27 +72,34 @@ export class ClubsComponent implements OnInit {
   }
 
   isMember(clubId: number): boolean {
-    return this.clubMembers.some(member => member.club_id === clubId);
-  }
+  return this.clubMembers.some(m => m.club_id === clubId && m.status === 'approved');
+}
 
-  joinClub(club: any): void {
-    const data = {
-      club_id: club.id,
-      student_id: this.userId
-    };
+hasPendingRequest(clubId: number): boolean {
+  return this.clubMembers.some(m => m.club_id === clubId && m.status === 'pending');
+}
 
-    this.joining = true;
-    this.clubMemberService.joinClub(data).subscribe({
-      next: () => {
-        this.joining = false;
-        this.loadMyClubMemberships();
-      },
-      error: (err) => {
-        console.error('Error joining club:', err);
-        this.joining = false;
-      }
-    });
-  }
+
+ joinClub(club: any): void {
+  const data = {
+    club_id: club.id,
+    student_id: this.userId,
+    status: 'pending' // نضيف الحالة هنا
+  };
+
+  this.joining = true;
+  this.clubMemberService.joinClub(data).subscribe({
+    next: () => {
+      this.joining = false;
+      this.loadMyClubMemberships(); // إعادة تحميل العضويات
+    },
+    error: (err) => {
+      console.error('Error joining club:', err);
+      this.joining = false;
+    }
+  });
+}
+
 
   openChat(club: any): void {
     if (!this.isMember(club.id)) {

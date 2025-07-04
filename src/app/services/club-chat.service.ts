@@ -13,9 +13,9 @@ export class ClubChatService {
 
   // Get messages for a specific club
   getMessages(clubId: number, page: number = 1): Observable<any> {
-    const params = new HttpParams().set('page', page.toString());
-    return this.http.get(`${this.baseUrl}/${clubId}/messages`, { params });
-  }
+  return this.http.get(`${this.baseUrl}/${clubId}/messages?page=${page}`);
+}
+
 
   // Send a new message
   sendMessage(data: {

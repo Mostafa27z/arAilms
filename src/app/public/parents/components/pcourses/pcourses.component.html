@@ -1,58 +1,58 @@
-<div class="p-6">
-  <!-- 🔄 Loading Spinner -->
-  <div *ngIf="loading" class="flex justify-center items-center py-10">
-    <div class="w-12 h-12 border-4 border-[#7F55E0] border-t-transparent rounded-full animate-spin"></div>
-  </div>
-
-  <!-- 🚫 No student selected -->
-  <div *ngIf="!studentId && !loading" class="text-center py-10 text-lg font-semibold text-red-500">
-    Please select a student first.
-  </div>
-
-  <!-- ✅ Courses Section -->
-  <ng-container *ngIf="studentId && !loading">
-    <!-- Stats Overview -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-gray-500 text-sm">Total Enrolled</h3>
-        <p class="text-2xl font-semibold">{{ courses.length }}</p>
-        <p class="text-xs text-gray-400">Active Courses</p>
-      </div>
-    </div>
-
-    <!-- Course Table -->
-    <div class="bg-white p-6 rounded-2xl shadow overflow-x-auto">
-      <h3 class="text-lg font-semibold mb-4">Enrolled Courses</h3>
-
-      <!-- Desktop Table View -->
-      <table class="hidden md:table w-full text-left border-collapse rounded-lg overflow-hidden shadow-md">
-        <thead>
-          <tr class="bg-[#7F55E0] text-white">
-            <th class="p-3">Course Name</th>
-            <th class="p-3">Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let course of courses" class="border-b hover:bg-gray-100">
-            <td class="p-3">{{ course.courseName }}</td>
-            <td class="p-3">{{ course.instructor }}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Mobile Cards -->
-      <div class="md:hidden space-y-4">
-        <div *ngFor="let course of courses" class="border rounded-xl p-4 shadow-sm bg-white">
-          <div class="mb-2">
-            <span class="text-xs text-gray-500">Course Name</span>
-            <p class="font-medium">{{ course.courseName }}</p>
-          </div>
-          <div class="mb-2">
-            <span class="text-xs text-gray-500">Description</span>
-            <p>{{ course.instructor }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-container>
+<div class="p-6" dir="rtl"> 
+  <!-- 🔄 مؤشر التحميل --> 
+  <div *ngIf="loading" class="flex justify-center items-center py-10"> 
+    <div class="w-12 h-12 border-4 border-[#7F55E0] border-t-transparent rounded-full animate-spin"></div> 
+  </div> 
+ 
+  <!-- 🚫 لم يتم اختيار طالب --> 
+  <div *ngIf="!studentId && !loading" class="text-center py-10 text-lg font-semibold text-red-500"> 
+    يرجى اختيار طالب أولاً. 
+  </div> 
+ 
+  <!-- ✅ قسم الكورسات --> 
+  <ng-container *ngIf="studentId && !loading"> 
+    <!-- نظرة عامة على الإحصائيات --> 
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6"> 
+      <div class="bg-white p-4 rounded-2xl shadow"> 
+        <h3 class="text-gray-500 text-sm">إجمالي الكورسات المسجّلة</h3> 
+        <p class="text-2xl font-semibold">{{ courses.length }}</p> 
+        <p class="text-xs text-gray-400">كورسات نشطة</p> 
+      </div> 
+    </div> 
+ 
+    <!-- جدول الكورسات --> 
+    <div class="bg-white p-6 rounded-2xl shadow overflow-x-auto"> 
+      <h3 class="text-lg font-semibold mb-4">الكورسات المسجّلة</h3> 
+ 
+      <!-- العرض على الشاشات الكبيرة --> 
+      <table class="hidden md:table w-full text-right border-collapse rounded-lg overflow-hidden shadow-md"> 
+        <thead> 
+          <tr class="bg-[#7F55E0] text-white"> 
+            <th class="p-3">اسم الكورس</th> 
+            <th class="p-3">الوصف</th> 
+          </tr> 
+        </thead> 
+        <tbody> 
+          <tr *ngFor="let course of courses" class="border-b hover:bg-gray-100"> 
+            <td class="p-3">{{ course.courseName }}</td> 
+            <td class="p-3">{{ course.instructor }}</td> 
+          </tr> 
+        </tbody> 
+      </table> 
+ 
+      <!-- العرض على الموبايل --> 
+      <div class="md:hidden space-y-4"> 
+        <div *ngFor="let course of courses" class="border rounded-xl p-4 shadow-sm bg-white"> 
+          <div class="mb-2"> 
+            <span class="text-xs text-gray-500">اسم الكورس</span> 
+            <p class="font-medium">{{ course.courseName }}</p> 
+          </div> 
+          <div class="mb-2"> 
+            <span class="text-xs text-gray-500">الوصف</span> 
+            <p>{{ course.instructor }}</p> 
+          </div> 
+        </div> 
+      </div> 
+    </div> 
+  </ng-container> 
 </div>

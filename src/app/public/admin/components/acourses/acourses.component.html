@@ -1,39 +1,39 @@
-<div class="p-6 bg-gray-100 min-h-screen"> 
+<div class="p-6 bg-gray-100 min-h-screen" dir="rtl">  
 
-  <!-- Statistics cards -->
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-    <div class="p-4 bg-white shadow rounded-xl">
-      <h3 class="text-gray-500 text-sm">Total Courses</h3>
-      <p class="text-xl font-semibold">{{ totalCourses }}</p>
-    </div>
-    <div class="p-4 bg-white shadow rounded-xl">
-      <h3 class="text-gray-500 text-sm">Total Enrollments</h3>
-      <p class="text-xl font-semibold">{{ totalEnrollments }}</p>
-    </div>
-    <div class="p-4 bg-white shadow rounded-xl">
-      <h3 class="text-gray-500 text-sm">Pending Enrollments</h3>
-      <p class="text-xl font-semibold">{{ pendingEnrollments }}</p>
-    </div>
-  </div>
-
-  <!-- Courses Cards -->
-  <div class="bg-white shadow rounded-xl p-4"> 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"> 
-      <div *ngFor="let course of courses" class="bg-gray-50 shadow rounded-xl p-4"> 
-        <h3 class="text-lg font-semibold">{{ course.title }}</h3> 
-        <p class="text-sm text-gray-500"> 
-          Instructor: <span class="font-medium">{{ course.teacher }}</span> 
-        </p> 
-        <p class="text-sm text-gray-500"> 
-          Lessons: <span class="font-medium">{{ course.lessonsCount }}</span> 
-        </p> 
-        <p class="text-sm text-gray-500"> 
-          Enrollments: <span class="font-medium">{{ course.enrollmentsCount }}</span> 
-        </p> 
-        <div class="mt-4 flex justify-center"> 
-          <button class="text-red-500" (click)="deleteCourse(course.id)">🗑 Delete</button> 
-        </div> 
-      </div> 
+  <!-- بطاقات الإحصائيات --> 
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6"> 
+    <div class="p-4 bg-white shadow rounded-xl"> 
+      <h3 class="text-gray-500 text-sm">إجمالي الدورات</h3> 
+      <p class="text-xl font-semibold">{{ totalCourses }}</p> 
+    </div> 
+    <div class="p-4 bg-white shadow rounded-xl"> 
+      <h3 class="text-gray-500 text-sm">إجمالي التسجيلات</h3> 
+      <p class="text-xl font-semibold">{{ totalEnrollments }}</p> 
+    </div> 
+    <div class="p-4 bg-white shadow rounded-xl"> 
+      <h3 class="text-gray-500 text-sm">تسجيلات معلّقة</h3> 
+      <p class="text-xl font-semibold">{{ pendingEnrollments }}</p> 
     </div> 
   </div> 
+
+  <!-- بطاقات الدورات --> 
+  <div class="bg-white shadow rounded-xl p-4">  
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">  
+      <div *ngFor="let course of courses" class="bg-gray-50 shadow rounded-xl p-4">  
+        <h3 class="text-lg font-semibold">{{ course.title }}</h3>  
+        <p class="text-sm text-gray-500">  
+          المدرّس: <span class="font-medium">{{ course.teacher }}</span>  
+        </p>  
+        <p class="text-sm text-gray-500">  
+          عدد الدروس: <span class="font-medium">{{ course.lessonsCount }}</span>  
+        </p>  
+        <p class="text-sm text-gray-500">  
+          عدد المسجلين: <span class="font-medium">{{ course.enrollmentsCount }}</span>  
+        </p>  
+        <div class="mt-4 flex justify-center">  
+          <button class="text-red-500" (click)="deleteCourse(course.id)">🗑 حذف</button>  
+        </div>  
+      </div>  
+    </div>  
+  </div>  
 </div>

@@ -1,70 +1,70 @@
-<div class="p-6 space-y-6">
+<div class="p-6 space-y-6" dir="rtl">
 
-  <div *ngIf="loading" class="text-center py-10 font-semibold text-gray-600 flex  justify-center">
-     <div class="w-12 h-12 border-4 border-[#7F55E0] border-t-transparent rounded-full animate-spin"></div>
+  <div *ngIf="loading" class="text-center py-10 font-semibold text-gray-600 flex justify-center">
+    <div class="w-12 h-12 border-4 border-[#7F55E0] border-t-transparent rounded-full animate-spin"></div>
   </div>
 
   <div *ngIf="!studentId && !loading" class="text-center py-10 text-lg font-semibold text-red-500">
-    Please select student first.
+    الرجاء اختيار الطالب أولاً.
   </div>
 
   <ng-container *ngIf="studentId && !loading">
 
-    <!-- Summary Cards -->
+    <!-- البطاقات الإحصائية -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bg-white p-5 rounded-2xl shadow-lg text-center">
-        <h3 class="text-lg font-semibold">Total Assignments</h3>
+        <h3 class="text-lg font-semibold">إجمالي الواجبات</h3>
         <p class="text-3xl font-bold">{{ totalAssignments }}</p>
       </div>
       <div class="bg-white p-5 rounded-2xl shadow-lg text-center">
-        <h3 class="text-lg font-semibold">Reviewed</h3>
+        <h3 class="text-lg font-semibold">تمت المراجعة</h3>
         <p class="text-3xl font-bold text-green-500">{{ reviewedAssignments }}</p>
       </div>
       <div class="bg-white p-5 rounded-2xl shadow-lg text-center">
-        <h3 class="text-lg font-semibold">Pending Reviews</h3>
+        <h3 class="text-lg font-semibold">قيد المراجعة</h3>
         <p class="text-3xl font-bold text-red-500">{{ pendingReviews }}</p>
       </div>
       <div class="bg-white p-5 rounded-2xl shadow-lg text-center">
-        <h3 class="text-lg font-semibold">Student ID</h3>
+        <h3 class="text-lg font-semibold">رقم الطالب</h3>
         <p class="text-3xl font-bold">{{ studentId }}</p>
       </div>
     </div>
 
-    <!-- Assignments Cards -->
+    <!-- بطاقات الواجبات -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-  <div *ngFor="let submission of submissions" class="bg-white p-6 rounded-2xl shadow-lg">
-    <h3 class="font-semibold text-lg">{{ submission.assignment?.title ?? 'Untitled Assignment' }}</h3>
-    <p class="mt-2 text-sm text-gray-500">
-      <strong>Submitted At:</strong> {{ submission.updated_at | date }}
-    </p>
+      <div *ngFor="let submission of submissions" class="bg-white p-6 rounded-2xl shadow-lg">
+        <h3 class="font-semibold text-lg">{{ submission.assignment?.title ?? 'واجب بدون عنوان' }}</h3>
+        <p class="mt-2 text-sm text-gray-500">
+          <strong>تم التسليم في:</strong> {{ submission.updated_at | date }}
+        </p>
 
-    <div class="mt-4">
-      <span *ngIf="submission.reviewed" class="bg-green-500 text-white px-4 py-2 rounded-lg">Reviewed</span>
-      <span *ngIf="!submission.reviewed" class="bg-yellow-500 text-white px-4 py-2 rounded-lg">Pending Review</span>
+        <div class="mt-4">
+          <span *ngIf="submission.reviewed" class="bg-green-500 text-white px-4 py-2 rounded-lg">تمت المراجعة</span>
+          <span *ngIf="!submission.reviewed" class="bg-yellow-500 text-white px-4 py-2 rounded-lg">بانتظار المراجعة</span>
+        </div>
+
+        <div class="mt-4 text-center">
+          <button
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
+            (click)="openReview(submission)"
+            [disabled]="!submission.reviewed"
+          >
+            عرض الملاحظات
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="mt-4 text-center">
-      <button 
-        class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
-        (click)="openReview(submission)"
-        [disabled]="!submission.reviewed"
-      >
-        View Feedback
-      </button>
+    <!-- نافذة التقييم -->
+    <div *ngIf="selectedReview" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md relative">
+        <button (click)="closeReview()" class="absolute top-3 right-3 text-xl font-bold text-gray-600">✖</button>
+        <h3 class="text-xl font-semibold mb-4">ملاحظات المعلم</h3>
+
+        <p><strong>الدرجة:</strong> {{ selectedReview.score }}%</p>
+        <p class="mt-2"><strong>الملاحظات:</strong> {{ selectedReview.feedback }}</p>
+      </div>
     </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div *ngIf="selectedReview" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md relative">
-    <button (click)="closeReview()" class="absolute top-3 right-3 text-xl font-bold text-gray-600">✖</button>
-    <h3 class="text-xl font-semibold mb-4">Teacher Feedback</h3>
-
-    <p><strong>Score:</strong> {{ selectedReview.score }}%</p>
-    <p class="mt-2"><strong>Feedback:</strong> {{ selectedReview.feedback }}</p>
-  </div>
-</div>
 
   </ng-container>
 

@@ -1,29 +1,72 @@
-<div class="p-6 bg-gray-100 min-h-screen flex flex-col lg:flex-row">
-  <main class="flex-1 lg:ml-6 mt-6 lg:mt-0">
+<div class="p-6 bg-gray-100 min-h-screen flex flex-col lg:flex-row" dir="rtl">
+  <main class="flex-1 lg:mr-6 mt-6 lg:mt-0">
     <h1 class="text-2xl font-bold text-gray-800">
-      Welcome back, {{ name }}!
+      مرحبًا بعودتك، {{ name }}!
     </h1>
-    <p class="text-gray-600">Here's your learning progress</p>
+    <p class="text-gray-600">إليك ملخص تقدمك الدراسي</p>
 
-    <!-- Loading Spinner -->
+    <!-- مؤشر التحميل -->
     <div *ngIf="loadingCourses || loadingExams" class="flex justify-center py-6">
       <div class="w-10 h-10 border-4 border-purple-400 border-dashed rounded-full animate-spin"></div>
     </div>
 
-    <!-- Overview Cards -->
+    <!-- البطاقات الإحصائية -->
     <div *ngIf="!loadingCourses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
       <div class="bg-white p-4 rounded-lg shadow">
-        <h3 class="text-gray-700">Enrolled Courses</h3>
-        <p class="text-2xl font-bold">1</p>
+        <h3 class="text-gray-700">الدورات المسجل بها</h3>
+        <p class="text-2xl font-bold">{{this.courses.length}}</p>
       </div>
     </div>
 
-    <!-- Current Courses -->
-    <!-- <div class="mt-6 bg-white p-6 rounded-lg shadow">
-      <h2 class="text-xl font-semibold text-gray-800">Current Courses</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-gray-700">تم تسليم الواجبات</h3>
+    <p class="text-2xl font-bold">{{ submittedAssignments.length }}</p>
+  </div>
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-gray-700">لم تُسلّم بعد</h3>
+    <p class="text-2xl font-bold">{{ pendingAssignments.length }}</p>
+  </div>
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-gray-700">متأخرة</h3>
+    <p class="text-2xl font-bold text-red-500">{{ overdueAssignments.length }}</p>
+  </div>
+</div>
+
+
+<div class="mt-6 bg-white p-6 rounded-lg shadow">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">الدورات الحالية</h2>
+
+  <div *ngIf="courses.length === 0" class="text-gray-500">لا توجد دورات مسجل بها.</div>
+
+  <div class="space-y-4">
+    <div *ngFor="let course of courses" class="border-b pb-2">
+      <p class="text-gray-800 font-medium">{{ course.title }}</p>
+
+      <p class="text-sm text-gray-600">{{ course.description }}</p>
+
+      <div class="mt-2 h-2 bg-gray-200 rounded" *ngIf="courseProgressMap[course.id] !== undefined">
+        <div
+          class="h-full bg-purple-600 rounded"
+          [style.width.%]="courseProgressMap[course.id]"
+        ></div>
+      </div>
+
+      <p class="text-sm text-gray-600 mt-1" *ngIf="courseProgressMap[course.id] !== undefined">
+       معدل التقدم: {{ courseProgressMap[course.id] }}%
+      </p>
+    </div>
+  </div>
+</div>
+
+
+    <!-- الدورات الحالية -->
+    <!--
+    <div class="mt-6 bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-gray-800">الدورات الحالية</h2>
 
       <div *ngIf="loadingCourses" class="animate-pulse text-gray-400 mt-4">
-        Loading courses...
+        يتم تحميل الدورات...
       </div>
 
       <div *ngIf="!loadingCourses" class="mt-4 space-y-4">
@@ -32,18 +75,22 @@
           <p class="text-gray-600">{{ course.description }}</p>
         </div>
       </div>
-    </div> -->
+    </div>
+    -->
 
-    <!-- Upcoming Exams -->
-    <!-- <div *ngIf="!loadingExams" class="mt-6 bg-white p-6 rounded-lg shadow">
-      <h2 class="text-xl font-semibold text-gray-800">Upcoming Exams</h2>
-      <div *ngIf="exams.length === 0" class="text-gray-500 mt-2">No upcoming exams</div>
+    <!-- الامتحانات القادمة -->
+    <!--
+    <div *ngIf="!loadingExams" class="mt-6 bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-gray-800">الامتحانات القادمة</h2>
+      <div *ngIf="exams.length === 0" class="text-gray-500 mt-2">لا توجد امتحانات قريبة</div>
       <div class="mt-4 space-y-2" *ngFor="let exam of exams">
         <div class="flex justify-between text-gray-700">
           <p>{{ exam.title }}</p>
           <span class="text-gray-500">{{ exam.exam_date }}</span>
         </div>
       </div>
-    </div> -->
+    </div>
+    -->
+
   </main>
 </div>

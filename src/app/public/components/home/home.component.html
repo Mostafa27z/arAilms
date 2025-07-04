@@ -1,67 +1,65 @@
-<div *ngIf="loading" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
-  <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#636AE8]"></div>
-</div>
-<div *ngIf="!loading">
-  <!-- Put your current home content here -->
-  <main >
-    <main class="flex flex-wrap items-center justify-center gap-8 animate-fade-in"> 
-  <div class="w-full relative h-[400px] overflow-hidden rounded-b-3xl"> 
-    <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white text-center p-4 z-10"> 
-      <h1 class="font-bold text-3xl md:text-5xl mb-2">Empower Your Learning Journey</h1> 
-      <p class="max-w-xl mb-4 text-lg">Join thousands of learners and educators on our AI-powered platform. Learn, grow, and succeed at your own pace.</p> 
-      <button class="bg-[#4A50C0] hover:bg-[#3a3fb3] rounded-xl px-6 py-3 transition-all duration-300">Get Started</button> 
-    </div> 
-    <img src="./assets/home.png" alt="Hero" class="w-full h-full object-cover" /> 
-  </div> 
-</main>
+<div *ngIf="loading" class="fixed inset-0 bg-white z-50 flex items-center justify-center"> 
+  <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#636AE8]"></div> 
+</div> 
 
-<section class="my-12 animate-fade-in-up"> 
-  <div class="w-11/12 md:w-3/5 mx-auto text-center mb-10"> 
-    <h2 class="text-3xl font-bold text-[#2C2F66] mb-4">Platform Features</h2> 
-    <p class="text-gray-600">Explore our key features tailored for students, parents, and teachers to enhance the education experience.</p> 
-  </div>
+<div *ngIf="!loading"> 
+  <!-- Put your current home content here --> 
+  <main> 
+    <main class="flex flex-wrap items-center justify-center gap-8 animate-fade-in">  
+      <div class="w-full relative h-[400px] overflow-hidden rounded-b-3xl">  
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white text-center p-4 z-10">  
+          <h1 class="font-bold text-3xl md:text-5xl mb-2">عزّز رحلتك التعليمية</h1>  
+          <p class="max-w-xl mb-4 text-lg">انضم إلى آلاف المتعلمين والمعلمين على منصتنا المدعومة بالذكاء الاصطناعي. تعلّم، وتطور، وحقق النجاح بالوتيرة التي تناسبك.</p>  
+          <button class="bg-[#4A50C0] hover:bg-[#3a3fb3] rounded-xl px-6 py-3 transition-all duration-300">ابدأ الآن</button>  
+        </div>  
+        <img src="./assets/home.png" alt="Hero" class="w-full h-full object-cover" />  
+      </div>  
+    </main> 
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-10 w-11/12 md:w-4/5 mx-auto"> 
-    <!-- Student Features --> 
-    <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-center"> 
-      <div class="text-[#4A50C0] text-5xl mb-4">🎓</div>
-      <h3 class="font-bold text-xl mb-2">Student Dashboard</h3> 
-      <p class="text-gray-600">Track your progress, view lessons, and participate in interactive quizzes all in one place.</p> 
-    </div>
+    <section class="my-12 animate-fade-in-up">  
+      <div class="w-11/12 md:w-3/5 mx-auto text-center mb-10">  
+        <h2 class="text-3xl font-bold text-[#2C2F66] mb-4">مميزات المنصة</h2>  
+        <p class="text-gray-600">استكشف المميزات الرئيسية المصممة للطلاب وأولياء الأمور والمعلمين لتعزيز تجربة التعليم.</p>  
+      </div> 
 
-    <!-- Parent Features --> 
-    <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-center"> 
-      <div class="text-[#FF4081] text-5xl mb-4">👨‍👩‍👧‍👦</div>
-      <h3 class="font-bold text-xl mb-2">Parental Insights</h3> 
-      <p class="text-gray-600">Monitor your child’s academic journey and stay informed with performance analytics and alerts.</p> 
-    </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 w-11/12 md:w-4/5 mx-auto">  
+        <!-- Student Features -->  
+        <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-center">  
+          <div class="text-[#4A50C0] text-5xl mb-4">🎓</div> 
+          <h3 class="font-bold text-xl mb-2">لوحة تحكم الطالب</h3>  
+          <p class="text-gray-600">تابع تقدمك، وشاهد الدروس، وشارك في اختبارات تفاعلية كل ذلك في مكان واحد.</p>  
+        </div> 
 
-    <!-- Teacher Features --> 
-    <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-center"> 
-      <div class="text-[#4CAF50] text-5xl mb-4">🧑‍🏫</div>
-      <h3 class="font-bold text-xl mb-2">Smart Teaching Tools</h3> 
-      <p class="text-gray-600">Easily create, manage, and grade assignments with AI-enhanced tools and live class support.</p> 
-    </div>
-  </div>
-</section>
+        <!-- Parent Features -->  
+        <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-center">  
+          <div class="text-[#FF4081] text-5xl mb-4">👨‍👩‍👧‍👦</div> 
+          <h3 class="font-bold text-xl mb-2">تحليلات ولي الأمر</h3>  
+          <p class="text-gray-600">راقب المسار الأكاديمي لطفلك وكن على اطلاع دائم بتحليل الأداء والتنبيهات.</p>  
+        </div> 
 
-<section class="bg-[#636AE8FF] text-white py-12 animate-fade-in-up"> 
-  <div class="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-6 gap-8"> 
-    <img src="./assets/contact.jpg" alt="Contact" class="rounded-2xl w-full md:w-1/2 shadow-lg" /> 
+        <!-- Teacher Features -->  
+        <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300 text-center">  
+          <div class="text-[#4CAF50] text-5xl mb-4">🧑‍🏫</div> 
+          <h3 class="font-bold text-xl mb-2">أدوات التدريس الذكية</h3>  
+          <p class="text-gray-600">أنشئ وأدِر وقم بتصحيح الواجبات بسهولة باستخدام أدوات مدعومة بالذكاء الاصطناعي ودعم الحصص المباشرة.</p>  
+        </div> 
+      </div> 
+    </section> 
 
-    <div class="flex flex-col justify-center items-start gap-4 w-full md:w-1/2 text-left"> 
-      <h2 class="text-3xl font-bold">Join Our Education Revolution</h2> 
-      <p class="text-lg leading-relaxed">Experience a personalized learning environment that adapts to each learner's pace and needs. From real-time progress tracking to AI-powered tutoring, we help students and teachers thrive.</p> 
-      <button class="bg-white text-[#636AE8FF] font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition-all">Join Now</button> 
-    </div> 
-  </div> 
-</section>
+    <section class="bg-[#636AE8FF] text-white py-12 animate-fade-in-up">  
+      <div class="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-6 gap-8">  
+        <img src="./assets/contact.jpg" alt="Contact" class="rounded-2xl w-full md:w-1/2 shadow-lg" />  
 
-<footer class="h-52 bg-[#2C2F66] mt-14 flex items-center justify-center text-white text-md font-semibold rounded-t-[50px] animate-fade-in-up"> 
-  &copy; 2025 LearnSphere. All Rights Reserved. 
-</footer>
+        <div class="flex flex-col justify-center items-start gap-4 w-full md:w-1/2 text-left">  
+          <h2 class="text-3xl font-bold">انضم إلى ثورة التعليم</h2>  
+          <p class="text-lg leading-relaxed">استمتع بتجربة تعليمية مخصصة تتكيف مع احتياجات وسرعة كل متعلم. من تتبع التقدم لحظيًا إلى الدعم الذكي، نساعد الطلاب والمعلمين على النجاح.</p>  
+          <button class="bg-white text-[#636AE8FF] font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition-all">انضم الآن</button>  
+        </div>  
+      </div>  
+    </section> 
 
-
-
-  </main>
+    <footer class="h-52 bg-[#2C2F66] mt-14 flex items-center justify-center text-white text-md font-semibold rounded-t-[50px] animate-fade-in-up">  
+      &copy; 2025 LearnSphere. جميع الحقوق محفوظة.  
+    </footer> 
+  </main> 
 </div>

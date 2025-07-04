@@ -1,29 +1,55 @@
-<div class="p-6 bg-gray-100 min-h-screen">
+<div class="p-6 bg-gray-100 min-h-screen" dir="rtl">
   <h2 class="text-xl font-semibold mb-4">{{ lesson.title }}</h2>
   <p class="text-gray-700 mb-6">{{ lesson.content }}</p>
 
-  <div *ngIf="this.questions.length > 0">
-    <h3 class="text-lg font-semibold mb-3">Quiz</h3>
+  <!-- ✅ نتيجة الطالب -->
+  <div *ngIf="submitted" class="mb-6 text-lg text-center font-bold text-blue-800">
+    نتيجتك: {{ score }}/{{ questions.length }}
+    <button (click)="retakeTest()" class="ml-4 bg-gray-500 text-white px-4 py-1 rounded hover:bg-gray-600">
+      إعادة المحاولة
+    </button>
+  </div>
+
+  <div *ngIf="questions.length > 0">
+    <h3 class="text-lg font-semibold mb-3">اختبار قصير</h3>
 
     <div *ngFor="let question of questions" class="mb-4 p-4 bg-white shadow rounded">
       <p class="font-medium mb-2">{{ question.question_text }}</p>
 
       <div *ngFor="let option of question.options" class="mb-1">
-        <label class="flex items-center space-x-2">
+        <label class="flex items-center space-x-reverse space-x-2">
           <input
             type="radio"
             [name]="'question-' + question.id"
             [value]="option.id"
             [(ngModel)]="answers[question.id]"
+            [disabled]="submitted"
             class="form-radio"
           />
-          <span>{{ option.option_text }}</span>
+          <span
+            [ngClass]="{
+              'text-green-600 font-bold': submitted && option.is_correct,
+              'text-red-600 font-bold': submitted && !option.is_correct && answers[question.id] === option.id
+            }"
+          >
+            {{ option.option_text }}
+            <span *ngIf="submitted && option.is_correct">✅</span>
+            <span *ngIf="submitted && !option.is_correct && answers[question.id] === option.id">❌</span>
+          </span>
         </label>
       </div>
     </div>
 
-    <button (click)="submitAnswers()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">
-      Submit Quiz
+    <button
+      *ngIf="!submitted"
+      (click)="submitAnswers()"
+      class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+    >
+      إرسال الإجابات
     </button>
+  </div>
+
+  <div *ngIf="questions.length === 0" class="text-center text-gray-500 mt-6">
+    لا توجد أسئلة حالياً لهذا الدرس.
   </div>
 </div>

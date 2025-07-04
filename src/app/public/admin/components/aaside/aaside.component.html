@@ -1,91 +1,66 @@
-<div
-  class="md:hidden fixed top-[20%] left-[-10px] z-50 h-[48px] bg-[#7F55E0] text-white px-3 py-2 rounded-full shadow-lg cursor-pointer"
-  (click)="toggleSidebar()"
-  *ngIf="!sidebarOpen"
-></div>
+<!-- زر فتح الشريط الجانبي في الجوال -->
+<div  
+  class="md:hidden fixed top-[20%] right-[-10px] z-50 h-[48px] bg-[#7F55E0] text-white px-3 py-2 rounded-full shadow-lg cursor-pointer"  
+  (click)="toggleSidebar()"  
+  *ngIf="!sidebarOpen"  
+>
+  ☰
+</div>  
 
-<aside
-  class="fixed z-40 top-0 left-0 h-full w-64 bg-[#7F55E0] text-white p-4 shadow-md flex flex-col transition-transform duration-300"
-  [class.-translate-x-full]="!sidebarOpen && isMobile"
+<!-- الشريط الجانبي -->
+<aside  
+  class="fixed z-40 top-0 right-0 h-full w-64 bg-[#7F55E0] text-white p-4 shadow-md flex flex-col transition-transform duration-300 rtl"
+  [class.translate-x-full]="!sidebarOpen && isMobile"
   [class.rounded-lg]="!isMobile"
   [class.md:static]="true"
   [class.md:translate-x-0]="true"
   [class.md:rounded-none]="true"
 >
-  <div class="md:hidden flex justify-end mb-4">
+  <!-- زر إغلاق في الجوال -->
+  <div class="md:hidden flex justify-start mb-4">
     <button (click)="toggleSidebar()" class="text-white text-xl font-bold">
       ✖
     </button>
   </div>
 
-  <div class="flex flex-col justify-between flex-1">
+  <div class="flex flex-col justify-between flex-1" dir="rtl">
     <div>
-      <h2 class="text-lg font-semibold mb-6 flex items-center gap-2">
-        <span>🛠️</span> Admin Panel
+      <h2 class="text-lg font-semibold mb-6 flex items-center gap-2 justify-end">
+        <span>🛠️</span> لوحة التحكم
       </h2>
-      <nav class="space-y-4">
-        <a
-          routerLink="dashboard"
-          routerLinkActive="bg-[#2C2F66]"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="block py-2 px-4 rounded flex items-center gap-2"
-        >
-          📊 Dashboard
+      <nav class="space-y-4 text-right">
+        <a routerLink="dashboard" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
+           class="block py-2 px-4 rounded flex items-center gap-2 justify-end">
+          📊 لوحة الإحصائيات
         </a>
-        <a
-          routerLink="users"
-          routerLinkActive="bg-[#2C2F66]"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
-        >
-          👥 User Management
+        <a routerLink="users" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
+           class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2 justify-end">
+          👥 إدارة المستخدمين
         </a>
-        <a
-          routerLink="courses"
-          routerLinkActive="bg-[#2C2F66]"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
-        >
-          📚 Course Management
+        <a routerLink="courses" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
+           class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2 justify-end">
+          📚 إدارة الدورات
         </a>
-        <!-- <a
-          routerLink="payments"
-          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
-        >
-          💳 Payments
-        </a> -->
-        <a
-          routerLink="groups"
-          routerLinkActive="bg-[#2C2F66]"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
-        >
-          🏫 Student Groups
+        <a routerLink="groups" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
+           class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2 justify-end">
+          🏫 مجموعات الطلاب
         </a>
-        <a
-          routerLink="reports"
-          routerLinkActive="bg-[#2C2F66]"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
-        >
-          📑 Reports
+        <a routerLink="reports" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
+           class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2 justify-end">
+          📑 التقارير
         </a>
-        <!-- <a routerLink="settings" class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2">
-          ⚙️ Settings
-        </a> -->
       </nav>
     </div>
 
+    <!-- مساعد الذكاء الاصطناعي -->
     <div class="bg-[#2C2F66] p-4 rounded-lg shadow-lg text-center mt-6">
-      <h3 class="text-lg font-semibold mb-2">🤖 AI Assistant</h3>
+      <h3 class="text-lg font-semibold mb-2">🤖 مساعد الذكاء الاصطناعي</h3>
       <p class="text-sm text-gray-300">
-        Get insights, reports, or help managing users.
+        احصل على تحليلات، تقارير، أو مساعدة في إدارة المستخدمين.
       </p>
-      <a
-        routerLink="ai"
-        class="mt-3 w-full bg-[#7F55E0] py-2 rounded-lg hover:bg-[#6A44C0] block"
-      >
-        Open Chat
+      <a routerLink="ai"
+         class="mt-3 w-full bg-[#7F55E0] py-2 rounded-lg hover:bg-[#6A44C0] block">
+        فتح المحادثة
       </a>
     </div>
   </div>

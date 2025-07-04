@@ -20,8 +20,11 @@ export class StudentService {
 }
 
   stdcourses(id: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}/courses`);
+    return this.http.get(`${environment.url}/enrollments/student/${id}/all`);
   }
+getCoursesWithProgress(studentId: number): Observable<any> {
+  return this.http.get(`${environment.url}/students/${studentId}/courses-with-progress`);
+}
 
   getProfile(id: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}/profile`);

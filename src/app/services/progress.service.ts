@@ -14,4 +14,8 @@ export class ProgressService {
   markProgress(data: any): Observable<any> {
     return this.http.post(this.baseUrl, data);
   }
+  getAllProgress(studentId: number) {
+  return this.http.get(`${this.baseUrl}/students/${studentId}`);
+}
+
 }

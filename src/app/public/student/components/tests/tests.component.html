@@ -1,99 +1,164 @@
-<div class="h-auto md:min-h-screen p-6 bg-gray-100"> 
-  <!-- <div class="p-5"> 
-    <div class="flex justify-between items-center mb-5"> 
-      <h2 class="text-xl font-semibold">Recent Tests Scores</h2> 
-    </div> 
-
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"> 
-      <div *ngFor="let test of exams" class="border rounded-lg p-5 shadow-sm"> 
-        <h3 class="font-medium">{{ test.exam.title }}</h3> 
-        <p class="text-gray-600">Score: <span class="font-semibold">{{ test.score }}</span></p> 
-        <p class="text-gray-600">Date: <span class="font-semibold">{{ test.exam.exam_date }}</span></p> 
-        <button class="mt-4 px-4 py-2 border rounded-md text-[#636AE8FF] hover:text-[#4850E4FF]">View Details</button> 
-      </div> 
-    </div> 
-  </div>  -->
-
-  <!-- Desktop View: Assignments --> 
-  <div class="hidden md:block overflow-x-auto mt-10 mx-auto rounded-md border border-gray-300"> 
-    <table class="w-full text-left rounded-lg"> 
-      <thead class="bg-gray-100"> 
-        <tr> 
-          <th class="p-3 border-b">Assignment Name</th> 
-          <th class="p-3 border-b">Due Date</th> 
-          <th class="p-3 border-b">Submission Status</th> 
-          <th class="p-3 border-b">Actions</th> 
-        </tr> 
-      </thead> 
-      <tbody> 
-        <tr *ngFor="let assignment of ass" class="border-b"> 
-          <td class="p-3">{{ assignment.title }}</td> 
-          <td class="p-3">{{ assignment.due_date }}</td> 
+<div class="h-auto md:min-h-screen p-6 bg-gray-100" dir="rtl">
+  <!-- عرض المهام لأجهزة سطح المكتب -->
+  <div class="hidden md:block overflow-x-auto mt-10 mx-auto rounded-md border border-gray-300">
+    <table class="w-full text-right rounded-lg">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-3 border-b">اسم المهمة</th>
+          <th class="p-3 border-b">تاريخ التسليم</th>
+          <th class="p-3 border-b">حالة التسليم</th>
+          <th class="p-3 border-b">المرفق</th>
+          <th class="p-3 border-b">الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let assignment of ass" class="border-b">
+          <td class="p-3">{{ assignment.title }}</td>
+          <td class="p-3">{{ assignment.due_date }}</td>
           <td class="p-3">
             <span [ngClass]="{
               'text-green-600': assignment.submission_status === 'Submitted',
               'text-red-600': assignment.submission_status === 'Not Submitted',
               'text-gray-500': !assignment.submission_status
             }">
-              {{ assignment.submission_status || 'Loading...' }}
+              {{ assignment.submission_status || 'جاري التحميل...' }}
             </span>
-          </td> 
-          <td class="p-3"> 
-            <button class="px-4 py-1 rounded text-black border" 
-              [disabled]="isPastDue(assignment.due_date)" 
+          </td>
+          <td class="p-3">
+  <a *ngIf="assignment.attachment" 
+     [href]="assignment.attachment" 
+     download 
+     class="text-blue-600 hover:underline"
+     target="_blank">
+    تحميل
+  </a>
+  <p *ngIf="!assignment.attachment" 
+     >
+    بلا مرفق
+</p>
+<!-- زر عرض الوصف -->
+<button class="ml-2 text-blue-600 underline" (click)="showDescription(assignment.description)">
+  عرض الوصف
+</button>
+
+</td>
+          <td class="p-3">
+            <button class="px-4 py-1 rounded text-black border"
+              [disabled]="isPastDue(assignment.due_date)"
               (click)="openSubmissionModal(assignment)">
-              {{ assignment.submission_status === 'Submitted' ? 'Re-Submit' : 'Submit' }}
-            </button> 
-          </td> 
-        </tr> 
-      </tbody> 
-    </table> 
-  </div> 
-</div> 
+              {{ assignment.submission_status === 'Submitted' ? 'إعادة الإرسال' : 'إرسال' }}
+            </button>
+            <button class="px-4 py-1 rounded text-blue-600 border ml-2"
+                    *ngIf="assignment.submission_status === 'Submitted'"
+                    (click)="showReview(assignment.submission_id)">
+              عرض المراجعة
+            </button>
 
-<!-- Mobile View --> 
-<div class="md:hidden overflow-x-auto mt-10 mx-auto rounded-md border border-gray-300"> 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"> 
-    <div class="bg-white p-6 rounded-lg shadow-md" *ngFor="let assignment of ass"> 
-      <h3 class="text-lg font-semibold">{{ assignment.title }}</h3> 
-      <p class="text-sm text-gray-500">Due Date: {{ assignment.due_date }}</p> 
-      <p class="text-sm text-gray-500">Description: {{ assignment.description }}</p> 
-      <p class="mt-2"> 
-        <span [ngClass]="{
-            'text-green-600': assignment.submission_status === 'Submitted',
-            'text-red-600': assignment.submission_status === 'Not Submitted',
-            'text-gray-500': !assignment.submission_status
-          }">
-          {{ assignment.submission_status || 'Loading...' }}
-        </span> 
-      </p> 
-      <div class="mt-4"> 
-        <button class="px-4 py-1 rounded text-black border" 
-          [disabled]="isPastDue(assignment.due_date)" 
-          (click)="openSubmissionModal(assignment)">
-          {{ assignment.submission_status === 'Submitted' ? 'Re-Submit' : 'Submit' }}
-        </button> 
-      </div> 
-    </div> 
-  </div> 
-</div> 
-
-<!-- Submission Modal --> 
-<div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"> 
-  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"> 
-    <h2 class="text-lg font-semibold mb-4">Submit Assignment</h2> 
-<div *ngIf="submitting" class="w-full bg-gray-200 rounded h-2 mt-4">
-  <div class="bg-blue-600 h-full rounded transition-all" [style.width.%]="uploadProgress"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-    <textarea [(ngModel)]="submissionText" rows="4" placeholder="Enter your submission text..." class="w-full p-2 border rounded mb-4"></textarea> 
+<!-- عرض المهام للجوال -->
+<div class="md:hidden overflow-x-auto mt-10 mx-auto rounded-md border border-gray-300" dir="rtl">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="bg-white p-6 rounded-lg shadow-md" *ngFor="let assignment of ass">
+      <h3 class="text-lg font-semibold text-right">{{ assignment.title }}</h3>
+      <p class="text-sm text-gray-500 text-right">تاريخ التسليم: {{ assignment.due_date }}</p>
+      <p class="text-sm text-gray-500 text-right">الوصف: {{ assignment.description }}</p>
+      <p class="mt-2 text-right">
+        <span [ngClass]="{
+          'text-green-600': assignment.submission_status === 'Submitted',
+          'text-red-600': assignment.submission_status === 'Not Submitted',
+          'text-gray-500': !assignment.submission_status
+        }">
+          {{ assignment.submission_status || 'جاري التحميل...' }}
+        </span>
+      </p>
+      <div class="text-sm text-right">
+  <span *ngIf="assignment.attachment">
+    📎 
+    <a [href]="assignment.attachment" 
+       download 
+       class="text-blue-600 hover:underline" 
+       target="_blank">تحميل المرفق</a>
+  </span>
+  <div *ngIf="!assignment.attachment" 
+     >
+    بلا مرفق
+</div>
+<!-- زر عرض الوصف -->
+<button class="ml-2 text-blue-600 underline" (click)="showDescription(assignment.description)">
+  عرض الوصف
+</button>
 
-    <input type="file" (change)="onFileSelected($event)" class="mb-4" /> 
+</div>
 
-    <div class="flex justify-end"> 
-      <button (click)="closeModal()" class="mr-4 text-gray-600">Cancel</button> 
-      <button (click)="submitAssignment()" class="bg-blue-600 text-white px-4 py-2 rounded">Submit</button> 
-    </div> 
-  </div> 
+      <div class="mt-4 text-right">
+        <button class="px-4 py-1 rounded text-black border"
+          [disabled]="isPastDue(assignment.due_date)"
+          (click)="openSubmissionModal(assignment)">
+          {{ assignment.submission_status === 'Submitted' ? 'إعادة الإرسال' : 'إرسال' }}
+        </button>
+        <button class="px-4 py-1 rounded text-blue-600 border ml-2"
+        *ngIf="assignment.submission_status === 'Submitted'"
+        (click)="showReview(assignment.submission_id)">
+  عرض المراجعة
+</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- نافذة إرسال المهمة -->
+<div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" dir="rtl">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-lg font-semibold mb-4 text-right">إرسال المهمة</h2>
+
+    <div *ngIf="submitting" class="w-full bg-gray-200 rounded h-2 mt-4">
+      <div class="bg-blue-600 h-full rounded transition-all" [style.width.%]="uploadProgress"></div>
+    </div>
+
+    <textarea [(ngModel)]="submissionText" rows="4" placeholder="اكتب إجابتك هنا..." class="w-full p-2 border rounded mb-4 text-right"></textarea>
+
+    <input type="file" (change)="onFileSelected($event)" class="mb-4 w-full" />
+
+    <div class="flex justify-between">
+      <button (click)="closeModal()" class="text-gray-600">إلغاء</button>
+      <button (click)="submitAssignment()" class="bg-blue-600 text-white px-4 py-2 rounded">إرسال</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="showReviewModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md" dir="rtl">
+    <h2 class="text-lg font-semibold mb-4 text-right">مراجعة المعلم</h2>
+
+    <div *ngIf="selectedReview">
+      <p><strong>الدرجة:</strong> {{ selectedReview.score }}</p>
+      <p><strong>تعليق المعلم:</strong></p>
+      <p class="whitespace-pre-line">{{ selectedReview.feedback }}</p>
+    </div>
+
+    <div *ngIf="!selectedReview">
+      <p class="text-gray-600">{{ reviewMessage || 'جاري التحميل...' }}</p>
+    </div>
+
+    <div class="mt-4 text-left">
+      <button (click)="showReviewModal = false" class="text-blue-600 hover:underline">إغلاق</button>
+    </div>
+  </div>
+</div>
+<!-- نافذة عرض الوصف -->
+<div *ngIf="showDescriptionModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" dir="rtl">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg text-right">
+    <h2 class="text-lg font-semibold mb-4">وصف المهمة</h2>
+    <p class="text-gray-800 whitespace-pre-wrap">{{ currentDescription }}</p>
+
+    <div class="mt-6 text-left">
+      <button (click)="closeDescription()" class="bg-gray-300 px-4 py-2 rounded">إغلاق</button>
+    </div>
+  </div>
 </div>

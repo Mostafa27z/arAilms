@@ -14,4 +14,8 @@ export class StudentAnswerService {
   submitAnswer(data: any): Observable<any> {
     return this.http.post(this.baseUrl, data);
   }
+  getAnswersByLessonAndStudent(lessonId: number, studentId: number) {
+  return this.http.get(`${environment.url}/students/${studentId}/lessons/${lessonId}/answers`);
+}
+
 }

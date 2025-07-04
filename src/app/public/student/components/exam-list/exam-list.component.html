@@ -1,0 +1,25 @@
+<div class="p-6 bg-gray-100 min-h-screen" dir="rtl">
+  <h2 class="text-2xl font-bold mb-4">📚 الامتحانات القادمة</h2>
+
+  <div *ngIf="loading" class="text-center py-6">
+    <div class="w-10 h-10 border-4 border-purple-400 border-dashed rounded-full animate-spin mx-auto"></div>
+    <p class="mt-2 text-gray-500">جاري تحميل الامتحانات...</p>
+  </div>
+
+  <div *ngIf="!loading && exams.length === 0" class="text-center text-gray-500">
+    لا توجد امتحانات قريبة حالياً.
+  </div>
+
+  <div *ngIf="!loading && exams.length > 0" class="grid gap-4">
+    <div *ngFor="let exam of exams" class="bg-white shadow p-4 rounded-lg">
+      <h3 class="text-lg font-semibold text-gray-800">{{ exam.title }}</h3>
+      <p class="text-gray-600 mb-2">الدورة: {{ exam.course.title }}</p>
+      <p class="text-gray-500">📅 التاريخ: {{ exam.exam_date | date:'medium' }}</p>
+      <!-- يمكنك إضافة زر للذهاب إلى صفحة الامتحان -->
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="text-red-500 mt-4 text-center">
+    {{ errorMessage }}
+  </div>
+</div>

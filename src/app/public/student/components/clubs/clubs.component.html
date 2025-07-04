@@ -1,37 +1,47 @@
-<div class="p-6 bg-gray-100 min-h-screen">
-  <h2 class="text-xl font-semibold mb-4">Student Clubs</h2>
+<div class="p-6 bg-gray-100 min-h-screen" dir="rtl">
+  <h2 class="text-xl font-semibold mb-4">أندية الطلاب</h2>
 
-  <!-- Spinner if loading -->
+  <!-- مؤشر التحميل -->
   <div *ngIf="loadingClubs || loadingMemberships" class="flex justify-center py-6">
     <div class="w-10 h-10 border-4 border-purple-400 border-dashed rounded-full animate-spin"></div>
   </div>
 
-  <!-- Clubs Grid -->
+  <!-- شبكة عرض الأندية -->
   <div *ngIf="!loadingClubs && !loadingMemberships" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div *ngFor="let club of clubs" class="bg-white p-4 shadow rounded-lg flex flex-col gap-3">
-      <h4 class="font-semibold">{{ club.name }}</h4>
-      <p class="text-sm mt-2">{{ club.description }}</p>
-      <p class="text-xs text-gray-500 mt-1">{{ club.members_count ?? '0' }} members</p>
+      
+      <h4 class="font-semibold text-lg">{{ club.name }}</h4>
+      <p class="text-sm text-gray-700 mt-2">{{ club.description }}</p>
+      <p class="text-xs text-gray-500 mt-1">{{ club.members_count ?? '0' }} عضو</p>
 
-      <ng-container *ngIf="isMember(club.id); else joinTemplate">
+      <!-- زر الدخول إلى المحادثة أو الانضمام -->
+          
+      <ng-container *ngIf="isMember(club.id); else otherCases">
         <button
-          class="mt-3 w-full bg-[#2C2F66] text-white py-2 rounded-lg"
+          class="mt-3 w-full bg-[#2C2F66] text-white py-2 rounded-lg hover:bg-[#1F1E52]"
           (click)="openChat(club)"
-          [disabled]="joining"
-        >
-          Open Chat
+          [disabled]="joining">
+          دخول المحادثة
         </button>
       </ng-container>
 
-      <ng-template #joinTemplate>
+      <ng-template #otherCases>
         <button
-          class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg"
+          class="mt-3 w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600"
+          *ngIf="hasPendingRequest(club.id)"
+          disabled>
+          بانتظار الموافقة
+        </button>
+
+        <button
+          *ngIf="!hasPendingRequest(club.id)"
+          class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
           (click)="joinClub(club)"
-          [disabled]="joining"
-        >
-          Join Club
+          [disabled]="joining">
+          انضم إلى النادي
         </button>
       </ng-template>
+
     </div>
   </div>
 </div>

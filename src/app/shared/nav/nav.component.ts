@@ -14,12 +14,21 @@ export class NavComponent {
   isLoggedIn = false;
   dashboardPath: string = '';
 
+  navLinks = [
+    { label: 'الرئيسية', path: '/home' },
+    { label: 'الدورات', path: '/course' },
+    { label: 'من نحن', path: '/about' },
+    // { label: 'اتصل بنا', path: '/contact' }
+  ];
+
   ngOnInit() {
     this.checkScreenSize();
     this.checkLoginStatus();
     window.addEventListener('resize', () => this.checkScreenSize());
+
     const user = localStorage.getItem('user');
     this.isLoggedIn = !!user;
+
     if (user) {
       const role = JSON.parse(user).role;
       switch (role) {
@@ -50,20 +59,12 @@ export class NavComponent {
   }
 
   checkLoginStatus() {
-    // example: checking if token exists
     this.isLoggedIn = !!localStorage.getItem('token');
   }
 
   logout() {
     localStorage.clear();
     this.isLoggedIn = false;
-    window.location.reload(); // or navigate to login
+    window.location.reload(); // أو يمكن إعادة التوجيه إلى صفحة تسجيل الدخول
   }
-  navLinks = [
-  { label: 'Home', path: '/home' },
-  { label: 'Courses', path: '/course' },
-  { label: 'About Us', path: '/about' },
-  // { label: 'Contact', path: '/contact' }
-];
-
 }

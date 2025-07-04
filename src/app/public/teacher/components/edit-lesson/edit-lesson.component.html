@@ -1,11 +1,11 @@
-<div class="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
-  <h2 class="text-xl font-semibold text-[#2C2F66] mb-6">Edit Lesson</h2>
+<div class="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto" dir="rtl">
+  <h2 class="text-xl font-semibold text-[#2C2F66] mb-6 text-right">تعديل الدرس</h2>
 
   <form [formGroup]="lessonForm" (ngSubmit)="updateLesson()">
     <div class="mb-4">
-      <label class="block font-medium mb-1">Select Course:</label>
-      <select formControlName="course_id" class="w-full p-2 border rounded">
-        <option value="">-- Select Course --</option>
+      <label class="block font-medium mb-1 text-right">اختر الدورة:</label>
+      <select formControlName="course_id" class="w-full p-2 border rounded text-right">
+        <option value="">-- اختر الدورة --</option>
         <option *ngFor="let course of courses" [value]="course.id">
           {{ course.title }}
         </option>
@@ -13,23 +13,23 @@
     </div>
 
     <div class="mb-4">
-      <label class="block font-medium mb-1">Lesson Title:</label>
-      <input type="text" formControlName="title" class="w-full p-2 border rounded" placeholder="Enter title" />
+      <label class="block font-medium mb-1 text-right">عنوان الدرس:</label>
+      <input type="text" formControlName="title" class="w-full p-2 border rounded text-right" placeholder="أدخل العنوان" />
     </div>
 
     <div class="mb-4">
-      <label class="block font-medium mb-1">Content:</label>
-      <textarea formControlName="content" rows="5" class="w-full p-2 border rounded" placeholder="Enter content"></textarea>
+      <label class="block font-medium mb-1 text-right">المحتوى:</label>
+      <textarea formControlName="content" rows="5" class="w-full p-2 border rounded text-right" placeholder="أدخل المحتوى"></textarea>
     </div>
 
     <div class="mb-4">
-      <label class="block font-medium mb-1">Replace Attachment (Optional):</label>
+      <label class="block font-medium mb-1 text-right">استبدال المرفق (اختياري):</label>
       <input type="file" (change)="onFileSelected($event)" class="w-full p-2 border rounded" />
     </div>
 
-    <div *ngIf="existingAttachment" class="mb-4">
+    <div *ngIf="existingAttachment" class="mb-4 text-right">
       <button (click)="downloadAttachment()" type="button" class="bg-green-500 text-white px-3 py-1 rounded">
-        📥 Download Existing File
+        📥 تحميل الملف الحالي
       </button>
     </div>
 
@@ -42,7 +42,7 @@
 
     <div class="flex justify-end">
       <button type="submit" class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg" [disabled]="lessonForm.invalid">
-        Update Lesson
+        تحديث الدرس
       </button>
     </div>
   </form>

@@ -1,11 +1,10 @@
-
 import { environment } from '../../../../environments/environment.development';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -16,7 +15,14 @@ import { CommonModule } from '@angular/common';
 export class RegisterComponent {
   registerForm: FormGroup;
   apiUrl = environment.url;
-
+  loading = true;
+ngAfterViewInit() {
+  const img = new Image();
+  img.src = '/assets/register.png';
+  img.onload = () => {
+    this.loading = false;
+  };
+}
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -24,10 +30,17 @@ export class RegisterComponent {
   ) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
-      password_confirmation: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      role: ['student', Validators.required],
       password: ['', Validators.required],
+      password_confirmation: ['', Validators.required],
     });
+
+    // // Simulate loading delay
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 500); // adjust if needed
   }
 
   onSubmit() {
@@ -35,25 +48,30 @@ export class RegisterComponent {
       this.registerForm.markAllAsTouched();
       return;
     }
-  
-    const { name, email, password ,password_confirmation } = this.registerForm.value;
+
+    const { name, email, phone, role, password, password_confirmation } = this.registerForm.value;
     const payload = {
       name,
       email,
+      phone,
+      role,
       password,
       password_confirmation,
     };
-  
+
     this.http.post(`${this.apiUrl}/register`, payload).subscribe({
       next: (res) => {
         console.log('Registration successful', res);
-        this.router.navigate(['/student']);
+        // redirect based on role
+        if (role === 'parent') {
+          this.router.navigate(['/parents']);
+        } else {
+          this.router.navigate(['/student']);
+        }
       },
       error: (err) => {
         console.error('Registration error', err);
-        // no reload here
       }
     });
   }
-  
 }

@@ -1,0 +1,24 @@
+<!-- my-groups.component.html -->
+<div class="p-6" dir="rtl">
+  <h2 class="text-xl font-bold mb-4">مجموعاتي</h2>
+
+  <div *ngIf="loading">جارٍ التحميل...</div>
+
+  <div *ngFor="let group of myGroups" class="bg-white shadow p-4 rounded mb-4">
+    <h3 class="text-lg font-semibold">{{ group.title }}</h3>
+    <p class="text-sm text-gray-700">{{ group.description }}</p>
+
+    <div class="mt-3">
+      <h4 class="text-md font-semibold mb-2">الجلسات:</h4>
+      <div *ngIf="group.sessions?.length === 0">لا توجد جلسات.</div>
+
+<div *ngFor="let session of group.sessions || []" class="bg-gray-100 p-2 rounded mb-2">
+  <p><strong>العنوان:</strong> {{ session.title }}</p>
+  <p><strong>الوصف:</strong> {{ session.description }}</p>
+  <p><strong>الميعاد:</strong> {{ session.session_time | date:'short' }}</p>
+  <a [href]="session.link" target="_blank" class="text-blue-600 underline">الدخول للجلسة</a>
+</div>
+
+    </div>
+  </div>
+</div>

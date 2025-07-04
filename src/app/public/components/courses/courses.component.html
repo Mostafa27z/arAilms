@@ -1,4 +1,4 @@
-<h1 class="text-[28px] font-extrabold text-center mt-6">Courses</h1>
+<h1 class="text-[28px] font-extrabold text-center mt-6">الدورات</h1>
 
 <!-- Loading Spinner -->
 <div *ngIf="loading" class="flex justify-center items-center h-[300px]">
@@ -7,7 +7,7 @@
 
 <!-- No Courses -->
 <div *ngIf="!loading && courses.length === 0" class="text-center text-gray-500 mt-12">
-  No courses available.
+  لا توجد دورات متاحة.
 </div>
 
 <!-- Courses Grid -->
@@ -20,10 +20,10 @@
 
     <h2 class="pl-3 text-[20px] font-bold truncate">{{ course.title }}</h2>
     <p class="pl-3 text-sm text-gray-600 line-clamp-3">
-      {{ course.description || 'No description available.' }}
+      {{ course.description || 'لا يوجد وصف متاح.' }}
     </p>
     <!-- <button class="text-[#7F55E0] border border-[#7F55E0] bg-white px-5 py-2 rounded-2xl mx-3 mt-auto">
-      View Course
+      عرض الدورة
     </button> -->
   </div>
 </section>

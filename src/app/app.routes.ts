@@ -55,6 +55,10 @@ import { PlinkStudentComponent } from './public/parents/components/plink-student
 import { AboutUsComponent } from './public/components/about-us/about-us.component';
 import { AuthGuard } from './auth/auth.guard';
 import { LessonAssignmentUploadComponent } from './public/teacher/components/lesson-assignment-upload/lesson-assignment-upload.component';
+import { ExamTakeComponent } from './public/student/components/exam-take/exam-take.component';
+import { ExamListComponent } from './public/student/components/exam-list/exam-list.component';
+import { StudentGroupsComponent } from './public/student/components/groups/groups.component';
+import { MyGroupsComponent } from './public/student/components/my-groups/my-groups.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
@@ -79,7 +83,12 @@ export const routes: Routes = [
       { path: 'ai', component: AiComponent },
       { path: 'lessons/:lessonId', component: LessonViewComponent },
       { path: 'courses/:courseId', component: CourseDetailsComponent},
-      
+      { path: 'exams/:examId', component: ExamTakeComponent },
+      { path: 'groups', component: StudentGroupsComponent },
+      { path: 'mygroups', component: MyGroupsComponent },
+      // { path: 'exams', component: ExamListComponent }
+
+
 
     ],
   },

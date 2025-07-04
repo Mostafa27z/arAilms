@@ -17,6 +17,10 @@ export class ClubChatComponent implements OnInit {
   newMessage: string = '';
   studentId: number = 0;
 Id: any;
+page = 1;
+  
+  loading = false;
+  allLoaded = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,17 +44,31 @@ Id: any;
     }
   }
 
-  loadMessages(): void {
-    this.chatService.getMessages(this.clubId).subscribe({
+ 
+
+loadMessages(): void {
+    if (this.loading || this.allLoaded) return;
+
+    this.loading = true;
+    this.chatService.getMessages(this.clubId, this.page).subscribe({
       next: (res) => {
-        this.messages = res.data;
-        console.log(this.messages);
+        const newMessages = res.data;
+
+        if (newMessages.length === 0) {
+          this.allLoaded = true;
+        } else {
+          this.messages = [...newMessages, ...this.messages]; // إضافة الرسائل الجديدة فوق
+          this.page++;
+        }
+
+        this.loading = false;
       },
-      error: (err) => {
-        console.error('Error loading messages:', err);
+      error: () => {
+        this.loading = false;
       }
     });
   }
+
 
   sendMessage(): void {
     if (!this.newMessage.trim()) return;

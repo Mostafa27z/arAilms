@@ -5,6 +5,7 @@ import { HttpClientModule, HttpEvent, HttpEventType } from '@angular/common/http
 import { ExamService } from '../../../../services/exam.service';
 import { AssignmentService } from '../../../../services/assignment.service';
 import { StudentSubmissionService } from '../../../../services/student-submission.service';
+import { TeacherAssignmentReviewService } from '../../../../services/teacher-assignment-review.service';
 
 @Component({
   selector: 'app-tests',
@@ -22,17 +23,32 @@ export class TestsComponent implements OnInit {
   loadingExams = true;
   checkingSubmissions = false;
   submitting = false;
+selectedReview: any = null;
+reviewMessage: string = '';
+showReviewModal: boolean = false;
 
   selectedAssignment: any = null;
   submissionText: string = '';
   selectedFile: File | null = null;
   showModal: boolean = false;
   uploadProgress: number = 0;
+showDescriptionModal: boolean = false;
+currentDescription: string = '';
+showDescription(description: string): void {
+  this.currentDescription = description;
+  this.showDescriptionModal = true;
+}
+
+closeDescription(): void {
+  this.showDescriptionModal = false;
+  this.currentDescription = '';
+}
 
   constructor(
     private serv: ExamService,
     private ser: AssignmentService,
-    private submissionService: StudentSubmissionService
+    private submissionService: StudentSubmissionService,
+    private rev:TeacherAssignmentReviewService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +65,25 @@ export class TestsComponent implements OnInit {
       }
     }
   }
+showReview(submissionId: number): void {
+  this.reviewMessage = '';
+  this.selectedReview = null;
+  this.showReviewModal = true;
+
+  this.rev.getReviewsBySubmission(submissionId).subscribe({
+    next: (res) => {
+      if (res ) {
+        this.selectedReview = res[0];
+      } else {
+        this.reviewMessage = 'لم يتم التقييم بعد.';
+      }
+      console.log(res)
+    },
+    error: () => {
+      this.reviewMessage = 'حدث خطأ أثناء تحميل المراجعة.';
+    }
+  });
+}
 
   loadStudentResults(id: any): void {
     this.loadingExams = true;

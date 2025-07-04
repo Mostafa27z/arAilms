@@ -7,13 +7,44 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class ExamService {
-private baseUrl = environment.url + '/exam';
-  constructor(private http: HttpClient) { }
+  private examsUrl = `${environment.url}/exams`;
+  private resultsUrl = `${environment.url}/exam-results`;
+
+  constructor(private http: HttpClient) {}
+
+
+  // جلب الامتحانات القادمة
   upcoming(): Observable<any> {
-  return this.http.get(`${this.baseUrl}s/upcoming/all`);
+    return this.http.get(`${this.examsUrl}/upcoming/all`);
   }
-  stdResult(id:any): Observable<any> {
-    console.log(id + "aa")
-  return this.http.get(`${this.baseUrl}-results/student/${id}/all`);
+
+  // جلب نتائج الطالب
+  stdResult(studentId: number): Observable<any> {
+    return this.http.get(`${this.resultsUrl}/student/${studentId}/all`);
+  }
+
+  // جلب امتحان معين بتفاصيله (مع الأسئلة)
+  getExam(id: number): Observable<any> {
+    return this.http.get(`${this.examsUrl}/${id}`);
+  }
+
+  // جلب كل امتحانات كورس معين
+  getByCourse(courseId: number): Observable<any> {
+    return this.http.get(`${this.examsUrl}/course/${courseId}/all`);
+  }
+
+  // جلب امتحانات اليوم
+  today(): Observable<any> {
+    return this.http.get(`${this.examsUrl}/today/all`);
+  }
+
+  // جلب الامتحانات المنتهية
+  past(): Observable<any> {
+    return this.http.get(`${this.examsUrl}/past/all`);
+  }
+
+  // إرسال إجابات الامتحان (للأسئلة الاختيارية والمقالية)
+  submitAnswers(data: any[]): Observable<any> {
+    return this.http.post(`${environment.url}/student-answers`, data);
   }
 }

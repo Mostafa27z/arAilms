@@ -1,18 +1,20 @@
 <div
-  class="md:hidden fixed top-[20%] left-[-10px] z-50 h-[48px] bg-[#7F55E0] text-white px-3 py-2 rounded-full shadow-lg cursor-pointer"
+  class="md:hidden fixed top-[20%] right-[-10px] z-50 h-[48px] bg-[#7F55E0] text-white px-3 py-2 rounded-full shadow-lg cursor-pointer"
   (click)="toggleSidebar()"
   *ngIf="!sidebarOpen"
+  dir="rtl"
 ></div>
 
 <aside
-  class="fixed z-40 top-0 left-0 h-full w-64 bg-[#7F55E0] text-white p-4 shadow-md flex flex-col transition-transform duration-300"
-  [class.-translate-x-full]="!sidebarOpen && isMobile"
+  dir="rtl"
+  class="fixed z-40 top-0 right-0 h-full w-64 bg-[#7F55E0] text-white p-4 shadow-md flex flex-col transition-transform duration-300"
+  [class.translate-x-full]="!sidebarOpen && isMobile"
   [class.rounded-lg]="!isMobile"
   [class.md:static]="true"
   [class.md:translate-x-0]="true"
   [class.md:rounded-none]="true"
 >
-  <div class="md:hidden flex justify-end mb-4">
+  <div class="md:hidden flex justify-start mb-4">
     <button (click)="toggleSidebar()" class="text-white text-xl font-bold">
       ✖
     </button>
@@ -21,7 +23,7 @@
   <div class="flex flex-col justify-between flex-1">
     <div>
       <h2 class="text-lg font-semibold mb-6 flex items-center gap-2">
-        <span>📊</span> Dashboard
+        <span>📊</span> لوحة التحكم
       </h2>
       <nav class="space-y-4">
         <a
@@ -29,7 +31,7 @@
           routerLinkActive="bg-[#2C2F66]"
           class="block py-2 px-4 rounded flex items-center gap-2"
         >
-          🏠 Home
+          🏠 الرئيسية
         </a>
         <a
           routerLink="courses"
@@ -37,7 +39,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
         >
-          📚 My Courses
+          📚 دوراتي
         </a>
         <a
           routerLink="tests"
@@ -45,39 +47,27 @@
           [routerLinkActiveOptions]="{ exact: true }"
           class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
         >
-          📝 Assignments
+          📝 الواجبات
         </a>
-        <!-- <a
-          routerLink="payment"
-          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
-        >
-          💳 Payments
-        </a> -->
         <a
           routerLink="clubs"
           routerLinkActive="bg-[#2C2F66]"
           [routerLinkActiveOptions]="{ exact: true }"
           class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
         >
-          👥 Study Clubs
+          👥 مجموعات الدراسة
         </a>
-        <!-- <a
-          routerLink="chats"
-          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
-        >
-          💬 Messages
-        </a> -->
       </nav>
     </div>
 
     <div class="bg-[#2C2F66] p-4 rounded-lg shadow-lg text-center mt-6">
-      <h3 class="text-lg font-semibold mb-2">🤖 AI Chatbot</h3>
-      <p class="text-sm text-gray-300">Ask me anything!</p>
+      <h3 class="text-lg font-semibold mb-2">🤖 روبوت ذكي</h3>
+      <p class="text-sm text-gray-300">اسألني أي شيء!</p>
       <a
         routerLink="ai"
         class="mt-3 w-full bg-[#7F55E0] py-2 rounded-lg hover:bg-[#6A44C0] block"
       >
-        Start Chat
+        بدء المحادثة
       </a>
     </div>
   </div>

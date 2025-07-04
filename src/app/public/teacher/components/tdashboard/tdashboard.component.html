@@ -1,54 +1,53 @@
-<div class="p-4 sm:p-6 min-h-screen bg-gray-50">
-  <h1 class="text-xl sm:text-2xl font-semibold text-[#2C2F66]">Welcome back, Teacher!</h1>
-  <p class="text-sm sm:text-base text-gray-500">Here's your current teaching summary</p>
+<div class="p-4 sm:p-6 min-h-screen bg-gray-50" dir="rtl">
+  <h1 class="text-xl sm:text-2xl font-semibold text-[#2C2F66]">مرحبًا بعودتك، أستاذ!</h1>
+  <p class="text-sm sm:text-base text-gray-500">إليك ملخص التدريس الحالي الخاص بك</p>
 
   <div *ngIf="isLoading" class="mt-10 text-center">
-    <p>Loading dashboard...</p>
+    <p>جاري تحميل لوحة التحكم...</p>
   </div>
 
   <div *ngIf="!isLoading">
 
-    <!-- Cards -->
+    <!-- البطاقات -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-      <div class="p-6 bg-white rounded-xl shadow-md border-l-4 border-[#7F55E0]">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66]">Pending Assignments</h2>
+      <div class="p-6 bg-white rounded-xl shadow-md border-r-4 border-[#7F55E0]">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66]">الواجبات المعلقة</h2>
         <p class="text-2xl sm:text-3xl font-bold">{{ pendingAssignments }}</p>
       </div>
 
-      <div class="p-6 bg-white rounded-xl shadow-md border-l-4 border-[#7F55E0]">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66]">Enrolled Students</h2>
+      <div class="p-6 bg-white rounded-xl shadow-md border-r-4 border-[#7F55E0]">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66]">الطلاب الملتحقون</h2>
         <p class="text-2xl sm:text-3xl font-bold">{{ totalStudents }}</p>
       </div>
 
-      <div class="p-6 bg-white rounded-xl shadow-md border-l-4 border-[#7F55E0]">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66]">My Courses</h2>
+      <div class="p-6 bg-white rounded-xl shadow-md border-r-4 border-[#7F55E0]">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66]">دوراتي</h2>
         <p class="text-2xl sm:text-3xl font-bold">{{ totalCourses }}</p>
       </div>
     </div>
 
-<!-- Students Enrolled as Cards -->
-<div class="mt-8">
-  <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66] mb-4">Students Enrolled</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div *ngFor="let student of students" class="p-4 bg-white rounded-xl shadow-md border border-gray-200">
-      <p class="font-semibold text-[#2C2F66]">{{ student.student_name }}</p>
-      <p class="text-gray-500 text-sm">Course: {{ student.course_name }}</p>
+    <!-- الطلاب الملتحقون -->
+    <div class="mt-8">
+      <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66] mb-4">الطلاب الملتحقون</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div *ngFor="let student of students" class="p-4 bg-white rounded-xl shadow-md border border-gray-200">
+          <p class="font-semibold text-[#2C2F66]">{{ student.student_name }}</p>
+          <p class="text-gray-500 text-sm">الدورة: {{ student.course_name }}</p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- Pending Reviews as Cards -->
-<div class="mt-8">
-  <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66] mb-4">Pending Reviews</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div *ngFor="let submission of unreviewedAssignments" class="p-4 bg-white rounded-xl shadow-md border border-gray-200">
-      <p class="font-semibold text-[#2C2F66]">{{ submission.assignment_title }}</p>
-      <p class="text-gray-500 text-sm">Student: {{ submission.student_name }}</p>
-      <p class="text-gray-400 text-xs mt-1">Submitted: {{ submission.submitted_at | date:'short' }}</p>
+    <!-- الواجبات قيد المراجعة -->
+    <div class="mt-8">
+      <h2 class="text-lg sm:text-xl font-semibold text-[#2C2F66] mb-4">الواجبات قيد المراجعة</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div *ngFor="let submission of unreviewedAssignments" class="p-4 bg-white rounded-xl shadow-md border border-gray-200">
+          <p class="font-semibold text-[#2C2F66]">{{ submission.assignment_title }}</p>
+          <p class="text-gray-500 text-sm">الطالب: {{ submission.student_name }}</p>
+          <p class="text-gray-400 text-xs mt-1">تاريخ التسليم: {{ submission.submitted_at | date:'short' }}</p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
 
   </div>
 </div>

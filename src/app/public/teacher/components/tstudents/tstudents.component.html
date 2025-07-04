@@ -1,31 +1,33 @@
-<!-- 🔄 Loading Spinner -->
-<div *ngIf="loading" class="text-center py-10">
+<!-- 🔄 مؤشر التحميل -->
+<div *ngIf="loading" class="text-center py-10" dir="rtl">
   <div class="w-10 h-10 border-4 border-purple-400 border-dashed rounded-full animate-spin mx-auto"></div>
-  <p class="mt-2 text-sm text-gray-500">Loading students...</p>
+  <p class="mt-2 text-sm text-gray-500">جارٍ تحميل الطلاب...</p>
 </div>
 
-<div class="bg-white p-6 rounded-lg shadow-lg" *ngIf="!loading">
+<div class="bg-white p-6 rounded-lg shadow-lg" *ngIf="!loading" dir="rtl">
   <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
-    <h2 class="text-2xl font-semibold text-[#2C2F66]">Students</h2>
-    <!-- <input 
-  type="text"
-  [(ngModel)]="searchTerm"
-  (ngModelChange)="onSearch()"
-  placeholder="Search students..."
-  class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7F55E0]" 
-/> -->
-
+    <h2 class="text-2xl font-semibold text-[#2C2F66]">قائمة الطلاب</h2>
+    <!-- حقل البحث (اختياري) -->
+    <!-- 
+    <input  
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      (ngModelChange)="onSearch()" 
+      placeholder="🔍 البحث عن طالب..." 
+      class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7F55E0]"  
+    /> 
+    -->
   </div>
 
-  <!-- Desktop Table -->
+  <!-- جدول للكمبيوتر -->
   <div class="hidden md:block">
     <table class="w-full table-auto border-collapse">
       <thead>
         <tr class="bg-[#2C2F66] text-white">
-          <th class="p-3 text-left rounded-tl-lg">No.</th>
-          <th class="p-3 text-left">Student</th>
-          <th class="p-3 text-left">Email</th>
-          <th class="p-3 text-left rounded-tr-lg">Actions</th>
+          <th class="p-3 text-right rounded-tr-lg">الرقم</th>
+          <th class="p-3 text-right">الاسم</th>
+          <th class="p-3 text-right">البريد الإلكتروني</th>
+          <th class="p-3 text-right rounded-tl-lg">إجراءات</th>
         </tr>
       </thead>
       <tbody>
@@ -35,14 +37,14 @@
           <td class="p-3">{{ student.user.email }}</td>
           <td class="p-3 flex gap-2">
             <!-- <button class="text-gray-500 hover:text-[#7F55E0] text-sm">✏️</button> -->
-            <button class="text-red-500 hover:text-[#7F55E0] text-sm" (click)="deleteStudent(student.id)" >🗑️ Delete</button>
+            <button class="text-red-500 hover:text-[#7F55E0] text-sm" (click)="deleteStudent(student.id)">🗑️ حذف</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Mobile Cards -->
+  <!-- عرض الموبايل -->
   <div class="md:hidden grid grid-cols-1 gap-4">
     <div
       *ngFor="let student of filteredStudents; index as i"
@@ -52,7 +54,7 @@
         <span class="text-sm font-semibold text-[#2C2F66]">#{{ i + 1 }}</span>
         <div class="flex gap-2">
           <!-- <button class="text-gray-500 hover:text-[#7F55E0] text-sm">✏️</button> -->
-          <button class="text-red-500 hover:text-[#7F55E0] text-sm" (click)="deleteStudent(student.id)" >🗑️ Delete</button>
+          <button class="text-red-500 hover:text-[#7F55E0] text-sm" (click)="deleteStudent(student.id)">🗑️ حذف</button>
         </div>
       </div>
 

@@ -1,85 +1,54 @@
-<div class="p-6"> 
-  <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6"> 
-    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg"> 
-      <p class="text-lg">Total Students</p> 
-      <h2 class="text-3xl font-semibold">{{ totalStudents }}</h2> 
-      <!-- <p class="text-sm text-gray-300">+12% from last month</p>  -->
-    </div> 
+<div class="p-6" dir="rtl">  
 
-    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg"> 
-      <p class="text-lg">Active Courses</p> 
-      <h2 class="text-3xl font-semibold">{{ activeCourses }}</h2> 
-      <!-- <p class="text-sm text-gray-300">+5 this week</p>  -->
-    </div> 
+  <!-- بطاقات الإحصائيات --> 
+  <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6">  
+    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg">  
+      <p class="text-lg">إجمالي الطلاب</p>  
+      <h2 class="text-3xl font-semibold">{{ totalStudents }}</h2>  
+    </div>  
 
-    <!-- <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg"> 
-      <p class="text-lg">Total Revenue</p> 
-      <h2 class="text-3xl font-semibold">${{ totalRevenue }}</h2> 
-      <p class="text-sm text-gray-300">This month</p> 
-    </div>  -->
+    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg">  
+      <p class="text-lg">الدورات النشطة</p>  
+      <h2 class="text-3xl font-semibold">{{ activeCourses }}</h2>  
+    </div>  
 
-    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg"> 
-      <p class="text-lg">Instructors</p> 
-      <h2 class="text-3xl font-semibold">{{ instructors }}</h2> 
-      <p class="text-sm text-gray-300">Active teachers</p> 
-    </div> 
-  </div> 
+    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg">  
+      <p class="text-lg">المعلمين</p>  
+      <h2 class="text-3xl font-semibold">{{ instructors }}</h2>  
+      <p class="text-sm text-gray-300">المعلمون النشطون</p>  
+    </div>  
+  </div>  
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8"> 
-    <div class="bg-[#1E1F3F] p-6 rounded-xl shadow-lg text-white"> 
-      <h3 class="text-xl font-semibold mb-4">Recent Enrollments</h3> 
-      <div class="space-y-4"> 
-        <div *ngFor="let enrollment of recentEnrollments" class="flex items-center gap-3"> 
-          <!-- <div class="w-10 h-10 bg-gray-600 rounded-full"></div>  -->
+  <!-- الأقسام السفلية --> 
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">  
+    <!-- تسجيلات حديثة --> 
+    <div class="bg-[#1E1F3F] p-6 rounded-xl shadow-lg text-white">  
+      <h3 class="text-xl font-semibold mb-4">أحدث التسجيلات</h3>  
+      <div class="space-y-4">  
+        <div *ngFor="let enrollment of recentEnrollments" class="flex items-center gap-3">  
+          <div>  
+            <p class="font-medium">رقم الطالب: {{ enrollment.student.id }} - الاسم: {{ enrollment.student.name }}</p>  
+            <p class="font-medium">الدورة: {{ enrollment.course.title }}</p> 
+            <p class="text-sm text-gray-300">تم التسجيل: {{ enrollment.enrolled_at | date }}</p>  
+          </div>  
+        </div>  
+      </div>  
+    </div>  
+
+    <!-- الدورات الشائعة --> 
+    <div class="bg-[#1E1F3F] p-6 rounded-xl shadow-lg text-white">  
+      <h3 class="text-xl font-semibold mb-4">الدورات الأكثر شيوعًا</h3>  
+      <div class="space-y-4">  
+        <div *ngFor="let course of popularCourses" class="flex justify-between">  
           <div> 
-            <p class="font-medium">Student ID: {{ enrollment.student.id }} - Name: {{ enrollment.student.name }}</p> 
-            <p class="font-medium">Course: {{ enrollment.course.title }}</p>
-            <p class="text-sm text-gray-300">Enrolled: {{ enrollment.enrolled_at | date }}</p> 
+            <p class="font-semibold">{{ course.title }}</p> 
+            <p class="text-sm text-gray-400">{{ course.description }}</p> 
           </div> 
-        </div> 
-      </div> 
-    </div> 
-
-    <div class="bg-[#1E1F3F] p-6 rounded-xl shadow-lg text-white"> 
-      <h3 class="text-xl font-semibold mb-4">Popular Courses</h3> 
-      <div class="space-y-4"> 
-        <div *ngFor="let course of popularCourses" class="flex justify-between"> 
-  <div>
-    <p class="font-semibold">{{ course.title }}</p>
-    <p class="text-sm text-gray-400">{{ course.description }}</p>
-  </div>
-  <div class="text-center">
-    <p class="text-sm text-gray-300">{{ course.enrolledStudents }} Students</p>
-  </div>
+          <div class="text-center"> 
+            <p class="text-sm text-gray-300">{{ course.enrolledStudents }} طلاب</p> 
+          </div> 
+        </div>  
+      </div>  
+    </div>  
+  </div>  
 </div>
- 
-      </div> 
-    </div> 
-  </div> 
-
-  <!-- <div class="bg-[#1E1F3F] p-6 rounded-xl shadow-lg text-white mt-8"> 
-    <div class="flex justify-between items-center mb-4"> 
-      <h3 class="text-xl font-semibold">Recent Transactions</h3> 
-      <button class="bg-[#7F55E0] px-4 py-2 rounded-lg">Download Report</button> 
-    </div>  -->
-
-    <!-- <div class="space-y-6"> 
-      
-      <div class="bg-[#2C2F66] p-4 rounded-xl shadow-md"> 
-        <div class="flex justify-between items-center"> 
-          <div class="flex gap-3 items-center"> 
-            <span class="text-lg font-semibold">#TRX-798456</span> 
-            <span class="text-sm text-gray-300">Jan 15, 2025</span> 
-          </div> 
-          <div class="flex gap-3 items-center"> 
-            <span class="text-sm text-gray-300">JavaScript Fundamentals</span> 
-            <span class="text-sm text-gray-300">$99.00</span> 
-          </div> 
-        </div> 
-        <div class="mt-2"> 
-          <span class="text-green-400">Completed</span> 
-        </div> 
-      </div> 
-    </div>  -->
-  <!-- </div>  -->
-</div> 

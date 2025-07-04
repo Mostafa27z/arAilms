@@ -1,0 +1,29 @@
+<div class="p-6 bg-gray-100 min-h-screen" dir="rtl" *ngIf="exam">
+  <h2 class="text-2xl font-bold mb-6">{{ exam.title }}</h2>
+
+  <form (ngSubmit)="submitExam()">
+    <div *ngFor="let question of exam.questions; let i = index" class="mb-6 bg-white p-4 rounded shadow">
+      <p class="font-semibold mb-2">سؤال {{ i + 1 }}: {{ question.question_text }}</p>
+
+      <div *ngIf="question.type === 'mcq'">
+        <label *ngFor="let option of question.options" class="block mb-2">
+          <input type="radio"
+                 [name]="'question_' + question.id"
+                 [value]="option.id"
+                 [(ngModel)]="answers[question.id]" />
+          {{ option.option_text }}
+        </label>
+      </div>
+
+      <div *ngIf="question.type === 'essay'">
+        <textarea [(ngModel)]="answers[question.id]"
+                  [name]="'question_' + question.id"
+                  class="w-full p-2 border rounded"
+                  rows="4"
+                  placeholder="اكتب إجابتك هنا..."></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded">إرسال الامتحان</button>
+  </form>
+</div>

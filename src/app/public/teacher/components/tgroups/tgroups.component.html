@@ -1,21 +1,21 @@
-<div class="bg-white p-6 rounded-lg shadow-md">
-  <!-- Header -->
+<div class="bg-white p-6 rounded-lg shadow-md" dir="rtl">
+  <!-- العنوان -->
   <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
-    <h2 class="text-xl font-semibold text-[#2C2F66]">Student Groups</h2>
+    <h2 class="text-xl font-semibold text-[#2C2F66]">المجموعات الطلابية</h2>
     <button (click)="openAddClub()"
             class="bg-[#7F55E0] text-white px-4 py-2 rounded-lg flex items-center gap-2">
-      ➕ Create New Group
+      ➕ إنشاء مجموعة جديدة
     </button>
   </div>
 
-  <!-- Search -->
+  <!-- البحث -->
   <div class="mb-6">
-    <input type="text" placeholder="🔍 Search groups..."
+    <input type="text" placeholder="🔍 البحث عن المجموعات..."
            class="p-2 w-full border rounded-lg focus:outline-[#7F55E0]"
            [(ngModel)]="searchTerm" (input)="filterClubs()" />
   </div>
 
-  <!-- Groups Grid -->
+  <!-- شبكة المجموعات -->
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     <div *ngFor="let club of filteredClubs"
          class="bg-gray-100 p-4 rounded-xl shadow hover:shadow-lg transition">
@@ -23,12 +23,12 @@
       <h3 class="text-lg font-semibold text-[#2C2F66] break-words mb-1">
         {{ club.name }}
       </h3>
-      <p class="text-gray-500 text-sm mb-1">👥 {{ club.members_count }} Members</p>
+      <p class="text-gray-500 text-sm mb-1">👥 {{ club.members_count }} عضو</p>
       <p class="text-gray-500 text-sm mb-3">📅 {{ club.created_at | date }}</p>
 
       <div class="flex flex-wrap justify-between items-center gap-2 mt-3">
         <button class="text-blue-600 text-sm" (click)="openMembers(club)">
-          👥 Manage Members
+          👥 إدارة الأعضاء
         </button>
 
         <div class="flex gap-3 text-sm">
@@ -41,53 +41,53 @@
   </div>
 </div>
 
-<!-- Create / Edit Modal -->
+<!-- نافذة إنشاء / تعديل -->
 <div *ngIf="showClubModal"
-     class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center p-4">
+     class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center p-4" dir="rtl">
   <div class="bg-white p-6 rounded-lg w-full max-w-md">
     <h3 class="text-lg font-semibold mb-4">
-      {{ isEditMode ? 'Edit Group' : 'Create Group' }}
+      {{ isEditMode ? 'تعديل المجموعة' : 'إنشاء مجموعة' }}
     </h3>
 
     <input type="text" [(ngModel)]="clubForm.name"
-           placeholder="Group Name"
+           placeholder="اسم المجموعة"
            class="border p-2 mb-3 w-full rounded focus:outline-[#7F55E0]" />
 
     <textarea [(ngModel)]="clubForm.description"
-              placeholder="Description"
+              placeholder="الوصف"
               class="border p-2 w-full rounded focus:outline-[#7F55E0] mb-3"></textarea>
 
     <div class="flex justify-end gap-3 mt-4">
       <button class="bg-gray-400 text-white px-4 py-2 rounded"
-              (click)="closeClubModal()">Cancel</button>
+              (click)="closeClubModal()">إلغاء</button>
       <button class="bg-[#7F55E0] text-white px-4 py-2 rounded"
-              (click)="saveClub()">Save</button>
+              (click)="saveClub()">حفظ</button>
     </div>
   </div>
 </div>
 
-<!-- Delete Modal -->
+<!-- نافذة الحذف -->
 <div *ngIf="showDeleteModal"
-     class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center p-4">
+     class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center p-4" dir="rtl">
   <div class="bg-white p-6 rounded-lg w-full max-w-md text-center">
     <p class="text-lg mb-4">
-      Are you sure you want to delete <span class="font-semibold">{{ selectedClub?.name }}</span>?
+      هل أنت متأكد أنك تريد حذف <span class="font-semibold">{{ selectedClub?.name }}</span>؟
     </p>
     <div class="flex justify-center gap-3">
       <button class="bg-gray-400 text-white px-4 py-2 rounded"
-              (click)="closeDeleteModal()">Cancel</button>
+              (click)="closeDeleteModal()">إلغاء</button>
       <button class="bg-red-600 text-white px-4 py-2 rounded"
-              (click)="deleteClub()">Delete</button>
+              (click)="deleteClub()">حذف</button>
     </div>
   </div>
 </div>
 
-<!-- Members Modal -->
+<!-- نافذة الأعضاء -->
 <div *ngIf="showMembersModal"
-     class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center p-4">
+     class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center p-4" dir="rtl">
   <div class="bg-white p-6 rounded-lg w-full max-w-lg">
     <h3 class="text-lg font-semibold mb-4">
-      Members of <span class="font-semibold">{{ selectedClub?.name }}</span>
+      الأعضاء في <span class="font-semibold">{{ selectedClub?.name }}</span>
     </h3>
 
     <div class="max-h-64 overflow-y-auto border rounded p-2 mb-4">
@@ -99,7 +99,7 @@
 
     <div class="flex justify-end">
       <button class="bg-[#7F55E0] text-white px-4 py-2 rounded"
-              (click)="closeMembersModal()">Close</button>
+              (click)="closeMembersModal()">إغلاق</button>
     </div>
   </div>
 </div>

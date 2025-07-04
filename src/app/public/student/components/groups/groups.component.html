@@ -1,0 +1,59 @@
+<!-- الصفحة الرئيسية -->
+<div class="p-6 bg-gray-100 min-h-screen" dir="rtl">
+
+  <h2 class="text-xl font-bold mb-4">المجموعات المتاحة</h2>
+
+  <!-- تحميل -->
+  <div *ngIf="loading" class="text-center py-10">جاري التحميل...</div>
+
+  <!-- كروت المجموعات -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" *ngIf="!loading">
+    <div *ngFor="let group of groups" class="bg-white shadow rounded p-4">
+      <h3 class="text-lg font-semibold">{{ group.title }}</h3>
+      <p class="text-sm text-gray-700">{{ group.description }}</p>
+      <p class="text-xs text-gray-500 mt-1">المعلم: {{ group.teacher_name }}</p>
+
+      <!-- طلب انضمام -->
+      <button *ngIf="group.membership_status === null"
+              class="mt-3 w-full bg-green-600 text-white py-1 rounded"
+              [disabled]="joining"
+              (click)="requestJoin(group.id)">
+        طلب الانضمام
+      </button>
+
+      <!-- حالة انتظار -->
+      <div *ngIf="group.membership_status === 'pending'"
+           class="text-orange-600 text-sm mt-2 text-center">
+        تم إرسال طلب انضمام... قيد المراجعة
+      </div>
+
+      <!-- دخول الجروب -->
+      <button *ngIf="group.membership_status === 'approved'"
+              class="mt-3 w-full bg-blue-600 text-white py-1 rounded"
+              (click)="openSessions(group.id, group.title)">
+        دخول المجموعة
+      </button>
+    </div>
+  </div>
+
+  <!-- جلسات المجموعة المحددة -->
+  <div *ngIf="selectedGroupId" class="mt-10 bg-white shadow rounded p-6 border">
+    <h3 class="text-lg font-bold text-blue-800 mb-4">
+      الجلسات الخاصة بـ {{ selectedGroupTitle }}
+    </h3>
+
+    <div *ngIf="groupSessions && groupSessions[selectedGroupId] && groupSessions[selectedGroupId].length > 0; else noSessions">
+      <div *ngFor="let session of groupSessions[selectedGroupId]" class="bg-gray-100 p-3 rounded mb-3">
+        <p><strong>العنوان:</strong> {{ session.title }}</p>
+        <p><strong>الوصف:</strong> {{ session.description }}</p>
+        <p><strong>الميعاد:</strong> {{ session.session_time | date:'short' }}</p>
+        <a [href]="session.link" target="_blank" class="text-blue-600 underline">الدخول للجلسة</a>
+      </div>
+    </div>
+
+    <ng-template #noSessions>
+      <p class="text-gray-500 text-sm">لا توجد جلسات حالياً.</p>
+    </ng-template>
+  </div>
+
+</div>
