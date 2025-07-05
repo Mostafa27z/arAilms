@@ -1,22 +1,22 @@
 <!-- زر فتح القائمة على الجوال -->
-<div 
-  class="md:hidden fixed top-[20%] left-[-10px] z-50 h-[48px] bg-[#7F55E0] text-white px-3 py-2 rounded-full shadow-lg cursor-pointer flex items-center justify-center" 
-  (click)="toggleSidebar()" 
-  *ngIf="!sidebarOpen"
+<div  
+  class="md:hidden fixed top-[20%] right-[-10px] z-50 h-[48px] w-[48px] bg-[#7F55E0] text-white flex items-center justify-center rounded-full shadow-lg cursor-pointer"  
+  (click)="toggleSidebar()"  
+  *ngIf="!sidebarOpen" 
   dir="rtl"
 >
-  ☰
+  
 </div>
 
 <!-- الشريط الجانبي -->
-<aside 
+<aside  
+  dir="rtl"
   class="fixed z-40 top-0 right-0 h-full w-64 bg-[#7F55E0] text-white p-4 shadow-md flex flex-col transition-transform duration-300"
   [class.translate-x-full]="!sidebarOpen && isMobile"
   [class.rounded-lg]="!isMobile"
   [class.md:static]="true"
   [class.md:translate-x-0]="true"
   [class.md:rounded-none]="true"
-  dir="rtl"
 >
 
   <!-- زر الإغلاق للجوال -->
@@ -26,58 +26,61 @@
     </button>
   </div>
 
-  <h2 class="text-lg font-semibold mb-6">لوحة التحكم</h2>
+  <h2 class="text-lg font-semibold mb-6 text-right">لوحة التحكم</h2>
 
   <!-- روابط التنقل -->
-  <nav class="space-y-2 flex-1">
+  <nav class="space-y-2 flex-1 text-right">
     <a routerLink="dashboard" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex items-center justify-end gap-3 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
-      <span>الرئيسية</span> 🏠
+       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>الرئيسية</span> <span>🏠</span>
     </a>
 
     <a routerLink="students" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex items-center justify-end gap-3 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
-      <span>الطلاب</span> 🎓
+       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>الطلاب</span> <span>🎓</span>
     </a>
 
     <a routerLink="courses" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex items-center justify-end gap-3 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
-      <span>الدورات</span> 📚
+       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>الدورات</span> <span>📚</span>
     </a>
 
     <a routerLink="assignments" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex items-center justify-end gap-3 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
-      <span>الواجبات</span> 📅
+       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>الواجبات</span> <span>📅</span>
     </a>
 
     <a routerLink="lessons" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex items-center justify-end gap-3 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
-      <span>الدروس</span> 🧾
+       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>الدروس</span> <span>🧾</span>
     </a>
 
     <a routerLink="addassignment" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex items-center justify-end gap-3 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
-      <span>إضافة واجب</span> ➕
+       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>إضافة واجب</span> <span>➕</span>
     </a>
 
     <a routerLink="groups" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex items-center justify-end gap-3 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
-      <span>المجموعات</span> 👥
+       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>المجموعات</span> <span>👥</span>
     </a>
 
     <a routerLink="chats" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex items-center justify-end gap-3 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
-      <span>المحادثات</span> 💬
+       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>المحادثات</span> <span>💬</span>
     </a>
   </nav>
 
   <!-- قسم الشات الذكي -->
-  <div class="bg-[#2C2F66] p-4 rounded-lg shadow-lg text-center mt-auto">
-    <h3 class="text-lg font-semibold mb-2">🤖 روبوت المحادثة</h3>
+  <div class="bg-[#2C2F66] p-4 rounded-lg shadow-lg text-right mt-6">
+    <h3 class="text-lg font-semibold mb-2 flex  items-center gap-2">
+      <span>روبوت المحادثة</span> <span>🤖</span>
+    </h3>
     <p class="text-sm text-gray-300">اسألني أي شيء!</p>
     <a routerLink="ai"
-       class="mt-3 w-full bg-[#7F55E0] py-2 rounded-lg hover:bg-[#6A44C0] block">
+       class="mt-3 w-full bg-[#7F55E0] py-2 rounded-lg hover:bg-[#6A44C0] block text-center">
       بدء المحادثة
     </a>
   </div>
+
 </aside>

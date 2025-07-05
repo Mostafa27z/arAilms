@@ -83,23 +83,66 @@
 </div>
 
 <!-- نافذة الأعضاء -->
+<!-- نافذة الأعضاء -->
 <div *ngIf="showMembersModal"
      class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center p-4" dir="rtl">
-  <div class="bg-white p-6 rounded-lg w-full max-w-lg">
+  <div class="bg-white p-6 rounded-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto">
     <h3 class="text-lg font-semibold mb-4">
-      الأعضاء في <span class="font-semibold">{{ selectedClub?.name }}</span>
+      إدارة الأعضاء في <span class="font-semibold">{{ selectedClub?.name }}</span>
     </h3>
 
-    <div class="max-h-64 overflow-y-auto border rounded p-2 mb-4">
-      <div *ngFor="let member of clubMembers"
-           class="border-b py-2 text-gray-700">
-        {{ member.student.user.name }}
+    <!-- 🔍 البحث عن طالب لإضافته -->
+    <div class="mb-4">
+      <input type="text" [(ngModel)]="studentSearch" (input)="searchStudents()"
+             placeholder="🔍 البحث عن طالب..." class="border p-2 rounded w-full" />
+    </div>
+
+    <!-- 📋 نتائج البحث -->
+    <div *ngIf="filteredStudents.length > 0" class="mb-4">
+      <h4 class="font-semibold mb-2 text-[#2C2F66]">إضافة عضو جديد:</h4>
+      <div *ngFor="let student of filteredStudents" class="flex justify-between items-center bg-gray-100 rounded p-2 mb-2">
+        <span>{{ student.user.name }}</span>
+        <button (click)="addMember(student.id)" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">
+          ➕ إضافة
+        </button>
       </div>
     </div>
 
-    <div class="flex justify-end">
-      <button class="bg-[#7F55E0] text-white px-4 py-2 rounded"
-              (click)="closeMembersModal()">إغلاق</button>
+    <!-- ✅ الأعضاء الموافق عليهم -->
+<div class="mt-6">
+  <h4 class="font-semibold mb-2 text-[#2C2F66]">الأعضاء الموافق عليهم:</h4>
+  <div *ngIf="clubMembers.length === 0" class="text-sm text-gray-500">لا يوجد أعضاء حالياً.</div>
+  <div *ngFor="let member of clubMembers" class="flex justify-between items-center border-b py-2">
+    <span>{{ member.student.user.name }}</span>
+    <button (click)="removeMember(member.id)" class="text-red-600 hover:text-red-800 text-sm">🗑️ حذف</button>
+  </div>
+</div>
+
+<!-- 🕓 الطلبات المعلقة -->
+<div class="mt-6" *ngIf="pendingRequests.length > 0">
+  <h4 class="font-semibold mb-2 text-[#2C2F66]">الطلبات المعلقة:</h4>
+  <div *ngFor="let req of pendingRequests" class="flex justify-between items-center border-b py-2">
+    <span>{{ req.student.user.name }}</span>
+    <div class="flex gap-2">
+      <button (click)="approveRequest(req.id)" class="text-green-600 hover:text-green-800 text-sm">✔️ قبول</button>
+      <button (click)="rejectRequest(req.id)" class="text-red-600 hover:text-red-800 text-sm">❌ رفض</button>
     </div>
   </div>
 </div>
+
+<!-- ❌ الطلبات المرفوضة -->
+<div class="mt-6" *ngIf="rejectedMembers.length > 0">
+  <h4 class="font-semibold mb-2 text-[#2C2F66]">المرفوضين:</h4>
+  <div *ngFor="let r of rejectedMembers" class="flex justify-between items-center border-b py-2">
+    <span>{{ r.student.user.name }}</span>
+    <button (click)="removeMember(r.id)" class="text-red-500 hover:text-red-700 text-sm">🗑️ حذف</button>
+  </div>
+</div>
+
+    <div class="flex justify-end mt-6">
+      <button class="bg-[#7F55E0] text-white px-4 py-2 rounded" (click)="closeMembersModal()">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+

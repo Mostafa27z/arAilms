@@ -3,7 +3,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../../environments/environment.development';
 
-// groups.component.ts
 @Component({
   selector: 'app-student-groups',
   templateUrl: './groups.component.html',
@@ -13,59 +12,72 @@ import { environment } from '../../../../../environments/environment.development
 })
 export class StudentGroupsComponent implements OnInit {
   groups: any[] = [];
-  loading = true;
-  joining = false;
+  loadingGroups: boolean = true;
+  joiningGroupId: number | null = null;
   studentId = 0;
+
+  selectedGroupId: number | null = null;
+  selectedGroupTitle: string = '';
+  groupSessions: { [groupId: number]: any[] } = {};
+  loadingSessions: boolean = false;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     const roleid = localStorage.getItem('roleid');
     this.studentId = roleid ? JSON.parse(roleid) : 0;
+    this.loadGroups();
+  }
 
-    this.http.get(`${environment.url}/groups/available/${this.studentId}`).subscribe((res: any) => {
-      this.groups = res.data;
-      console.log(this.groups)
-      this.loading = false;
+  loadGroups() {
+    this.loadingGroups = true;
+    this.http.get(`${environment.url}/groups/available/${this.studentId}`).subscribe({
+      next: (res: any) => {
+        this.groups = res.data;
+        this.loadingGroups = false;
+      },
+      error: (err) => {
+        console.error('Error loading groups:', err);
+        this.loadingGroups = false;
+      }
     });
   }
 
   requestJoin(groupId: number) {
-    this.joining = true;
-    this.loading = true;
+    this.joiningGroupId = groupId;
     this.http.post(`${environment.url}/group-members/request`, {
       student_id: this.studentId,
       group_id: groupId
-    }).subscribe(() => {
-      alert('تم إرسال طلب الانضمام.');
-      this.http.get(`${environment.url}/groups/available/${this.studentId}`).subscribe((res: any) => {
-      this.groups = res.data;
-      console.log(this.groups)
-      this.loading = false;
-    });
-      this.joining = false;
+    }).subscribe({
+      next: () => {
+        alert('✅ تم إرسال طلب الانضمام.');
+        this.loadGroups(); // reload to reflect status
+        this.joiningGroupId = null;
+      },
+      error: (err) => {
+        console.error('Error sending join request:', err);
+        this.joiningGroupId = null;
+      }
     });
   }
-  selectedGroupId: number | null = null;
-selectedGroupTitle: string = '';
-groupSessions: { [groupId: number]: any[] } = {};
 
-openSessions(groupId: number, groupTitle: string) {
-  this.selectedGroupId = groupId;
-  this.selectedGroupTitle = groupTitle;
+  openSessions(groupId: number, groupTitle: string) {
+    this.selectedGroupId = groupId;
+    this.selectedGroupTitle = groupTitle;
 
-  if (this.groupSessions[groupId]) return;
+    if (this.groupSessions[groupId]) return;
 
-  this.http.get(`${environment.url}/group-sessions/by-group/${groupId}`).subscribe({
-    next: (res: any) => {
-      this.groupSessions[groupId] = res.data;
-    },
-    error: (err) => {
-      console.error('Error loading sessions:', err);
-      this.groupSessions[groupId] = [];
-    }
-  });
+    this.loadingSessions = true;
+    this.http.get(`${environment.url}/group-sessions/by-group/${groupId}`).subscribe({
+      next: (res: any) => {
+        this.groupSessions[groupId] = res.data;
+        this.loadingSessions = false;
+      },
+      error: (err) => {
+        console.error('Error loading sessions:', err);
+        this.groupSessions[groupId] = [];
+        this.loadingSessions = false;
+      }
+    });
+  }
 }
-
-}
-

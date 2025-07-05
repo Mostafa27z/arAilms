@@ -1,5 +1,32 @@
 <div class="p-6 bg-gray-100 min-h-screen" dir="rtl">
   <h2 class="text-xl font-semibold mb-4">{{ lesson.title }}</h2>
+  <!-- ✅ عرض المرفق إن وجد -->
+<div *ngIf="lesson.attachment" class="mb-6">
+  <ng-container [ngSwitch]="getAttachmentType(lesson.attachment)">
+    
+    <!-- 🎥 فيديو -->
+    <video *ngSwitchCase="'video'" controls class="w-full max-h-[400px] rounded">
+      <source [src]="lesson.attachment" type="video/mp4" />
+      المتصفح لا يدعم تشغيل الفيديو.
+    </video>
+
+    <!-- 🖼️ صورة -->
+    <img *ngSwitchCase="'image'" [src]="lesson.attachment" class="w-full max-h-[400px] rounded shadow" />
+
+    <!-- 📄 PDF -->
+    <!-- 📄 PDF -->
+    <iframe *ngSwitchCase="'pdf'" [src]="safeAttachmentUrl" class="w-full h-[500px] rounded border"></iframe>
+
+    <!-- 💾 تحميل مباشر لأي نوع آخر -->
+    <div *ngSwitchDefault class="text-center mt-4">
+      <a [href]="lesson.attachment" target="_blank" download class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        تحميل الملف
+      </a>
+    </div>
+
+  </ng-container>
+</div>
+
   <p class="text-gray-700 mb-6">{{ lesson.content }}</p>
 
   <!-- ✅ نتيجة الطالب -->
@@ -53,3 +80,4 @@
     لا توجد أسئلة حالياً لهذا الدرس.
   </div>
 </div>
+

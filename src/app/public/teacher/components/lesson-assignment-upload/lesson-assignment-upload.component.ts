@@ -19,6 +19,8 @@ export class LessonAssignmentUploadComponent implements OnInit {
   loading: boolean = false;
   errorMessage: string = '';
   successMessage: string = '';
+  assignments: any[] = [];
+  fileToUpload: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -39,9 +41,7 @@ export class LessonAssignmentUploadComponent implements OnInit {
     if (roleId) {
       this.teacherId = parseInt(JSON.parse(roleId));
       this.loadLessons();
-	 
-this.loadAssignments();
-
+      this.loadAssignments();
     }
   }
 
@@ -49,68 +49,78 @@ this.loadAssignments();
     this.lessonService.getLessonsByTeacher(this.teacherId).subscribe({
       next: (res) => {
         this.lessons = res.data || [];
-		console.log(res.data)
       },
       error: (err) => console.error(err)
     });
   }
 
-//   onFileChange(event: any) {
-//     const file = event.target.files[0];
-//     if (file) {
-//       this.uploadForm.patchValue({ attachment: file });
-//     }
-//   }
+  loadAssignments() {
+    this.assignmentService.getAssignmentsByTeacher(this.teacherId).subscribe({
+      next: (res) => {
+        this.assignments = res.data || [];
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.fileToUpload = file;
+    }
+  }
 
   submitAssignment() {
-    if (this.uploadForm.invalid) return;
+  if (this.uploadForm.invalid) {
+    this.uploadForm.markAllAsTouched(); // تظهر رسائل التحقق
+    return;
+  }
 
-    this.loading = true;
-    this.errorMessage = '';
-    this.successMessage = '';
+  this.loading = true;
+  this.errorMessage = '';
+  this.successMessage = '';
 
-    const formData = new FormData();
-    formData.append('lesson_id', this.uploadForm.value.lesson_id);
-    formData.append('title', this.uploadForm.value.title);
-    formData.append('description', this.uploadForm.value.description || '');
-    formData.append('due_date', this.uploadForm.value.due_date);
+  const formData = new FormData();
+  formData.append('lesson_id', this.uploadForm.value.lesson_id);
+  formData.append('title', this.uploadForm.value.title);
+  formData.append('description', this.uploadForm.value.description || '');
+  formData.append('due_date', this.uploadForm.value.due_date);
 
-    const attachment = this.uploadForm.value.attachment;
-   if (this.fileToUpload) {
-  formData.append('attachment', this.fileToUpload);
+  if (this.fileToUpload) {
+    formData.append('attachment', this.fileToUpload);
+  }
+
+  this.assignmentService.createAssignment(formData).subscribe({
+    next: (res) => {
+      this.successMessage = '✅ تم رفع المهمة بنجاح';
+      this.uploadForm.reset();
+      this.fileToUpload = null;
+      this.loadAssignments();
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error(err);
+      this.errorMessage = '❌ حدث خطأ أثناء رفع المهمة';
+      this.loading = false;
+    }
+  });
 }
 
-
-    this.assignmentService.createAssignment(formData).subscribe({
-      next: (res) => {
-        this.successMessage = 'Assignment uploaded successfully';
-        this.uploadForm.reset();
+  deleteAssignment(assignmentId: number) {
+  if (confirm('هل أنت متأكد أنك تريد حذف هذه المهمة؟')) {
+    this.loading = true;
+    this.assignmentService.deleteAssignment(assignmentId).subscribe({
+      next: () => {
+        this.successMessage = 'تم حذف المهمة بنجاح ✅';
+        this.loadAssignments(); // إعادة تحميل المهام بعد الحذف
         this.loading = false;
       },
       error: (err) => {
         console.error(err);
-        this.errorMessage = 'Error uploading assignment';
+        this.errorMessage = 'حدث خطأ أثناء حذف المهمة ❌';
         this.loading = false;
       }
     });
-  }
-  assignments: any[] = [];
-
-loadAssignments() {
-  this.assignmentService.getAssignmentsByTeacher(this.teacherId).subscribe({
-    next: (res) => {
-      this.assignments = res.data || [];
-	  console.log(res.data)
-    },
-    error: (err) => console.error(err)
-  });
-}
-fileToUpload: File | null = null;
-
-onFileChange(event: any) {
-  const file = event.target.files[0];
-  if (file) {
-    this.fileToUpload = file;
   }
 }
 

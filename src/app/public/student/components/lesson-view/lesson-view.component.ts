@@ -6,7 +6,7 @@ import { StudentAnswerService } from '../../../../services/student-answer.servic
 import { ProgressService } from '../../../../services/progress.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-lesson-view',
   templateUrl: './lesson-view.component.html',
@@ -25,8 +25,10 @@ export class LessonViewComponent implements OnInit {
     private lessonService: LessonService,
     private questionService: QuestionService,
     private answerService: StudentAnswerService,
-    private progressService: ProgressService
+    private progressService: ProgressService,
+    private sanitizer: DomSanitizer
   ) {}
+safeAttachmentUrl: SafeResourceUrl | null = null;
 
   submitted = false;
 score = 0;
@@ -43,6 +45,7 @@ ngOnInit(): void {
     this.loadQuestions();
     this.markLessonStarted();
     this.loadPreviousAnswers();
+    
   }
 }
 
@@ -105,12 +108,39 @@ retakeTest() {
 }
 
 
-  loadLesson() {
-    this.lessonService.getLesson(this.lessonId).subscribe({
-      next: res => this.lesson = res.data,
-      error: err => console.error(err)
-    });
-  }
+
+
+loadLesson() {
+  this.lessonService.getLesson(this.lessonId).subscribe({
+    next: res => {
+      this.lesson = res.data;
+
+      // sanitize attachment URL if PDF
+      const type = this.getAttachmentType(this.lesson.attachment);
+      if (type === 'pdf') {
+        this.safeAttachmentUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.lesson.attachment);
+      }
+
+      console.log('📘 الدرس:', this.lesson);
+    },
+    error: err => console.error(err)
+  });
+}
+
+getAttachmentType(url: string): string {
+  if (!url) return 'unknown';
+  
+  const extension = url.split('.').pop()?.toLowerCase();
+
+  if (!extension) return 'unknown';
+
+  if (['mp4', 'webm', 'ogg'].includes(extension)) return 'video';
+  if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(extension)) return 'image';
+  if (extension === 'pdf') return 'pdf';
+
+  return 'other';
+}
+
 
   loadQuestions() {
     this.questionService.getQuestionsByLesson(this.lessonId).subscribe({

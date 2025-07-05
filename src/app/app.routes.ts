@@ -84,12 +84,9 @@ export const routes: Routes = [
       { path: 'lessons/:lessonId', component: LessonViewComponent },
       { path: 'courses/:courseId', component: CourseDetailsComponent},
       { path: 'exams/:examId', component: ExamTakeComponent },
+      { path: 'exams', component: ExamListComponent },
       { path: 'groups', component: StudentGroupsComponent },
       { path: 'mygroups', component: MyGroupsComponent },
-      // { path: 'exams', component: ExamListComponent }
-
-
-
     ],
   },
   // Supervisor Layout Wrapper

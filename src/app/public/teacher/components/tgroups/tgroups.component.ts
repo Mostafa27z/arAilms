@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ClubService } from '../../../../services/club.service';
-import { ClubMemberService } from '../../../../services/club-member.service'; 
+import { ClubMemberService } from '../../../../services/club-member.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -17,20 +17,26 @@ export class TgroupsComponent implements OnInit {
   filteredClubs: any[] = [];
   searchTerm: string = '';
 
-  // Modal variables
+  // Modal states
   showClubModal: boolean = false;
   isEditMode: boolean = false;
+  showDeleteModal: boolean = false;
+  showMembersModal: boolean = false;
+
   selectedClub: any = null;
   clubForm = { name: '', description: '' };
 
-  // Delete Modal
-  showDeleteModal: boolean = false;
-
-  // Members Modal
-  showMembersModal: boolean = false;
+  // Members data
   clubMembers: any[] = [];
+  pendingRequests: any[] = [];
+  allStudents: any[] = [];
+  filteredStudents: any[] = [];
+  studentSearch: string = '';
 
-  constructor(private clubService: ClubService, private memberService: ClubMemberService) {}
+  constructor(
+    private clubService: ClubService,
+    private memberService: ClubMemberService
+  ) {}
 
   ngOnInit(): void {
     this.loadClubs();
@@ -48,7 +54,9 @@ export class TgroupsComponent implements OnInit {
 
   filterClubs() {
     const term = this.searchTerm.toLowerCase();
-    this.filteredClubs = this.clubs.filter(club => club.name.toLowerCase().includes(term));
+    this.filteredClubs = this.clubs.filter(club =>
+      club.name.toLowerCase().includes(term)
+    );
   }
 
   openAddClub() {
@@ -65,17 +73,14 @@ export class TgroupsComponent implements OnInit {
   }
 
   saveClub() {
-    if (this.isEditMode) {
-      this.clubService.updateClub(this.selectedClub.id, this.clubForm).subscribe(() => {
-        this.loadClubs();
-        this.closeClubModal();
-      });
-    } else {
-      this.clubService.createClub(this.clubForm).subscribe(() => {
-        this.loadClubs();
-        this.closeClubModal();
-      });
-    }
+    const action = this.isEditMode
+      ? this.clubService.updateClub(this.selectedClub.id, this.clubForm)
+      : this.clubService.createClub(this.clubForm);
+
+    action.subscribe(() => {
+      this.loadClubs();
+      this.closeClubModal();
+    });
   }
 
   openDeleteClub(club: any) {
@@ -90,16 +95,68 @@ export class TgroupsComponent implements OnInit {
     });
   }
 
-  openMembers(club: any) {
-    this.selectedClub = club;
-    this.memberService.getMembers(club.id).subscribe(res => {
-      this.clubMembers = res.data;
-      console.log(this.clubMembers)
-      this.showMembersModal = true;
-    });
-  }
-
   closeClubModal() { this.showClubModal = false; }
   closeDeleteModal() { this.showDeleteModal = false; }
   closeMembersModal() { this.showMembersModal = false; }
+rejectedMembers: any[] = [];
+
+ openMembers(club: any) {
+  this.selectedClub = club;
+
+  this.memberService.getMembers(club.id).subscribe(res => {
+    const all = res.data || [];
+    this.clubMembers = all.filter((m: any) => m.status === 'approved');
+    this.pendingRequests = all.filter((m: any) => m.status === 'pending');
+    this.rejectedMembers = all.filter((m: any) => m.status === 'rejected');
+  });
+
+  this.memberService.getAllStudents().subscribe(res => {
+    this.allStudents = res.data || [];
+    this.filteredStudents = [];
+  });
+
+  this.showMembersModal = true;
+}
+
+
+  searchStudents() {
+    const term = this.studentSearch.toLowerCase();
+    this.filteredStudents = this.allStudents.filter(student =>
+      student.user.name.toLowerCase().includes(term) &&
+      !this.clubMembers.some(m => m.student_id === student.id) &&
+      !this.pendingRequests.some(r => r.student_id === student.id)
+    );
+  }
+
+  addMember(studentId: number) {
+    const data = {
+      student_id: studentId,
+      club_id: this.selectedClub.id,
+      status: 'approved'
+    };
+
+    this.memberService.addMember(data).subscribe(() => {
+      this.openMembers(this.selectedClub);
+    });
+  }
+
+  removeMember(memberId: number) {
+    if (confirm('هل أنت متأكد من حذف هذا العضو؟')) {
+      this.memberService.deleteMember(memberId).subscribe(() => {
+        this.openMembers(this.selectedClub);
+      });
+    }
+  }
+
+  approveRequest(requestId: number) {
+    this.memberService.approveRequest(requestId).subscribe(() => {
+      this.openMembers(this.selectedClub);
+    });
+  }
+
+  rejectRequest(requestId: number) {
+    this.memberService.rejectRequest(requestId).subscribe(() => {
+      this.openMembers(this.selectedClub);
+    });
+  }
 }

@@ -1,5 +1,5 @@
 <div
-  class="md:hidden fixed top-[20%] right-[-10px] z-50 h-[48px] bg-[#7F55E0] text-white px-3 py-2 rounded-full shadow-lg cursor-pointer"
+  class="md:hidden fixed top-[20%]  right-[-10px] z-50 h-[48px] bg-[#7F55E0] text-white px-3 py-2 rounded-full shadow-lg cursor-pointer"
   (click)="toggleSidebar()"
   *ngIf="!sidebarOpen"
   dir="rtl"
@@ -56,6 +56,29 @@
           class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
         >
           👥 مجموعات الدراسة
+        </a>
+        <a 
+          routerLink="groups" 
+          routerLinkActive="bg-[#2C2F66]" 
+          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
+        >
+          📅 المجموعات المتاحة
+        </a>
+
+        <a 
+          routerLink="mygroups" 
+          routerLinkActive="bg-[#2C2F66]" 
+          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
+        >
+          ✅ مجموعاتي
+        </a>
+        <a
+          routerLink="exams"
+          routerLinkActive="bg-[#2C2F66]"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="block py-2 px-4 hover:bg-[#2C2F66] rounded flex items-center gap-2"
+        >
+          📝 الامتحانات
         </a>
       </nav>
     </div>
