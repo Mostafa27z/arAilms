@@ -1,40 +1,41 @@
 <div class="mt-10" dir="rtl">
   <h3 class="text-lg font-semibold mb-4 text-[#2C2F66] text-right">📋 المهام المرفوعة</h3>
 
-  <div *ngIf="assignments.length > 0; else noAssignments">
+  <!-- 🔄 تحميل المهام -->
+  <div *ngIf="loadingAssignments" class="text-center py-6">
+    <div class="w-8 h-8 border-4 border-purple-400 border-dashed rounded-full animate-spin mx-auto"></div>
+    <p class="mt-2 text-sm text-gray-500">جارٍ تحميل المهام...</p>
+  </div>
+
+  <div *ngIf="!loadingAssignments && assignments.length > 0; else noAssignments">
     <table class="min-w-full bg-white border border-gray-200 rounded shadow-sm text-right">
       <thead class="bg-gray-100 text-gray-600 text-sm">
-  <tr>
-    <th class="py-2 px-4">العنوان</th>
-    <th class="py-2 px-4">الدرس</th>
-    <th class="py-2 px-4">تاريخ التسليم</th>
-    <th class="py-2 px-4">مرفق</th>
-    <th class="py-2 px-4">إجراءات</th>
-  </tr>
-</thead>
-<tbody class="text-sm text-gray-700">
-  <tr *ngFor="let a of assignments" class="border-t">
-    <td class="py-2 px-4">{{ a.title }}</td>
-    <td class="py-2 px-4">{{ a.lesson_title || 'غير متوفر' }}</td>
-    <td class="py-2 px-4">{{ a.due_date | date }}</td>
-
-    <td class="py-2 px-4 text-center">
-      <a *ngIf="a.attachment" [href]="a.attachment" download target="_blank" class="text-blue-600 hover:underline text-sm">
-        📥 تحميل
-      </a>
-      <span *ngIf="!a.attachment" class="text-gray-400 text-sm">لا يوجد</span>
-    </td>
-
-    <td class="py-2 px-4 text-center">
-      <button 
-        class="text-red-600 hover:text-red-800 text-sm"
-        (click)="deleteAssignment(a.id)">
-        🗑️ حذف
-      </button>
-    </td>
-  </tr>
-</tbody>
-
+        <tr>
+          <th class="py-2 px-4">العنوان</th>
+          <th class="py-2 px-4">الدرس</th>
+          <th class="py-2 px-4">تاريخ التسليم</th>
+          <th class="py-2 px-4">مرفق</th>
+          <th class="py-2 px-4">إجراءات</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm text-gray-700">
+        <tr *ngFor="let a of assignments" class="border-t">
+          <td class="py-2 px-4">{{ a.title }}</td>
+          <td class="py-2 px-4">{{ a.lesson_title || 'غير متوفر' }}</td>
+          <td class="py-2 px-4">{{ a.due_date | date }}</td>
+          <td class="py-2 px-4 text-center">
+            <a *ngIf="a.attachment" [href]="a.attachment" download target="_blank" class="text-blue-600 hover:underline text-sm">
+              📥 تحميل
+            </a>
+            <span *ngIf="!a.attachment" class="text-gray-400 text-sm">لا يوجد</span>
+          </td>
+          <td class="py-2 px-4 text-center">
+            <button class="text-red-600 hover:text-red-800 text-sm" (click)="deleteAssignment(a.id)">
+              🗑️ حذف
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
@@ -43,42 +44,48 @@
   </ng-template>
 </div>
 
+<!-- ✅ نموذج رفع مهمة -->
 <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto mt-8" dir="rtl">
   <h2 class="text-xl font-semibold text-[#2C2F66] mb-4 text-right">➕ رفع مهمة جديدة</h2>
 
   <form [formGroup]="uploadForm" (ngSubmit)="submitAssignment()" enctype="multipart/form-data">
-    <div class="mb-4">
-  <label class="block mb-1 font-medium text-right">الدرس</label>
-  <select formControlName="lesson_id" class="w-full p-2 border rounded text-right" required>
-    <option value="">-- اختر الدرس --</option>
-    <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
-  </select>
-  <div *ngIf="uploadForm.get('lesson_id')?.invalid && uploadForm.get('lesson_id')?.touched" class="text-red-600 text-sm">
-    اختيار الدرس مطلوب
-  </div>
-</div>
-
-<!-- العنوان -->
-<div class="mb-4">
-  <label class="block mb-1 font-medium text-right">العنوان</label>
-  <input formControlName="title" type="text" class="w-full p-2 border rounded text-right" placeholder="أدخل عنوان المهمة" />
-  <div *ngIf="uploadForm.get('title')?.invalid && uploadForm.get('title')?.touched" class="text-red-600 text-sm">
-    العنوان مطلوب
-  </div>
-</div>
+    <!-- 🔄 تحميل الدروس -->
+    <!-- <div *ngIf="loadingLessons" class="text-center py-4">
+      <div class="w-8 h-8 border-4 border-purple-400 border-dashed rounded-full animate-spin mx-auto"></div>
+      <p class="mt-2 text-sm text-gray-500">جارٍ تحميل الدروس...</p>
+    </div> -->
 
     <div class="mb-4">
-      <label class="block mb-1 font-medium text-right" required>الوصف</label>
+      <label class="block mb-1 font-medium text-right">الدرس</label>
+      <select formControlName="lesson_id" class="w-full p-2 border rounded text-right" required>
+        <option value="">-- اختر الدرس --</option>
+        <option *ngFor="let lesson of lessons" [value]="lesson.id">{{ lesson.title }}</option>
+      </select>
+      <div *ngIf="uploadForm.get('lesson_id')?.invalid && uploadForm.get('lesson_id')?.touched" class="text-red-600 text-sm">
+        اختيار الدرس مطلوب
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block mb-1 font-medium text-right">العنوان</label>
+      <input formControlName="title" type="text" class="w-full p-2 border rounded text-right" placeholder="أدخل عنوان المهمة" />
+      <div *ngIf="uploadForm.get('title')?.invalid && uploadForm.get('title')?.touched" class="text-red-600 text-sm">
+        العنوان مطلوب
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block mb-1 font-medium text-right">الوصف</label>
       <textarea formControlName="description" class="w-full p-2 border rounded text-right" rows="4" placeholder="الوصف اختياري..."></textarea>
     </div>
 
     <div class="mb-4">
-  <label class="block mb-1 font-medium text-right">تاريخ التسليم</label>
-  <input formControlName="due_date" type="date" class="w-full p-2 border rounded text-right" />
-  <div *ngIf="uploadForm.get('due_date')?.invalid && uploadForm.get('due_date')?.touched" class="text-red-600 text-sm">
-    تاريخ التسليم مطلوب
-  </div>
-</div>
+      <label class="block mb-1 font-medium text-right">تاريخ التسليم</label>
+      <input formControlName="due_date" type="date" class="w-full p-2 border rounded text-right" />
+      <div *ngIf="uploadForm.get('due_date')?.invalid && uploadForm.get('due_date')?.touched" class="text-red-600 text-sm">
+        تاريخ التسليم مطلوب
+      </div>
+    </div>
 
     <div class="mb-4">
       <label class="block mb-1 font-medium text-right">مرفق (اختياري)</label>

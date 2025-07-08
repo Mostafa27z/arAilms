@@ -15,11 +15,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class LessonAssignmentUploadComponent implements OnInit {
   uploadForm!: FormGroup;
   lessons: any[] = [];
+  assignments: any[] = [];
   teacherId: number = 0;
+
   loading: boolean = false;
+  loadingLessons: boolean = false;
+  loadingAssignments: boolean = false;
+
   errorMessage: string = '';
   successMessage: string = '';
-  assignments: any[] = [];
   fileToUpload: File | null = null;
 
   constructor(
@@ -46,20 +50,30 @@ export class LessonAssignmentUploadComponent implements OnInit {
   }
 
   loadLessons() {
+    this.loadingLessons = true;
     this.lessonService.getLessonsByTeacher(this.teacherId).subscribe({
       next: (res) => {
         this.lessons = res.data || [];
+        this.loadingLessons = false;
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error(err);
+        this.loadingLessons = false;
+      }
     });
   }
 
   loadAssignments() {
+    this.loadingAssignments = true;
     this.assignmentService.getAssignmentsByTeacher(this.teacherId).subscribe({
       next: (res) => {
         this.assignments = res.data || [];
+        this.loadingAssignments = false;
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error(err);
+        this.loadingAssignments = false;
+      }
     });
   }
 
@@ -71,57 +85,56 @@ export class LessonAssignmentUploadComponent implements OnInit {
   }
 
   submitAssignment() {
-  if (this.uploadForm.invalid) {
-    this.uploadForm.markAllAsTouched(); // تظهر رسائل التحقق
-    return;
-  }
-
-  this.loading = true;
-  this.errorMessage = '';
-  this.successMessage = '';
-
-  const formData = new FormData();
-  formData.append('lesson_id', this.uploadForm.value.lesson_id);
-  formData.append('title', this.uploadForm.value.title);
-  formData.append('description', this.uploadForm.value.description || '');
-  formData.append('due_date', this.uploadForm.value.due_date);
-
-  if (this.fileToUpload) {
-    formData.append('attachment', this.fileToUpload);
-  }
-
-  this.assignmentService.createAssignment(formData).subscribe({
-    next: (res) => {
-      this.successMessage = '✅ تم رفع المهمة بنجاح';
-      this.uploadForm.reset();
-      this.fileToUpload = null;
-      this.loadAssignments();
-      this.loading = false;
-    },
-    error: (err) => {
-      console.error(err);
-      this.errorMessage = '❌ حدث خطأ أثناء رفع المهمة';
-      this.loading = false;
+    if (this.uploadForm.invalid) {
+      this.uploadForm.markAllAsTouched();
+      return;
     }
-  });
-}
 
-  deleteAssignment(assignmentId: number) {
-  if (confirm('هل أنت متأكد أنك تريد حذف هذه المهمة؟')) {
     this.loading = true;
-    this.assignmentService.deleteAssignment(assignmentId).subscribe({
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    const formData = new FormData();
+    formData.append('lesson_id', this.uploadForm.value.lesson_id);
+    formData.append('title', this.uploadForm.value.title);
+    formData.append('description', this.uploadForm.value.description || '');
+    formData.append('due_date', this.uploadForm.value.due_date);
+
+    if (this.fileToUpload) {
+      formData.append('attachment', this.fileToUpload);
+    }
+
+    this.assignmentService.createAssignment(formData).subscribe({
       next: () => {
-        this.successMessage = 'تم حذف المهمة بنجاح ✅';
-        this.loadAssignments(); // إعادة تحميل المهام بعد الحذف
+        this.successMessage = '✅ تم رفع المهمة بنجاح';
+        this.uploadForm.reset();
+        this.fileToUpload = null;
+        this.loadAssignments();
         this.loading = false;
       },
       error: (err) => {
         console.error(err);
-        this.errorMessage = 'حدث خطأ أثناء حذف المهمة ❌';
+        this.errorMessage = '❌ حدث خطأ أثناء رفع المهمة';
         this.loading = false;
       }
     });
   }
-}
 
+  deleteAssignment(assignmentId: number) {
+    if (confirm('هل أنت متأكد أنك تريد حذف هذه المهمة؟')) {
+      this.loading = true;
+      this.assignmentService.deleteAssignment(assignmentId).subscribe({
+        next: () => {
+          this.successMessage = 'تم حذف المهمة بنجاح ✅';
+          this.loadAssignments();
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error(err);
+          this.errorMessage = 'حدث خطأ أثناء حذف المهمة ❌';
+          this.loading = false;
+        }
+      });
+    }
+  }
 }

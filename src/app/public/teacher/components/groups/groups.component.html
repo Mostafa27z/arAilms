@@ -1,0 +1,124 @@
+<div class="p-6 bg-white shadow rounded" dir="rtl">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold text-[#2C2F66]">📚 إدارة المجموعات الدراسية</h2>
+    <button class="bg-[#7F55E0] text-white px-4 py-2 rounded" (click)="openModal()">➕ مجموعة جديدة</button>
+  </div>
+
+  <!-- التحميل -->
+  <div *ngIf="loading" class="text-center py-10">
+    <div class="w-10 h-10 border-4 border-purple-400 border-dashed rounded-full animate-spin mx-auto"></div>
+    <p class="mt-2 text-sm text-gray-500">جاري التحميل...</p>
+  </div>
+
+  <!-- لا يوجد مجموعات -->
+  <div *ngIf="!loading && groups.length === 0" class="text-center text-gray-500">
+    لا توجد مجموعات حاليًا.
+  </div>
+
+  <!-- عرض المجموعات -->
+  <div *ngIf="!loading && groups.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+    <div *ngFor="let g of groups" class="border p-4 rounded shadow bg-gray-50">
+      <h3 class="text-lg font-semibold text-[#2C2F66]">{{ g.title }}</h3>
+      <p class="text-sm text-gray-600 mb-2">{{ g.description }}</p>
+      <p class="text-sm text-gray-500">📅 {{ g.start_time | date }} إلى {{ g.end_time | date }}</p>
+
+      <div class="mt-3 flex flex-wrap gap-2 text-sm">
+        <button class="text-blue-600" (click)="viewSessions(g.id)">📆 الجلسات</button>
+        <button class="text-green-600" (click)="openSessionModal(g)">➕ جلسة جديدة</button>
+        <button class="text-orange-600" (click)="viewPending(g.id); selectedGroup = g">🕓 الطلبات</button>
+        <button class="text-[#7F55E0]" (click)="openModal(g)">✏️ تعديل</button>
+        <button class="text-red-600" (click)="deleteGroup(g.id)">🗑 حذف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- المودال -->
+  <div *ngIf="showGroupModal" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+    <div class="bg-white rounded-lg shadow p-6 w-full max-w-md">
+      <h3 class="text-lg font-semibold mb-4">{{ isEditMode ? 'تعديل مجموعة' : 'إنشاء مجموعة' }}</h3>
+      <form [formGroup]="groupForm" (ngSubmit)="saveGroup()">
+        <input type="text" formControlName="title" placeholder="عنوان المجموعة" class="w-full border rounded p-2 mb-3" />
+        <textarea formControlName="description" rows="3" placeholder="وصف المجموعة" class="w-full border rounded p-2 mb-3"></textarea>
+        <input type="datetime-local" formControlName="start_time" class="w-full border rounded p-2 mb-3" />
+        <input type="datetime-local" formControlName="end_time" class="w-full border rounded p-2 mb-3" />
+
+        <div class="flex justify-end gap-2">
+          <button type="button" class="bg-gray-400 text-white px-4 py-1 rounded" (click)="closeModal()">إلغاء</button>
+          <button type="submit" [disabled]="groupForm.invalid" class="bg-[#7F55E0] text-white px-4 py-1 rounded">
+            {{ isEditMode ? 'حفظ التعديلات' : 'إنشاء' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+<!-- Modal: إنشاء جلسة -->
+<div *ngIf="showSessionModal" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg w-full max-w-md">
+    <h3 class="text-lg font-semibold mb-4">➕ إنشاء جلسة</h3>
+
+    <form [formGroup]="sessionForm" (ngSubmit)="saveSession()">
+      <!-- العنوان -->
+      <input type="text" formControlName="title" placeholder="عنوان الجلسة"
+             class="w-full border p-2 rounded mb-1" />
+      <div *ngIf="sessionForm.get('title')?.invalid && sessionForm.get('title')?.touched" class="text-red-600 text-sm mb-2">
+        العنوان مطلوب
+      </div>
+
+      <!-- الوصف -->
+      <textarea formControlName="description" placeholder="وصف الجلسة" rows="3"
+                class="w-full border p-2 rounded mb-3"></textarea>
+
+      <!-- الوقت -->
+      <input type="datetime-local" formControlName="session_time"
+             class="w-full border p-2 rounded mb-1" />
+      <div *ngIf="sessionForm.get('session_time')?.invalid && sessionForm.get('session_time')?.touched" class="text-red-600 text-sm mb-2">
+        وقت الجلسة مطلوب
+      </div>
+
+      <!-- الرابط -->
+      <input type="url" formControlName="link" placeholder="رابط الجلسة (Zoom, Meet...)"
+             class="w-full border p-2 rounded mb-1" />
+      <div *ngIf="sessionForm.get('link')?.invalid && sessionForm.get('link')?.touched" class="text-red-600 text-sm mb-2">
+        يرجى إدخال رابط صحيح يبدأ بـ http أو https
+      </div>
+
+      <div class="flex justify-end gap-2 mt-2">
+        <button type="button" class="bg-gray-400 text-white px-4 py-1 rounded" (click)="closeSessionModal()">إلغاء</button>
+        <button type="submit" [disabled]="sessionForm.invalid" class="bg-[#7F55E0] text-white px-4 py-1 rounded">
+          حفظ
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+  <!-- الجلسات -->
+ <div  class="mt-6">
+  <h4 class="text-lg font-semibold text-[#2C2F66]">📆 الجلسات:</h4>
+  <div *ngIf="sessions.length === 0" class="text-sm text-gray-500 mt-2">لا توجد جلسات.</div>
+  <ul *ngIf="sessions.length > 0" class="list-disc list-inside text-sm text-gray-700 mt-2">
+    <li *ngFor="let s of sessions" class="flex justify-between items-center border-b py-2">
+      <div>
+        {{ s.title }} - {{ s.session_time | date:'medium' }}
+        <a [href]="s.link" target="_blank" class="text-blue-600 underline ml-2">رابط الجلسة</a>
+      </div>
+      <button (click)="deleteSession(s.id)" class="text-red-600 hover:text-red-800 text-sm ml-2">🗑️ حذف</button>
+    </li>
+  </ul>
+</div>
+
+
+  <!-- الطلبات -->
+  <div class="mt-6">
+    <h4 class="text-lg font-semibold text-[#2C2F66]">🕓 الطلبات المعلقة:</h4>
+    <div *ngIf="pendingRequests.length === 0" class="text-sm text-gray-500">لا توجد طلبات.</div>
+    <div *ngFor="let p of pendingRequests" class="flex justify-between items-center border-b py-2">
+      <span>{{ p.student.user.name }}</span>
+      <div class="flex gap-2 text-sm">
+        <button class="text-green-600" (click)="approveRequest(p.id)">✔️ قبول</button>
+        <button class="text-red-600" (click)="rejectRequest(p.id)">❌ رفض</button>
+      </div>
+    </div>
+  </div>
+</div>

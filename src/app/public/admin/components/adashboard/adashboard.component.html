@@ -1,54 +1,74 @@
-<div class="p-6" dir="rtl">  
+<div class="p-6" dir="rtl">
 
-  <!-- بطاقات الإحصائيات --> 
-  <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6">  
-    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg">  
-      <p class="text-lg">إجمالي الطلاب</p>  
-      <h2 class="text-3xl font-semibold">{{ totalStudents }}</h2>  
-    </div>  
+  <!-- بطاقات الإحصائيات -->
+  <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- إجمالي الطلاب -->
+    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg text-center">
+      <p class="text-lg">إجمالي الطلاب</p>
+      <h2 class="text-3xl font-semibold" *ngIf="!loadingStudents">{{ totalStudents }}</h2>
+      <div *ngIf="loadingStudents" class="animate-pulse mt-2 text-sm text-gray-300">جارٍ التحميل...</div>
+    </div>
 
-    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg">  
-      <p class="text-lg">الدورات النشطة</p>  
-      <h2 class="text-3xl font-semibold">{{ activeCourses }}</h2>  
-    </div>  
+    <!-- الدورات النشطة -->
+    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg text-center">
+      <p class="text-lg">الدورات النشطة</p>
+      <h2 class="text-3xl font-semibold" *ngIf="!loadingCourses">{{ activeCourses }}</h2>
+      <div *ngIf="loadingCourses" class="animate-pulse mt-2 text-sm text-gray-300">جارٍ التحميل...</div>
+    </div>
 
-    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg">  
-      <p class="text-lg">المعلمين</p>  
-      <h2 class="text-3xl font-semibold">{{ instructors }}</h2>  
-      <p class="text-sm text-gray-300">المعلمون النشطون</p>  
-    </div>  
-  </div>  
+    <!-- المعلمين -->
+    <div class="bg-[#2C2F66] text-white p-6 rounded-xl shadow-lg text-center">
+      <p class="text-lg">المعلمين</p>
+      <h2 class="text-3xl font-semibold" *ngIf="!loadingInstructors">{{ instructors }}</h2>
+      <div *ngIf="loadingInstructors" class="animate-pulse mt-2 text-sm text-gray-300">جارٍ التحميل...</div>
+      <!-- <p class="text-sm text-gray-300">المعلمون النشطون</p> -->
+    </div>
+  </div>
 
-  <!-- الأقسام السفلية --> 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">  
-    <!-- تسجيلات حديثة --> 
-    <div class="bg-[#1E1F3F] p-6 rounded-xl shadow-lg text-white">  
-      <h3 class="text-xl font-semibold mb-4">أحدث التسجيلات</h3>  
-      <div class="space-y-4">  
-        <div *ngFor="let enrollment of recentEnrollments" class="flex items-center gap-3">  
-          <div>  
-            <p class="font-medium">رقم الطالب: {{ enrollment.student.id }} - الاسم: {{ enrollment.student.name }}</p>  
-            <p class="font-medium">الدورة: {{ enrollment.course.title }}</p> 
-            <p class="text-sm text-gray-300">تم التسجيل: {{ enrollment.enrolled_at | date }}</p>  
-          </div>  
-        </div>  
-      </div>  
-    </div>  
+  <!-- الأقسام السفلية -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+    <!-- تسجيلات حديثة -->
+    <div class="bg-[#1E1F3F] p-6 rounded-xl shadow-lg text-white">
+      <h3 class="text-xl font-semibold mb-4">أحدث التسجيلات</h3>
 
-    <!-- الدورات الشائعة --> 
-    <div class="bg-[#1E1F3F] p-6 rounded-xl shadow-lg text-white">  
-      <h3 class="text-xl font-semibold mb-4">الدورات الأكثر شيوعًا</h3>  
-      <div class="space-y-4">  
-        <div *ngFor="let course of popularCourses" class="flex justify-between">  
-          <div> 
-            <p class="font-semibold">{{ course.title }}</p> 
-            <p class="text-sm text-gray-400">{{ course.description }}</p> 
-          </div> 
-          <div class="text-center"> 
-            <p class="text-sm text-gray-300">{{ course.enrolledStudents }} طلاب</p> 
-          </div> 
-        </div>  
-      </div>  
-    </div>  
-  </div>  
+      <div *ngIf="loadingEnrollments" class="text-center text-gray-300 py-6 animate-pulse">جارٍ التحميل...</div>
+
+      <div *ngIf="!loadingEnrollments && recentEnrollments.length === 0" class="text-center text-gray-400">
+        لا توجد تسجيلات حديثة.
+      </div>
+
+      <div *ngIf="!loadingEnrollments && recentEnrollments.length > 0" class="space-y-4">
+        <div *ngFor="let enrollment of recentEnrollments" class="flex items-center gap-3">
+          <div>
+            <p class="font-medium">رقم الطالب: {{ enrollment.student.id }} - الاسم: {{ enrollment.student.name }}</p>
+            <p class="font-medium">الدورة: {{ enrollment.course.title }}</p>
+            <p class="text-sm text-gray-300">تم التسجيل: {{ enrollment.enrolled_at | date }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الدورات الشائعة -->
+    <div class="bg-[#1E1F3F] p-6 rounded-xl shadow-lg text-white">
+      <h3 class="text-xl font-semibold mb-4">الدورات الأكثر شيوعًا</h3>
+
+      <div *ngIf="loadingPopular" class="text-center text-gray-300 py-6 animate-pulse">جارٍ التحميل...</div>
+
+      <div *ngIf="!loadingPopular && popularCourses.length === 0" class="text-center text-gray-400">
+        لا توجد بيانات شائعة حالياً.
+      </div>
+
+      <div *ngIf="!loadingPopular && popularCourses.length > 0" class="space-y-4">
+        <div *ngFor="let course of popularCourses" class="flex justify-between">
+          <div>
+            <p class="font-semibold">{{ course.title }}</p>
+            <p class="text-sm text-gray-400">{{ course.description }}</p>
+          </div>
+          <div class="text-center">
+            <p class="text-sm text-gray-300">{{ course.enrolledStudents }} طلاب</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

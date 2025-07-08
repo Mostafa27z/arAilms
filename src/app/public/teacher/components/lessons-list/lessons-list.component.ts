@@ -16,6 +16,8 @@ export class LessonsListComponent implements OnInit {
   courses: any[] = [];
   lessons: any[] = [];
   filteredLessons: any[] = [];
+loadingCourses: boolean = false;
+loadingLessons: boolean = false;
 
   selectedCourseId: string = '';
   searchTerm: string = '';
@@ -55,23 +57,34 @@ viewQuestions(lesson: any) {
 }
 
   loadCourses() {
-    this.courseService.getCoursesByTeacher(this.teacherId).subscribe({
-      next: (res) => {
-        this.courses = res.data;
-      },
-      error: (err) => console.error(err),
-    });
-  }
+  this.loadingCourses = true;
+  this.courseService.getCoursesByTeacher(this.teacherId).subscribe({
+    next: (res) => {
+      this.courses = res.data;
+      this.loadingCourses = false;
+    },
+    error: (err) => {
+      console.error(err);
+      this.loadingCourses = false;
+    },
+  });
+}
 
-  loadLessons(id:any) {
-    this.lessonService.getLessonsByTeacher(id).subscribe({
-      next: (res) => {
-        this.lessons = res.data;
-        this.applyFilter();
-      },
-      error: (err) => console.error(err),
-    });
-  }
+loadLessons(id: any) {
+  this.loadingLessons = true;
+  this.lessonService.getLessonsByTeacher(id).subscribe({
+    next: (res) => {
+      this.lessons = res.data;
+      this.applyFilter();
+      this.loadingLessons = false;
+    },
+    error: (err) => {
+      console.error(err);
+      this.loadingLessons = false;
+    },
+  });
+}
+
 
   applyFilter() {
     this.filteredLessons = this.lessons.filter((lesson) => {

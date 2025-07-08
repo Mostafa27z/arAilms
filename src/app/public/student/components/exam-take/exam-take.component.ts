@@ -41,6 +41,7 @@ export class ExamTakeComponent implements OnInit {
       next: (res: any) => {
         this.exam = res.data;
         this.loading = false;
+        console.log(res);
       },
       error: (err) => {
         console.error('❌ Error loading exam:', err);
@@ -59,7 +60,7 @@ export class ExamTakeComponent implements OnInit {
 
       const payload = {
         student_id: this.studentId,
-        question_id: question.id,
+        exam_question_id: question.id,
         selected_option_id: question.type === 'mcq' ? answer : null,
         essay_answer: question.type === 'essay' ? answer : null,
         score: null
@@ -86,6 +87,7 @@ export class ExamTakeComponent implements OnInit {
       },
       error: (err) => {
         console.error('❌ Error submitting exam:', err);
+        console.log(submissionData)
         alert('حدث خطأ أثناء إرسال الامتحان.');
       }
     });

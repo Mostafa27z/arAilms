@@ -1,0 +1,73 @@
+<div class="p-6" dir="rtl">
+  <h2 class="text-2xl font-bold mb-4 text-[#2C2F66]">📝 إدارة أسئلة الامتحان</h2>
+
+  <button class="bg-[#7F55E0] text-white px-4 py-2 rounded mb-4" (click)="openForm()">➕ إضافة سؤال</button>
+
+  <div *ngIf="loading" class="text-center text-gray-500 py-6">جاري التحميل...</div>
+
+  <div *ngIf="!loading && questions.length === 0" class="text-center text-gray-400">
+    لا توجد أسئلة حالياً.
+  </div>
+
+  <div *ngIf="questions.length > 0" class="space-y-4">
+    <div *ngFor="let q of questions" class="border rounded p-4 bg-gray-100 shadow">
+      <h3 class="font-semibold text-[#2C2F66]">{{ q.question_text }}</h3>
+      <p class="text-sm text-gray-600">النوع: {{ q.type === 'mcq' ? 'اختياري' : 'مقالي' }}</p>
+
+      <ul *ngIf="q.options?.length > 0" class="list-disc list-inside text-sm text-gray-700 mt-2">
+        <li *ngFor="let opt of q.options">
+          {{ opt.option_text }}
+          <span *ngIf="opt.is_correct" class="text-green-600 font-bold">✔</span>
+        </li>
+      </ul>
+
+      <div class="flex gap-3 mt-2 text-sm">
+        <button class="text-[#7F55E0]" (click)="openForm(q)">✏️ تعديل</button>
+        <button class="text-red-600" (click)="deleteQuestion(q.id)">🗑 حذف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة إضافة/تعديل سؤال -->
+  <div *ngIf="showForm" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-lg">
+      <h3 class="text-lg font-semibold mb-4">
+        {{ isEditMode ? '✏️ تعديل سؤال' : '➕ إضافة سؤال' }}
+      </h3>
+
+      <form [formGroup]="questionForm" (ngSubmit)="saveQuestion()">
+        <input formControlName="question_text" type="text" placeholder="نص السؤال"
+          class="w-full p-2 border rounded mb-3" />
+
+        <select formControlName="type" class="w-full p-2 border rounded mb-3">
+          <option value="mcq">اختياري</option>
+          <option value="essay">مقالي</option>
+        </select>
+
+        <!-- خيارات الاسئلة الاختيارية -->
+        <div *ngIf="questionForm.value.type === 'mcq'">
+          <div formArrayName="options">
+            <div *ngFor="let option of options.controls; let i = index" [formGroupName]="i"
+              class="flex items-center gap-2 mb-2">
+              <input type="radio" name="correct" [checked]="option.value.is_correct" (change)="markCorrect(i)" />
+              <input formControlName="option_text" type="text" placeholder="نص الخيار"
+                class="border p-2 rounded w-full" />
+              <button type="button" (click)="removeOption(i)" class="text-red-500">🗑</button>
+            </div>
+          </div>
+
+          <button type="button" (click)="addOption()" class="bg-gray-200 px-3 py-1 rounded text-sm">+ خيار جديد</button>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-4">
+          <button type="button" class="bg-gray-400 text-white px-4 py-1 rounded" (click)="closeForm()">إلغاء</button>
+          <button type="submit"
+            [disabled]="questionForm.invalid "
+            class="bg-[#7F55E0] text-white px-4 py-1 rounded">
+            {{ isEditMode ? 'حفظ' : 'إضافة' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="p-6" dir="rtl">
+  <h2 class="text-xl font-bold mb-4 text-[#2C2F66]">👨‍🎓 الطلاب الذين أجابوا على الامتحان</h2>
+
+  <div *ngIf="loading" class="text-center text-gray-500">جارٍ التحميل...</div>
+  <div *ngIf="!loading && students.length === 0" class="text-center text-gray-400">لا يوجد طلاب بعد.</div>
+
+  <div *ngIf="!loading && students.length > 0" class="space-y-4">
+    <div *ngFor="let s of students" class="bg-white p-4 rounded shadow flex items-center justify-between">
+      <div>
+        <h3 class="font-semibold text-[#2C2F66]">{{ s.student.name }}</h3>
+        <p class="text-sm text-gray-500">📅 {{ s.created_at | date:'medium' }}</p>
+      </div>
+      <button class="bg-[#7F55E0] text-white px-3 py-1 rounded" (click)="viewAnswers(s.student.id)">
+        📄 عرض الإجابات
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="text-red-600 text-center mt-4">
+    {{ errorMessage }}
+  </div>
+</div>

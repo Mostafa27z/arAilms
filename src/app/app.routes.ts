@@ -59,6 +59,12 @@ import { ExamTakeComponent } from './public/student/components/exam-take/exam-ta
 import { ExamListComponent } from './public/student/components/exam-list/exam-list.component';
 import { StudentGroupsComponent } from './public/student/components/groups/groups.component';
 import { MyGroupsComponent } from './public/student/components/my-groups/my-groups.component';
+import { TeacherGroupsComponent } from './public/teacher/components/groups/groups.component';
+import { TeacherExamsComponent } from './public/teacher/components/teacher-exams/teacher-exams.component';
+import { ExamResultsComponent } from './public/teacher/components/exam-results/exam-results.component';
+import { ExamQuestionsComponent } from './public/teacher/components/exam-questions/exam-questions.component';
+import { ExamStudentAnswersComponent } from './public/teacher/components/exam-student-answers/exam-student-answers.component';
+import { ExamStudentsComponent } from './public/teacher/components/exam-students/exam-students.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
@@ -83,6 +89,8 @@ export const routes: Routes = [
       { path: 'ai', component: AiComponent },
       { path: 'lessons/:lessonId', component: LessonViewComponent },
       { path: 'courses/:courseId', component: CourseDetailsComponent},
+      
+
       { path: 'exams/:examId', component: ExamTakeComponent },
       { path: 'exams', component: ExamListComponent },
       { path: 'groups', component: StudentGroupsComponent },
@@ -135,18 +143,34 @@ export const routes: Routes = [
       { path: 'dashboard', component: TdashboardComponent }, // Loads in named outlet inside StudentLayoutComponent
       { path: 'students', component: TstudentsComponent },
       { path: 'courses', component: TcoursesComponent },
-	  { path: 'addassignment', component: LessonAssignmentUploadComponent },
+	    { path: 'addassignment', component: LessonAssignmentUploadComponent },
       { path: 'groups', component: TgroupsComponent },
       { path: 'chats', component: TchatsComponent },
       { path: 'payments', component: TpaymentsComponent },
+
+      {
+        path: 'exam/:examId/student/:studentId/answers',
+        component: ExamStudentAnswersComponent,
+      },
+      { path: 'exam', component: TeacherExamsComponent },
+        {
+    path: 'exam/:examId/students',
+    component: ExamStudentsComponent
+  },
+
+      { path: 'exam-results/:id', component: ExamResultsComponent },
       { path: 'assignments', component: TeacherAssignmentsReviewComponent },
       { path: 'lessons', component: LessonsListComponent },
       { path: 'addlesson', component: AddLessonComponent },
       { path: 'editlesson/:id', component: EditLessonComponent },
       { path: 'ai', component: AiComponent },
-	   
+	    { path: 'group', component: TeacherGroupsComponent },
       { path: 'lesson/:lessonId/questions', 
        component: LessonQuestionsComponent
+      },
+            {
+        path: 'exam/:id/questions',
+        component: ExamQuestionsComponent // أنشئ هذا لعرض/إضافة الأسئلة
       }
     ],
   },

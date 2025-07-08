@@ -15,6 +15,9 @@ export class ExamAnswerService {
   submitAnswers(payload: any): Observable<any> {
     return this.http.post(`${this.baseUrl}`, payload);
   }
+getStudentsWhoAnswered(examId: number) {
+  return this.http.get<any>(`${this.baseUrl}/exam/${examId}/students`);
+}
 
   // جلب إجابات الطالب في امتحان معين
   getStudentAnswersForExam(examId: number, studentId: number): Observable<any> {
@@ -30,4 +33,11 @@ export class ExamAnswerService {
   getAllAnswers(): Observable<any> {
     return this.http.get(this.baseUrl);
   }
+  // student-exam-answer.service.ts
+getAnswers(examId: number, studentId: number) {
+  return this.http.get(`${this.baseUrl}/exam/${examId}/student/${studentId}`);
+}
+
+
+
 }

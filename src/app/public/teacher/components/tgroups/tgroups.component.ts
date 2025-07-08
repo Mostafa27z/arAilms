@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClubService } from '../../../../services/club.service';
 import { ClubMemberService } from '../../../../services/club-member.service';
+import { StudentService } from '../../../../services/student.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -29,13 +30,17 @@ export class TgroupsComponent implements OnInit {
   // Members data
   clubMembers: any[] = [];
   pendingRequests: any[] = [];
+  rejectedMembers: any[] = [];
   allStudents: any[] = [];
   filteredStudents: any[] = [];
   studentSearch: string = '';
 
+  loading: boolean = false;
+
   constructor(
     private clubService: ClubService,
-    private memberService: ClubMemberService
+    private memberService: ClubMemberService,
+    private std: StudentService,
   ) {}
 
   ngOnInit(): void {
@@ -43,12 +48,17 @@ export class TgroupsComponent implements OnInit {
   }
 
   loadClubs() {
+    this.loading = true;
     this.clubService.getAllClubs().subscribe({
       next: (res) => {
         this.clubs = res.data;
         this.filteredClubs = [...this.clubs];
+        this.loading = false;
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error(err);
+        this.loading = false;
+      }
     });
   }
 
@@ -98,26 +108,29 @@ export class TgroupsComponent implements OnInit {
   closeClubModal() { this.showClubModal = false; }
   closeDeleteModal() { this.showDeleteModal = false; }
   closeMembersModal() { this.showMembersModal = false; }
-rejectedMembers: any[] = [];
 
- openMembers(club: any) {
-  this.selectedClub = club;
+  openMembers(club: any) {
+    this.selectedClub = club;
+    this.loading = true;
 
-  this.memberService.getMembers(club.id).subscribe(res => {
-    const all = res.data || [];
-    this.clubMembers = all.filter((m: any) => m.status === 'approved');
-    this.pendingRequests = all.filter((m: any) => m.status === 'pending');
-    this.rejectedMembers = all.filter((m: any) => m.status === 'rejected');
-  });
+    this.memberService.getMembers(club.id).subscribe({
+      next: (res) => {
+        const all = res.data || [];
+        this.clubMembers = all.filter((m: any) => m.status === 'approved');
+        this.pendingRequests = all.filter((m: any) => m.status === 'pending');
+        this.rejectedMembers = all.filter((m: any) => m.status === 'rejected');
+        this.loading = false;
+      },
+      error: () => this.loading = false
+    });
 
-  this.memberService.getAllStudents().subscribe(res => {
-    this.allStudents = res.data || [];
-    this.filteredStudents = [];
-  });
+    this.std.getAllStudents().subscribe(res => {
+      this.allStudents = res.data || [];
+      this.filteredStudents = [];
+    });
 
-  this.showMembersModal = true;
-}
-
+    this.showMembersModal = true;
+  }
 
   searchStudents() {
     const term = this.studentSearch.toLowerCase();

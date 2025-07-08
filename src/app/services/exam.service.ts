@@ -47,4 +47,27 @@ export class ExamService {
   submitAnswers(data: any[]): Observable<any> {
     return this.http.post(`${environment.url}/student-answers`, data);
   }
+   getExamsByTeacher(teacherId: number) {
+    return this.http.get<any>(`${this.examsUrl}/teacher/${teacherId}/all`);
+  }
+
+  // إنشاء امتحان جديد
+  createExam(data: any) {
+    return this.http.post<any>(this.examsUrl, data);
+  }
+
+  // تعديل امتحان
+  updateExam(id: number, data: any) {
+    return this.http.put<any>(`${this.examsUrl}/${id}`, data);
+  }
+
+  // حذف امتحان
+  deleteExam(id: number) {
+    return this.http.delete<any>(`${this.examsUrl}/${id}`);
+  }
+
+  // عرض تفاصيل امتحان
+  getExamById(id: number) {
+    return this.http.get<any>(`${this.examsUrl}/${id}`);
+  }
 }

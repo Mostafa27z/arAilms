@@ -1,0 +1,32 @@
+<div class="p-6" dir="rtl">
+  <h2 class="text-2xl font-bold text-[#2C2F66] mb-4">📊 نتائج الامتحان</h2>
+
+  <div *ngIf="loading" class="text-center text-gray-500 py-10">جاري التحميل...</div>
+
+  <div *ngIf="!loading && results.length === 0" class="text-center text-gray-500">لا توجد نتائج حتى الآن.</div>
+
+  <table *ngIf="!loading && results.length > 0" class="w-full border mt-4">
+    <thead class="bg-[#2C2F66] text-white">
+      <tr>
+        <th class="text-right p-2">اسم الطالب</th>
+        <th class="text-right p-2"> الامتحان</th>
+        <th class="text-right p-2">الدرجة</th>
+        <th class="text-right p-2">الدرجة النهائية</th>
+        <th class="text-right p-2">الحالة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of results" class="border-b">
+        <td class="p-2">{{ r.student.user.name }}</td>
+        <td class="p-2">{{ r.exam.title }}</td>
+        <td class="p-2">{{ r.score }}</td>
+        <td class="p-2">{{ r.total_marks }}</td>
+        <td class="p-2">
+          <span [ngClass]="r.score >= 50 ? 'text-green-600' : 'text-red-600'">
+            {{ r.score >= 50 ? '✔️ ناجح' : '❌ راسب' }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

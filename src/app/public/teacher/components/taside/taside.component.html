@@ -5,7 +5,7 @@
   *ngIf="!sidebarOpen" 
   dir="rtl"
 >
-  
+  ☰
 </div>
 
 <!-- الشريط الجانبي -->
@@ -30,50 +30,68 @@
 
   <!-- روابط التنقل -->
   <nav class="space-y-2 flex-1 text-right">
+
     <a routerLink="dashboard" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
       <span>الرئيسية</span> <span>🏠</span>
     </a>
 
     <a routerLink="students" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
       <span>الطلاب</span> <span>🎓</span>
     </a>
 
     <a routerLink="courses" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
       <span>الدورات</span> <span>📚</span>
     </a>
 
     <a routerLink="assignments" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
       <span>الواجبات</span> <span>📅</span>
     </a>
 
     <a routerLink="lessons" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
       <span>الدروس</span> <span>🧾</span>
     </a>
 
     <a routerLink="addassignment" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
       <span>إضافة واجب</span> <span>➕</span>
     </a>
 
+    <a routerLink="exam" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>الامتحانات</span> <span>📝</span>
+    </a>
+
     <a routerLink="groups" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>إدارة المحادثات</span> <span>👥</span>
+    </a>
+
+    <a routerLink="group" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
       <span>المجموعات</span> <span>👥</span>
     </a>
 
     <a routerLink="chats" routerLinkActive="bg-[#2C2F66]" [routerLinkActiveOptions]="{ exact: true }"
-       class="flex flex-row-reverse justify-end items-center  gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
       <span>المحادثات</span> <span>💬</span>
     </a>
+
+    <!-- 🆕 رابط الطلاب الذين أجابوا على الامتحان -->
+    <!-- <a routerLink="exam/1/students" routerLinkActive="bg-[#2C2F66]" 
+       class="flex flex-row-reverse justify-end items-center gap-2 py-2 px-4 rounded-lg hover:bg-[#2C2F66]">
+      <span>إجابات الامتحان</span> <span>📖</span>
+    </a> -->
+
   </nav>
 
   <!-- قسم الشات الذكي -->
   <div class="bg-[#2C2F66] p-4 rounded-lg shadow-lg text-right mt-6">
-    <h3 class="text-lg font-semibold mb-2 flex  items-center gap-2">
+    <h3 class="text-lg font-semibold mb-2 flex items-center gap-2">
       <span>روبوت المحادثة</span> <span>🤖</span>
     </h3>
     <p class="text-sm text-gray-300">اسألني أي شيء!</p>

@@ -1,0 +1,21 @@
+<div class="p-6" dir="rtl">
+  <h2 class="text-xl font-bold mb-4 text-[#2C2F66]">👨‍🎓 الطلاب الذين أجابوا على الامتحان</h2>
+
+  <div *ngIf="loading" class="text-center text-gray-500">جارٍ التحميل...</div>
+
+  <div *ngIf="!loading && students.length === 0" class="text-center text-gray-400">
+    لا يوجد طلاب أجابوا على هذا الامتحان بعد.
+  </div>
+
+  <ul *ngIf="students.length > 0" class="space-y-3">
+    <li *ngFor="let student of students" class="bg-white shadow p-3 rounded flex justify-between items-center">
+      <div>
+        <p class="font-semibold text-[#2C2F66]">{{ student.student?.user.name || 'طالب غير معروف' }}</p>
+        <p class="text-sm text-gray-600">📅 {{ student.created_at | date : 'short' }}</p>
+      </div>
+      <button class="bg-[#7F55E0] text-white px-3 py-1 rounded" (click)="goToAnswers(student.student_id)">
+        عرض الإجابات
+      </button>
+    </li>
+  </ul>
+</div>
